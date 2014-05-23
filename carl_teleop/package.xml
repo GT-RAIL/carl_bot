@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package>
+  <name>carl_teleop</name>
+  <version>0.0.0</version>
+  <description>Control and Query the Movement Devices on CARL</description>
+
+  <maintainer email="spkordell@wpi.edu">Steven Kordell</maintainer>
+  <author email="spkordell@wpi.edu">Steven Kordell</author>
+
+  <license>BSD</license>
+
+  <url type="website">http://ros.org/wiki/carl_teleop</url>
+  <url type="bugtracker">https://github.com/WPI-RAIL/carl_bot/issues</url>
+  <url type="repository">https://github.com/WPI-RAIL/carl_bot</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>std_msgs</build_depend>
+  <build_depend>roscpp</build_depend>
+
+  <run_depend>std_msgs</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>joy</run_depend>
+
+</package>
