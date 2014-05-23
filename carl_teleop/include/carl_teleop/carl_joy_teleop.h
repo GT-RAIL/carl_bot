@@ -17,6 +17,37 @@
 #include <ros/ros.h>
 #include <sensor_msgs/Joy.h>
 
+#define MAX_TRANS_VEL .8
+#define MAX_ANG_VEL 1.2
+
+class carl_joy_teleop {
+public:
+	  /*!
+	* \brief Creates a carl_joy_teleop.
+	*
+	* Creates a carl_joy_teleop object that can be used control carl with a joystick.
+	* ROS nodes, services, and publishers are created and maintained within this object.
+	*/
+	carl_joy_teleop();
+	void joy_check();
+
+private:
+	  /*!
+	* \brief joy topic callback function.
+	*
+	* \param joy the message for the joy topic
+	*/
+	 void joy_cback(const sensor_msgs::Joy::ConstPtr& joy);
+
+	 ros::NodeHandle node; /*!< a handle for this ROS node */
+
+	 ros::Publisher cmd_vel; /*!< the cmd_vel topic */
+	 ros::Subscriber joy_sub; /*!< the joy topic */
+
+	 float linear_throttle_factor; /*!< factor for reducing the maximum linear speed */
+	 float angular_throttle_factor; /*!< factor for reducing the maximum angular speed */
+};
+
 
 /*!
 * Creates and runs the carl_joy_teleop node.
