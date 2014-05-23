@@ -10,8 +10,8 @@
 */
 
 
-#ifndef YOUBOT_JOY_TELEOP_H_
-#define YOUBOT_JOY_TELEOP_H_
+#ifndef CARL_JOY_TELEOP_H_
+#define CARL_JOY_TELEOP_H_
 
 #include <geometry_msgs/Twist.h>
 #include <ros/ros.h>

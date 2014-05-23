@@ -3,12 +3,6 @@ project(carl_teleop)
 
 find_package(catkin REQUIRED COMPONENTS roscpp joy geometry_msgs)
 
-
-###################################################
-## Declare things to be passed to other projects ##
-###################################################
-
-
 catkin_package()
 
 ###########
@@ -26,15 +20,18 @@ set(CMAKE_BUILD_TYPE Release)
 
 ## Declare a cpp executable
 add_executable(carl_joy_teleop src/carl_joy_teleop.cpp)
-
+add_executable(carl_key_teleop src/carl_key_teleop.cpp)
 
 target_link_libraries(carl_joy_teleop ${catkin_LIBRARIES})
-
+target_link_libraries(carl_key_teleop ${catkin_LIBRARIES})
 
 #############
 ## Install ##
 #############
 
 install(TARGETS carl_joy_teleop
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+install(TARGETS carl_key_teleop
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
