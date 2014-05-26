@@ -50,14 +50,25 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy) {
   // create the twist message
   geometry_msgs::Twist twist;
 
-  // left joystick controls the linear and angular movement
-  twist.linear.x = joy->axes.at(1)*MAX_TRANS_VEL*linear_throttle_factor;
   twist.linear.y = 0;
   twist.linear.z = 0;
-
   twist.angular.x = 0;
   twist.angular.y = 0;
-  twist.angular.z = joy->axes.at(0)*MAX_ANG_VEL*angular_throttle_factor;
+
+  if (joy->buttons.at(4) == 1) {
+	  // left joystick controls the linear and angular movement
+	  twist.linear.x = joy->axes.at(1)*MAX_TRANS_VEL*linear_throttle_factor;
+	  twist.angular.z = joy->axes.at(0)*MAX_ANG_VEL*angular_throttle_factor;
+  } else {
+	  twist.linear.x = 0;
+	  twist.angular.z = 0;
+  }
+
+  //boost button
+  if (joy->buttons.at(5) == 1) {
+	  twist.linear.x*=2;
+	  twist.angular.z*=2;
+  }
 
   // send the twist command
   cmd_vel.publish(twist);
