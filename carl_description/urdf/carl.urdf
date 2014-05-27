@@ -1,0 +1,37 @@
+<robot name="carl">
+
+  <link name="base_link" />
+  <link name="jaco" />
+  <link name="top_plate" />
+  <link name="left_wheel" />
+  <link name="right_wheel" />
+  
+  <joint name="base_to_plate" type="continuous">
+  	<parent link="base_link"/>
+    <child link="top_plate"/>
+    <origin xyz="0 0 0.47" rpy="0 0 0" /> 	
+  </joint>
+  
+    <joint name="plate_to_jaco" type="continuous">
+  	<parent link="top_plate"/>
+    <child link="jaco"/>
+    <origin xyz="0.3 0 0" rpy="0 0 0" /> 	
+  </joint>
+     
+  <joint name="base_to_left_wheel" type="continuous">
+    <parent link="base_link"/>
+    <child link="left_wheel"/>
+    <origin xyz="0 .3 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+  </joint>
+
+  <joint name="base_to_right_wheel" type="continuous">
+    <parent link="base_link"/>
+    <child link="right_wheel"/>
+    <origin xyz="0 -.3 0" rpy="0 0 0" />
+    <axis xyz="0 -1 0" />
+  </joint>
+
+
+
+</robot>
