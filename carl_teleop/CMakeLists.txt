@@ -9,14 +9,10 @@ catkin_package()
 ## Build ##
 ###########
 
-
 include_directories(
-	include
- 	${catkin_INCLUDE_DIRS}	
- 	${Boost_INCLUDE_DIR}
+  include
+  ${catkin_INCLUDE_DIRS}	
 )
-
-set(CMAKE_BUILD_TYPE Release)
 
 ## Declare a cpp executable
 add_executable(carl_joy_teleop src/carl_joy_teleop.cpp)
