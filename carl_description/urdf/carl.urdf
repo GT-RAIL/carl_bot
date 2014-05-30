@@ -2,7 +2,7 @@
 
   <link name="base_link">
    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <!--<origin xyz="0 0 0" rpy="0 0 0"/>-->
       <geometry>
         <mesh filename="package://carl_description/meshes/FullRobot - RMP_210-1 RMP_Powerbase-1.STL" />
       </geometry>
@@ -120,7 +120,22 @@
     </collision>
   </link>
   
-  <link name="CameraTilt_link">
+    <link name="CameraTiltBracket_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot - tempSwivelBase-1.STL" />
+      </geometry>
+    </visual>
+    <collision>
+	  <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot - tempSwivelBase-1.STL"/>
+      </geometry>
+    </collision>
+  </link>
+  
+  <link name="CameraTiltPlate_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
@@ -169,14 +184,14 @@
     <parent link="base_link"/>
     <child link="LeftWheel_link"/>
     <origin xyz="0.32 0.02 0" rpy="0 0 0" />
-    <axis xyz="0 1 0" />
+    <axis xyz="1 0 0" />
   </joint>
   
   <joint name="BaseToRightWheel" type="continuous">
     <parent link="base_link"/>
     <child link="RightWheel_link"/>
     <origin xyz="-0.32 0.02 0" rpy="0 0 0" />
-    <axis xyz="0 -1 0" />
+    <axis xyz="-1 0 0" />
   </joint>
   
   <joint name="BaseToCaster" type="fixed">
@@ -209,10 +224,17 @@
     <origin xyz="0.20 0.01 1.17" rpy="0 0 0" />
   </joint>
   
-  <joint name="CameraLiftToCameraTilt" type="fixed">
+    <joint name="CameraLiftToCameraTiltBracket" type="continuous">
     <parent link="CameraLift_link"/>
-    <child link="CameraTilt_link"/>
-    <origin xyz="0 -0.07 -0.02" rpy="0.707 0 0" />
+    <child link="CameraTiltBracket_link"/>
+    <origin xyz="-0.10 -0.03  0" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+  </joint>
+  
+  <joint name="CameraLiftBracketToCameraTiltPlate" type="fixed">
+    <parent link="CameraTiltBracket_link"/>
+    <child link="CameraTiltPlate_link"/>
+    <origin xyz="0.10 -0.11 0.0" rpy="0 0 0" />
   </joint>
 
   <joint name="TopPlateToJacoMount" type="fixed">
