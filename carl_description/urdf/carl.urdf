@@ -2,14 +2,14 @@
 
   <link name="base_link">
    <visual>
-      <!--<origin xyz="0 0 0" rpy="0 0 0"/>-->
+      <origin xyz="-.325 .243 -.241" rpy="1.5708 0 0"/>
       <geometry>
         <mesh filename="package://carl_description/meshes/FullRobot - RMP_210-1 RMP_Powerbase-1.STL" />
       </geometry>
     </visual>
     <collision>
 	  <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
+      <geometry> 
         <mesh filename="package://carl_description/meshes/FullRobot - RMP_210-1 RMP_Powerbase-1.STL"/>
       </geometry>
     </collision>
@@ -17,7 +17,7 @@
   
   <link name="LeftWheel_link">
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="-.325 .243 -.241" rpy="1.5708 0 0"/>
       <geometry>
         <mesh filename="package://carl_description/meshes/FullRobot - RMP_210-1 StandardWheel-2.STL" />
       </geometry>
@@ -32,7 +32,7 @@
   
   <link name="RightWheel_link">
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="-.325 .243 -.241" rpy="1.5708 0 0"/>
       <geometry>
         <mesh filename="package://carl_description/meshes/FullRobot - RMP_210-1 StandardWheel-1.STL" />
       </geometry>
@@ -47,7 +47,7 @@
 
   <link name="Caster_link">
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="-.325 .243 -.241" rpy="1.5708 0 0"/>
       <geometry>
         <mesh filename="package://carl_description/meshes/FullRobot - RMP_210-1 CasterAssembly-1.STL" />
       </geometry>
@@ -62,22 +62,22 @@
   
   <link name="RearLeftStrut_link">
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="-.325 .243 -.241" rpy="1.5708 0 0"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/FullRobot - SuperStructure-1 RearVerticalStrut-2.STL" />
+        <mesh filename="package://carl_description/meshes/FullRobot - SuperStructure-1 RearVerticalStrut-1.STL" />
       </geometry>
     </visual>
     <collision>
 	  <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/FullRobot - SuperStructure-1 RearVerticalStrut-2.STL"/>
+        <mesh filename="package://carl_description/meshes/FullRobot - SuperStructure-1 RearVerticalStrut-1.STL"/>
       </geometry>
     </collision>
   </link>
   
   <link name="RearRightStrut_link">
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="-.325 .243 -.241" rpy="1.5708 0 0"/>
       <geometry>
         <mesh filename="package://carl_description/meshes/FullRobot - SuperStructure-1 RearVerticalStrut-2.STL" />
       </geometry>
@@ -92,7 +92,7 @@
 
   <link name="TopPlate_link">
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="-.325 .243 -.241" rpy="1.5708 0 0"/>
       <geometry>
         <mesh filename="package://carl_description/meshes/FullRobot - SuperStructure-1 Table Plate-1.STL" />
       </geometry>
@@ -107,7 +107,7 @@
   
   <link name="CameraLift_link">
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="-.325 .243 -.241" rpy="1.5708 0 0"/>
       <geometry>
         <mesh filename="package://carl_description/meshes/FullRobot - tempHorizontal-1.STL" />
       </geometry>
@@ -122,7 +122,7 @@
   
     <link name="CameraTiltBracket_link">
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="-.325 .243 -.241" rpy="1.5708 0 0"/>
       <geometry>
         <mesh filename="package://carl_description/meshes/FullRobot - tempSwivelBase-1.STL" />
       </geometry>
@@ -137,7 +137,7 @@
   
   <link name="CameraTiltPlate_link">
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="-.325 .243 -.241" rpy="1.5708 0 0"/>
       <geometry>
         <mesh filename="package://carl_description/meshes/FullRobot - tempPlate-1.STL" />
       </geometry>
@@ -152,7 +152,7 @@
   
   <link name="JacoMount_link">
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="-.325 .243 -.241" rpy="1.5708 0 0"/>
       <geometry>
         <mesh filename="package://carl_description/meshes/FullRobot - SuperStructure-1 ArmMountHoriz-1.STL" />
       </geometry>
@@ -167,7 +167,7 @@
 
   <link name="Hokuyo_link">
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="-.325 .243 -.241" rpy="1.5708 0 0"/>
       <geometry>
         <mesh filename="package://carl_description/meshes/FullRobot - hokuyo-1.STL" />
       </geometry>
