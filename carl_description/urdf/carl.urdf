@@ -8,36 +8,223 @@
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0.0"/>
+	  <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
         <mesh filename="package://carl_description/meshes/FullRobot - RMP_210-1 RMP_Powerbase-1.STL"/>
       </geometry>
     </collision>
   </link>
   
-  
   <link name="LeftWheel_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/FullRobot - RMP_210-2 StandardWheel-2.STL" />
+        <mesh filename="package://carl_description/meshes/FullRobot - RMP_210-1 StandardWheel-2.STL" />
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+	  <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/FullRobot - RMP_210-2 StandardWheel-2.STL"/>
+        <mesh filename="package://carl_description/meshes/FullRobot - RMP_210-1 StandardWheel-2.STL"/>
       </geometry>
     </collision>
   </link>
   
+  <link name="RightWheel_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot - RMP_210-1 StandardWheel-1.STL" />
+      </geometry>
+    </visual>
+    <collision>
+	  <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot - RMP_210-1 StandardWheel-1.STL"/>
+      </geometry>
+    </collision>
+  </link>
 
-  <!--Super Structure-->
+  <link name="Caster_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot - RMP_210-1 CasterAssembly-1.STL" />
+      </geometry>
+    </visual>
+    <collision>
+	  <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot - RMP_210-1 CasterAssembly-1.STL"/>
+      </geometry>
+    </collision>
+  </link>
+  
+  <link name="RearLeftStrut_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot - SuperStructure-1 RearVerticalStrut-2.STL" />
+      </geometry>
+    </visual>
+    <collision>
+	  <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot - SuperStructure-1 RearVerticalStrut-2.STL"/>
+      </geometry>
+    </collision>
+  </link>
+  
+  <link name="RearRightStrut_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot - SuperStructure-1 RearVerticalStrut-2.STL" />
+      </geometry>
+    </visual>
+    <collision>
+	  <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot - SuperStructure-1 RearVerticalStrut-2.STL"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="TopPlate_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot - SuperStructure-1 Table Plate-1.STL" />
+      </geometry>
+    </visual>
+    <collision>
+	  <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot - SuperStructure-1 Table Plate-1.STL"/>
+      </geometry>
+    </collision>
+  </link>
+  
+  <link name="CameraLift_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot - tempHorizontal-1.STL" />
+      </geometry>
+    </visual>
+    <collision>
+	  <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot - tempHorizontal-1.STL"/>
+      </geometry>
+    </collision>
+  </link>
+  
+  <link name="CameraTilt_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot - tempPlate-1.STL" />
+      </geometry>
+    </visual>
+    <collision>
+	  <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot - tempPlate-1.STL"/>
+      </geometry>
+    </collision>
+  </link>
+  
+  <link name="JacoMount_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot - SuperStructure-1 ArmMountHoriz-1.STL" />
+      </geometry>
+    </visual>
+    <collision>
+	  <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot - SuperStructure-1 ArmMountHoriz-1.STL"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="Hokuyo_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot - hokuyo-1.STL" />
+      </geometry>
+    </visual>
+    <collision>
+	  <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot - hokuyo-1.STL"/>
+      </geometry>
+    </collision>
+  </link>
+
   <joint name="BaseToLeftWheel" type="continuous">
     <parent link="base_link"/>
     <child link="LeftWheel_link"/>
     <origin xyz="0.32 0.02 0" rpy="0 0 0" />
     <axis xyz="0 1 0" />
+  </joint>
+  
+  <joint name="BaseToRightWheel" type="continuous">
+    <parent link="base_link"/>
+    <child link="RightWheel_link"/>
+    <origin xyz="-0.32 0.02 0" rpy="0 0 0" />
+    <axis xyz="0 -1 0" />
+  </joint>
+  
+  <joint name="BaseToCaster" type="fixed">
+    <parent link="base_link"/>
+    <child link="Caster_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+
+  <joint name="BaseToRearLeftStrut" type="fixed">
+    <parent link="base_link"/>
+    <child link="RearLeftStrut_link"/>
+    <origin xyz="0.20 0.19 0.22" rpy="0 0 0" />
+  </joint>
+
+  <joint name="BaseToRearRightStrut" type="fixed">
+    <parent link="base_link"/>
+    <child link="RearRightStrut_link"/>
+    <origin xyz="-0.20 0.19 0.22" rpy="0 0 0" />
+  </joint>
+
+  <joint name="RearLeftStrutToTopPlate" type="fixed">
+    <parent link="RearRightStrut_link"/>
+    <child link="TopPlate_link"/>
+    <origin xyz="0.20 -0.30 0.30" rpy="0 0 0" />
+  </joint>
+  
+  <joint name="RearLeftStrutToCameraLift" type="fixed">
+    <parent link="RearRightStrut_link"/>
+    <child link="CameraLift_link"/>
+    <origin xyz="0.20 0.01 1.17" rpy="0 0 0" />
+  </joint>
+  
+  <joint name="CameraLiftToCameraTilt" type="fixed">
+    <parent link="CameraLift_link"/>
+    <child link="CameraTilt_link"/>
+    <origin xyz="0 -0.07 -0.02" rpy="0.707 0 0" />
+  </joint>
+
+  <joint name="TopPlateToJacoMount" type="fixed">
+    <parent link="TopPlate_link"/>
+    <child link="JacoMount_link"/>
+    <origin xyz="0 -0.13 -0.22" rpy="0 0 0" />
+  </joint>
+
+  <joint name="CasterToHokuyo" type="fixed">
+    <parent link="Caster_link"/>
+    <child link="Hokuyo_link"/>
+    <origin xyz="0 -0.36 0" rpy="0 0 0" />
   </joint>
 
 </robot>
