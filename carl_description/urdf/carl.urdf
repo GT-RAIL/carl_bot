@@ -4,13 +4,13 @@
    <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>    
       <geometry>
-        <mesh filename="package://carl_description/meshes/FullRobot - RMP_210-1 RMP_Powerbase-1.STL" />
+        <mesh filename="package://carl_description/meshes/FullRobot_-_RMP_210-1_RMP_Powerbase-1.STL" />
       </geometry>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/> 
       <geometry> 
-        <mesh filename="package://carl_description/meshes/FullRobot - RMP_210-1 RMP_Powerbase-1.STL"/>
+        <mesh filename="package://carl_description/meshes/FullRobot_-_RMP_210-1_RMP_Powerbase-1.STL"/>
       </geometry>
     </collision>
   </link>
@@ -19,13 +19,13 @@
     <visual>
       <origin xyz="0 0.02 -0.32" rpy="1.5708 0 0" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/FullRobot - RMP_210-1 StandardWheel-2.STL" />
+        <mesh filename="package://carl_description/meshes/FullRobot_-_RMP_210-1_StandardWheel-2.STL" />
       </geometry>
     </visual>
     <collision>
       <origin xyz="0 0.02 -0.32" rpy="1.5708 0 0" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/FullRobot - RMP_210-1 StandardWheel-2.STL"/>
+        <mesh filename="package://carl_description/meshes/FullRobot_-_RMP_210-1_StandardWheel-2.STL"/>
       </geometry>
     </collision>
   </link>
@@ -34,13 +34,13 @@
     <visual>
      <origin xyz="0 -0.02 -0.32" rpy="-1.5708 0 0" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/FullRobot - RMP_210-1 StandardWheel-1.STL" />
+        <mesh filename="package://carl_description/meshes/FullRobot_-_RMP_210-1_StandardWheel-1.STL" />
       </geometry>
     </visual>
     <collision>
       <origin xyz="0 -0.02 -0.32" rpy="-1.5708 0 0" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/FullRobot - RMP_210-1 StandardWheel-1.STL"/>
+        <mesh filename="package://carl_description/meshes/FullRobot_-_RMP_210-1_StandardWheel-1.STL"/>
       </geometry>
     </collision>
   </link>
@@ -49,13 +49,13 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/FullRobot - RMP_210-1 CasterAssembly-1.STL" />
+        <mesh filename="package://carl_description/meshes/FullRobot_-_RMP_210-1_CasterAssembly-1.STL" />
       </geometry>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/FullRobot - RMP_210-1 CasterAssembly-1.STL"/>
+        <mesh filename="package://carl_description/meshes/FullRobot_-_RMP_210-1_CasterAssembly-1.STL"/>
       </geometry>
     </collision>
   </link>
@@ -64,13 +64,13 @@
     <visual>
       <origin xyz="0.19 -0.20 -0.22" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/FullRobot - SuperStructure-1 RearVerticalStrut-1.STL" />
+        <mesh filename="package://carl_description/meshes/FullRobot_-_SuperStructure-1_RearVerticalStrut-1.STL" />
       </geometry>
     </visual>
     <collision>
 	  <origin xyz="0.19 -0.20 -0.22" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/FullRobot - SuperStructure-1 RearVerticalStrut-1.STL"/>
+        <mesh filename="package://carl_description/meshes/FullRobot_-_SuperStructure-1_RearVerticalStrut-1.STL"/>
       </geometry>
     </collision>
   </link>
@@ -79,13 +79,13 @@
     <visual>
       <origin xyz="0.19 0.20 -0.22" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/FullRobot - SuperStructure-1 RearVerticalStrut-2.STL" />
+        <mesh filename="package://carl_description/meshes/FullRobot_-_SuperStructure-1_RearVerticalStrut-2.STL" />
       </geometry>
     </visual>
     <collision>
       <origin xyz="0.19 0.20 -0.22" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/FullRobot - SuperStructure-1 RearVerticalStrut-2.STL"/>
+        <mesh filename="package://carl_description/meshes/FullRobot_-_SuperStructure-1_RearVerticalStrut-2.STL"/>
       </geometry>
     </collision>
   </link>
@@ -94,13 +94,13 @@
     <visual>
       <origin xyz="-.11 0 -0.52" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/FullRobot - SuperStructure-1 Table Plate-1.STL" />
+        <mesh filename="package://carl_description/meshes/FullRobot_-_SuperStructure-1_Table_Plate-1.STL" />
       </geometry>
     </visual>
     <collision>
       <origin xyz="-.11 0 -0.52" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/FullRobot - SuperStructure-1 Table Plate-1.STL"/>
+        <mesh filename="package://carl_description/meshes/FullRobot_-_SuperStructure-1_Table_Plate-1.STL"/>
       </geometry>
     </collision>
   </link>
@@ -109,13 +109,13 @@
     <visual>
       <origin xyz="0.22 0 -1.36" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/FullRobot - tempHorizontal-1.STL" />
+        <mesh filename="package://carl_description/meshes/FullRobot_-_tempHorizontal-1.STL" />
       </geometry>
     </visual>
     <collision>
       <origin xyz="0.22 0 -1.36" rpy="0 0 0" />
       <geometry> 	
-        <mesh filename="package://carl_description/meshes/FullRobot - tempHorizontal-1.STL"/>
+        <mesh filename="package://carl_description/meshes/FullRobot_-_tempHorizontal-1.STL"/>
       </geometry>
     </collision>
   </link>
@@ -124,13 +124,13 @@
     <!--<visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/FullRobot - tempSwivelMount-1.STL" />
+        <mesh filename="package://carl_description/meshes/FullRobot_-_tempSwivelMount-1.STL" />
       </geometry>
     </visual>-->
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/FullRobot - tempSwivelMount-1.STL"/>
+        <mesh filename="package://carl_description/meshes/FullRobot_-_tempSwivelMount-1.STL"/>
       </geometry>
     </collision>
   </link>
@@ -139,13 +139,13 @@
     <visual>
       <origin xyz="-1.24 .54 0 " rpy="-1.5708 0 -2.1" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/FullRobot - tempPlate-1.STL" />
+        <mesh filename="package://carl_description/meshes/FullRobot_-_tempPlate-1.STL" />
       </geometry>
     </visual>
     <collision>
       <origin xyz="-1.24 .54 0 " rpy="-1.5708 0 -2.1" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/FullRobot - tempPlate-1.STL"/>
+        <mesh filename="package://carl_description/meshes/FullRobot_-_tempPlate-1.STL"/>
       </geometry>
     </collision>
   </link>
@@ -154,13 +154,13 @@
     <visual>      
       <origin xyz="-0.33 0 -0.35" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/FullRobot - SuperStructure-1 ArmMountHoriz-1.STL" />
+        <mesh filename="package://carl_description/meshes/FullRobot_-_SuperStructure-1_ArmMountHoriz-1.STL" />
       </geometry>
     </visual>
     <collision>
       <origin xyz="-0.33 0 -0.35" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/FullRobot - SuperStructure-1 ArmMountHoriz-1.STL"/>
+        <mesh filename="package://carl_description/meshes/FullRobot_-_SuperStructure-1_ArmMountHoriz-1.STL"/>
       </geometry>
     </collision>
   </link>
@@ -169,13 +169,13 @@
     <visual>
       <origin xyz="-0.36 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/FullRobot - hokuyo-1.STL" />
+        <mesh filename="package://carl_description/meshes/FullRobot_-_hokuyo-1.STL" />
       </geometry>
     </visual>
     <collision>
       <origin xyz="-0.36 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/FullRobot - hokuyo-1.STL"/>
+        <mesh filename="package://carl_description/meshes/FullRobot_-_hokuyo-1.STL"/>
       </geometry>
     </collision>
   </link>
