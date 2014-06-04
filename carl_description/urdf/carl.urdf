@@ -47,6 +47,12 @@
         <mesh filename="package://carl_description/meshes/FullRobot_-_RMP_210-1_CasterAssembly-1.STL"/>
       </geometry>
     </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.31 0 -0.12"/>
+      <geometry>
+        <cylinder length="0.213" radius="0.116"/>
+      </geometry>
+    </collision>
   </link>
   <link name="RearLeftStrut_link">
     <visual>
