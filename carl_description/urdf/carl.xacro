@@ -96,10 +96,8 @@
       </geometry>
     </visual>
     <collision>
-      <!--<origin xyz="-.055 0 -0.295" rpy="0 0 0" />-->
       <origin xyz="-.068 0 -0.295" rpy="0 0 0" />
       <geometry>
-        <!--<box size="0.465 0.584 0.6" />-->
         <box size="0.483 0.584 0.6" />
       </geometry>
     </collision>
@@ -178,8 +176,15 @@
     </collision>
   </link>
   
+    <link name="BackCover_link">
+    <visual>
+      <origin xyz="-.237 0 .208" rpy="0 0 0" />
+      <geometry>
+      	<box size="0.005 0.45 0.6" />
+      </geometry>
+    </visual>
+  </link>
   
-
   <joint name="BaseToLeftWheel" type="continuous">
     <parent link="base_link"/>
     <child link="LeftWheel_link"/>
@@ -265,6 +270,12 @@
     <parent link="base_link"/>
     <child link="FrontCover_link"/>
     <origin xyz="0 0 0.012" rpy="0 0 0" />
+  </joint>
+  
+  <joint name="BaseToBackCover" type="fixed">
+    <parent link="base_link"/>
+    <child link="BackCover_link"/>
+    <origin xyz="0 0 -0.012" rpy="0 0 0" />
   </joint>
 
   <xacro:jaco_arm  parent="JacoMount_link"/>

@@ -90,10 +90,8 @@
       </geometry>
     </visual>
     <collision>
-      <!--<origin xyz="-.055 0 -0.295" rpy="0 0 0" />-->
       <origin rpy="0 0 0" xyz="-.068 0 -0.295"/>
       <geometry>
-        <!--<box size="0.465 0.584 0.6" />-->
         <box size="0.483 0.584 0.6"/>
       </geometry>
     </collision>
@@ -162,6 +160,14 @@
         <mesh filename="package://carl_description/meshes/FrontCoverCollision.STL"/>
       </geometry>
     </collision>
+  </link>
+  <link name="BackCover_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="-.237 0 .208"/>
+      <geometry>
+        <box size="0.005 0.45 0.6"/>
+      </geometry>
+    </visual>
   </link>
   <joint name="BaseToLeftWheel" type="continuous">
     <parent link="base_link"/>
@@ -235,6 +241,11 @@
     <parent link="base_link"/>
     <child link="FrontCover_link"/>
     <origin rpy="0 0 0" xyz="0 0 0.012"/>
+  </joint>
+  <joint name="BaseToBackCover" type="fixed">
+    <parent link="base_link"/>
+    <child link="BackCover_link"/>
+    <origin rpy="0 0 0" xyz="0 0 -0.012"/>
   </joint>
   <link name="jaco_link_base">
     <visual>
