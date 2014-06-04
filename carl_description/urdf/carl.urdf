@@ -84,9 +84,11 @@
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="-.055 0 -0.295"/>
+      <!--<origin xyz="-.055 0 -0.295" rpy="0 0 0" />-->
+      <origin rpy="0 0 0" xyz="-.068 0 -0.295"/>
       <geometry>
-        <box size="0.465 0.584 0.6"/>
+        <!--<box size="0.465 0.584 0.6" />-->
+        <box size="0.483 0.584 0.6"/>
       </geometry>
     </collision>
   </link>
@@ -140,6 +142,20 @@
         <mesh filename="package://carl_description/meshes/FullRobot_-_sideWall-1.STL"/>
       </geometry>
     </visual>
+  </link>
+  <link name="FrontCover_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 -.012"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot_-_FrontCover-1.STL"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 -.012"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FrontCoverCollision.STL"/>
+      </geometry>
+    </collision>
   </link>
   <joint name="BaseToLeftWheel" type="continuous">
     <parent link="base_link"/>
@@ -208,6 +224,11 @@
     <parent link="RearRightStrut_link"/>
     <child link="RightSideWall_link"/>
     <origin rpy="0 0 0" xyz="0.229 -0.025 0.078"/>
+  </joint>
+  <joint name="BaseToFrontCover" type="fixed">
+    <parent link="base_link"/>
+    <child link="FrontCover_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0.012"/>
   </joint>
   <link name="jaco_link_base">
     <visual>
