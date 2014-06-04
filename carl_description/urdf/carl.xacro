@@ -135,6 +135,24 @@
       </geometry>
     </visual>
   </link>
+ 
+   <link name="LeftSideWall_link">
+    <visual>
+      <origin xyz="0 -.225 -.27" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot_-_sideWall-1.STL" />
+      </geometry>
+    </visual>
+  </link>
+
+   <link name="RightSideWall_link">
+    <visual>
+      <origin xyz="0 -.225 -.27" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot_-_sideWall-1.STL" />
+      </geometry>
+    </visual>
+  </link>
 
   <joint name="BaseToLeftWheel" type="continuous">
     <parent link="base_link"/>
@@ -203,6 +221,18 @@
     <parent link="Caster_link"/>
     <child link="Hokuyo_link"/>
     <origin xyz="0.36 0 0" rpy="0 0 0" />
+  </joint>
+  
+  <joint name="RearLeftStrutToLeftSideWall" type="fixed">
+    <parent link="RearLeftStrut_link"/>
+    <child link="LeftSideWall_link"/>
+    <origin xyz="0.229 0.025 0.078" rpy="0 0 0" />
+  </joint>
+  
+  <joint name="RearRightStrutToRightSideWall" type="fixed">
+    <parent link="RearRightStrut_link"/>
+    <child link="RightSideWall_link"/>
+    <origin xyz="0.229 -0.025 0.078" rpy="0 0 0" />
   </joint>
 
   <xacro:jaco_arm  parent="JacoMount_link"/>
