@@ -1,0 +1,283 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="carl">
+
+  <xacro:include filename="$(find jaco_model)/urdf/jaco_arm.xacro" />
+
+  <link name="base_link">
+   <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>    
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot_-_RMP_210-1_RMP_Powerbase-1.STL" />
+      </geometry>
+    </visual>
+  </link>
+  
+  <link name="LeftWheel_link">
+    <visual>
+      <origin xyz="0 0.02 -0.32" rpy="1.5708 0 0" />
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot_-_RMP_210-1_StandardWheel-2.STL" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.045" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.25" length="0.090" />
+      </geometry>
+    </collision>
+  </link>
+  
+  <link name="RightWheel_link">
+    <visual>
+     <origin xyz="0 -0.02 -0.32" rpy="-1.5708 0 0" />
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot_-_RMP_210-1_StandardWheel-1.STL" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.045" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.25" length="0.090" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="Caster_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot_-_RMP_210-1_CasterAssembly-1.STL" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.31 0 -0.12" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.116" length="0.213" />
+       </geometry>
+    </collision>
+    
+  </link>
+  
+  <link name="RearLeftStrut_link">
+    <visual>
+      <origin xyz="0.222 -0.20 -0.194" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot_-_SuperStructure-1_RearVerticalStrut-1.STL" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 -0.40 0.24" rpy="0 0 0" />
+      <geometry>
+        <box size="0.025 0.051 1.055" />
+       </geometry>
+    </collision>
+  </link>
+  
+  <link name="RearRightStrut_link">
+    <visual>
+      <origin xyz="0.222 0.20 -0.194" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot_-_SuperStructure-1_RearVerticalStrut-2.STL" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0.40 0.24" rpy="0 0 0" />
+      <geometry>
+        <box size="0.025 0.051 1.055" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="TopPlate_link">
+    <visual>
+      <origin xyz="-.08 0 -0.495" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot_-_SuperStructure-1_Table_Plate-1.STL" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="-.068 0 -0.295" rpy="0 0 0" />
+      <geometry>
+        <box size="0.483 0.584 0.6" />
+      </geometry>
+    </collision>
+  </link>
+  
+  <link name="CameraLift_link">
+    <visual>
+      <origin xyz="0.22 0 -1.36" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot_-_tempHorizontal-1.STL" />
+      </geometry>
+    </visual>
+  </link>
+  
+  <link name="CameraTiltBracket_link">
+	<!--exists to move center of rotation for camera mount-->
+  </link>
+  
+  <link name="CameraTiltPlate_link">
+    <visual>
+      <origin xyz="-1.24 .54 0 " rpy="-1.5708 0 -2.1" />
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot_-_tempPlate-1.STL" />
+      </geometry>
+    </visual>
+  </link>
+  
+  <link name="JacoMount_link">
+    <visual>      
+      <origin xyz="-0.295 0 -0.367" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot_-_SuperStructure-1_ArmMountHoriz-1.STL" />
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="Hokuyo_link">
+    <visual>
+      <origin xyz="-0.36 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot_-_hokuyo-1.STL" />
+      </geometry>
+    </visual>
+  </link>
+ 
+   <link name="LeftSideWall_link">
+    <visual>
+      <origin xyz="0 -.225 -.27" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot_-_sideWall-1.STL" />
+      </geometry>
+    </visual>
+  </link>
+
+   <link name="RightSideWall_link">
+    <visual>
+      <origin xyz="0 -.225 -.27" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot_-_sideWall-1.STL" />
+      </geometry>
+    </visual>
+  </link>
+  
+  <link name="FrontCover_link">
+    <visual>
+      <origin xyz="0 0 -.012" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FullRobot_-_FrontCover-1.STL" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -.012" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://carl_description/meshes/FrontCoverCollision.STL" />
+      </geometry>
+    </collision>
+  </link>
+  
+    <link name="BackCover_link">
+    <visual>
+      <origin xyz="-.237 0 .208" rpy="0 0 0" />
+      <geometry>
+      	<box size="0.005 0.45 0.6" />
+      </geometry>
+    </visual>
+  </link>
+  
+  <joint name="BaseToLeftWheel" type="continuous">
+    <parent link="base_link"/>
+    <child link="LeftWheel_link"/>
+    <origin xyz="0.02 0.32 0" rpy="-1.5708 0 0" />
+    <axis xyz="0 0 1" />
+  </joint>
+  
+  <joint name="BaseToRightWheel" type="continuous">
+    <parent link="base_link"/>
+    <child link="RightWheel_link"/>
+    <origin xyz="0.02 -0.32 0" rpy="1.5708 0 0" />
+    <axis xyz="0 0 1" />
+  </joint>
+  
+  <joint name="BaseToCaster" type="fixed">
+    <parent link="base_link"/>
+    <child link="Caster_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+
+  <joint name="BaseToRearLeftStrut" type="fixed">
+    <parent link="base_link"/>
+    <child link="RearLeftStrut_link"/>
+    <origin xyz="-0.222 0.20 0.194" rpy="0 0 0" />
+  </joint>
+
+  <joint name="BaseToRearRightStrut" type="fixed">
+    <parent link="base_link"/>
+    <child link="RearRightStrut_link"/>
+    <origin xyz="-0.222 -0.20 0.194" rpy="0 0 0" />
+  </joint>
+
+  <joint name="RearLeftStrutToTopPlate" type="fixed">
+    <parent link="RearRightStrut_link"/>
+    <child link="TopPlate_link"/>
+    <origin xyz="0.30 0.20 0.30" rpy="0 0 0" />
+  </joint>
+  
+  <joint name="RearLeftStrutToCameraLift" type="fixed">
+    <parent link="RearRightStrut_link"/>
+    <child link="CameraLift_link"/>
+    <origin xyz="0.01 0.20 1.17" rpy="0 0 0" />
+  </joint>
+  
+    <joint name="CameraLiftToCameraTiltBracket" type="continuous">
+    <parent link="CameraLift_link"/>
+    <child link="CameraTiltBracket_link"/>
+    <origin xyz="0.03 -0.10 0" rpy="1.5708 0 0" />
+    <axis xyz="0 0 1" />
+  </joint>
+  
+  <joint name="CameraLiftBracketToCameraTiltPlate" type="fixed">
+    <parent link="CameraTiltBracket_link"/>
+    <child link="CameraTiltPlate_link"/>
+    <origin xyz="0.11 0 -0.10" rpy="0 0 0" />
+  </joint>
+
+  <joint name="TopPlateToJacoMount" type="fixed">
+    <parent link="TopPlate_link"/>
+    <child link="JacoMount_link"/>
+    <origin xyz="0.216 0 -0.13" rpy="0 0 0" />
+  </joint>
+
+  <joint name="CasterToHokuyo" type="fixed">
+    <parent link="Caster_link"/>
+    <child link="Hokuyo_link"/>
+    <origin xyz="0.36 0 0" rpy="0 0 0" />
+  </joint>
+  
+  <joint name="RearLeftStrutToLeftSideWall" type="fixed">
+    <parent link="RearLeftStrut_link"/>
+    <child link="LeftSideWall_link"/>
+    <origin xyz="0.229 0.025 0.078" rpy="0 0 0" />
+  </joint>
+  
+  <joint name="RearRightStrutToRightSideWall" type="fixed">
+    <parent link="RearRightStrut_link"/>
+    <child link="RightSideWall_link"/>
+    <origin xyz="0.229 -0.025 0.078" rpy="0 0 0" />
+  </joint>
+
+  <joint name="BaseToFrontCover" type="fixed">
+    <parent link="base_link"/>
+    <child link="FrontCover_link"/>
+    <origin xyz="0 0 0.012" rpy="0 0 0" />
+  </joint>
+  
+  <joint name="BaseToBackCover" type="fixed">
+    <parent link="base_link"/>
+    <child link="BackCover_link"/>
+    <origin xyz="0 0 -0.012" rpy="0 0 0" />
+  </joint>
+
+  <xacro:jaco_arm  parent="JacoMount_link"/>
+
+</robot>
