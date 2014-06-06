@@ -7,7 +7,7 @@
    <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>    
       <geometry>
-        <mesh filename="package://carl_description/meshes/Base.dae" />
+        <mesh filename="package://carl_description/meshes/base.dae" />
       </geometry>
     </visual>
   </link>
@@ -16,7 +16,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/Wheel.dae" />
+        <mesh filename="package://carl_description/meshes/wheel.dae" />
       </geometry>
     </visual>
     <collision>
@@ -31,7 +31,7 @@
     <visual>    
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/Wheel.dae" />
+        <mesh filename="package://carl_description/meshes/wheel.dae" />
       </geometry>
     </visual>
     <collision>
@@ -46,7 +46,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 1.5708"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/CasterPlate.dae" />
+        <mesh filename="package://carl_description/meshes/caster_plate.dae" />
       </geometry>
     </visual>
   </link>
@@ -55,7 +55,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 1.5708"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/Caster.dae" />
+        <mesh filename="package://carl_description/meshes/caster.dae" />
       </geometry>
     </visual>
     <collision>
@@ -70,7 +70,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 -1.5708" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/RearStrut.dae" />
+        <mesh filename="package://carl_description/meshes/rear_strut.dae" />
       </geometry>
     </visual>
     <collision>
@@ -85,7 +85,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 -1.5708" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/RearStrut.dae" />
+        <mesh filename="package://carl_description/meshes/rear_strut.dae" />
       </geometry>
     </visual>
     <collision>
@@ -118,7 +118,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 -1.5708" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/TablePlate.dae" />
+        <mesh filename="package://carl_description/meshes/table_plate.dae" />
       </geometry>
     </visual>
     <collision>
@@ -133,13 +133,13 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 1.5708" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/CameraLift.dae" />
+        <mesh filename="package://carl_description/meshes/camera_lift.dae" />
       </geometry>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 1.5708" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/CameraLift.dae" />
+        <mesh filename="package://carl_description/meshes/camera_lift.dae" />
       </geometry>
     </collision>
   </link>
@@ -152,13 +152,13 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 1.5708 0" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/CameraPlate.dae" />
+        <mesh filename="package://carl_description/meshes/camera_plate.dae" />
       </geometry>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 1.5708 0" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/CameraPlate.dae" />
+        <mesh filename="package://carl_description/meshes/camera_plate.dae" />
       </geometry>
     </collision>
   </link>
@@ -167,7 +167,7 @@
     <visual>      
       <origin xyz="0 0 0" rpy="0 0 1.5708" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/JacoMount.dae" />
+        <mesh filename="package://carl_description/meshes/jaco_mount.dae" />
       </geometry>
     </visual>
   </link>
@@ -176,25 +176,25 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/Hokuyo.dae" />
+        <mesh filename="package://carl_description/meshes/hokuyo.dae" />
       </geometry>
     </visual>
   </link>
  
-   <link name="LeftSideWall_link">
+   <link name="LeftSideCover_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 1.5708" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/SideWall.dae" />
+        <mesh filename="package://carl_description/meshes/side_cover.dae" />
       </geometry>
     </visual>
   </link>
 
-   <link name="RightSideWall_link">
+   <link name="RightSideCover_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 1.5708" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/SideWall.dae" />
+        <mesh filename="package://carl_description/meshes/side_cover.dae" />
       </geometry>
     </visual>
   </link>
@@ -203,13 +203,13 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 1.5708" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/FrontCover.dae" />
+        <mesh filename="package://carl_description/meshes/front_cover.dae" />
       </geometry>
     </visual>
     <collision>
       <origin xyz="-.245 0 -.241" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://carl_description/meshes/FrontCoverCollision.STL" />
+        <mesh filename="package://carl_description/meshes/front_cover_collision.stl" />
       </geometry>
     </collision>
   </link>
@@ -219,7 +219,7 @@
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
       	<!--<box size="0.005 0.45 0.6" />-->
-      	<mesh filename="package://carl_description/meshes/BackCover.dae" />
+      	<mesh filename="package://carl_description/meshes/back_cover.dae" />
       </geometry>
     </visual>
   </link>
@@ -314,15 +314,15 @@
     <origin xyz="0.07 0 0.035" rpy="0 0 0" />
   </joint>
   
-  <joint name="RearLeftStrutToLeftSideWall" type="fixed">
+  <joint name="RearLeftStrutToLeftSideCover" type="fixed">
     <parent link="RearLeftStrut_link"/>
-    <child link="LeftSideWall_link"/>
+    <child link="LeftSideCover_link"/>
     <origin xyz="0.229 0.026 0.447" rpy="0 0 0" />
   </joint>
   
-  <joint name="RearRightStrutToRightSideWall" type="fixed">
+  <joint name="RearRightStrutToRightSideCover" type="fixed">
     <parent link="RearRightStrut_link"/>
-    <child link="RightSideWall_link"/>
+    <child link="RightSideCover_link"/>
     <origin xyz="0.229 -0.026 0.447" rpy="0 0 0" />
   </joint>
 
