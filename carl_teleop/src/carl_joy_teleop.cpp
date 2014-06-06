@@ -83,15 +83,6 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
   cmd_vel.publish(twist);
 }
 
-void carl_joy_teleop::joy_check()
-{
-  if ((receivedmsg) && ((ros::Time::now().toSec() - T.toSec()) > .15))
-  {
-    geometry_msgs::Twist zero;
-    cmd_vel.publish(zero);
-  }
-}
-
 int main(int argc, char **argv)
 {
   // initialize ROS and the node
