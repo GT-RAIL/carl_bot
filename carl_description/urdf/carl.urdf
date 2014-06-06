@@ -90,6 +90,22 @@
       </geometry>
     </collision>
   </link>
+  <link name="RearLeftStrutInside_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0.5275"/>
+      <geometry>
+        <box size="0.02 0.045 1"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="RearRightStrutInside_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0.5275"/>
+      <geometry>
+        <box size="0.02 0.045 1"/>
+      </geometry>
+    </visual>
+  </link>
   <link name="TopPlate_link">
     <visual>
       <origin rpy="0 0 -1.5708" xyz="0 0 0"/>
@@ -222,6 +238,16 @@
     <parent link="base_link"/>
     <child link="RearRightStrut_link"/>
     <origin rpy="0 0 0" xyz="-0.222 -0.200 -0.102"/>
+  </joint>
+  <joint name="RearRightStrutToRearRightStutInside" type="fixed">
+    <parent link="RearRightStrut_link"/>
+    <child link="RearRightStrutInside_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </joint>
+  <joint name="RearLeftStrutToRearLeftStutInside" type="fixed">
+    <parent link="RearLeftStrut_link"/>
+    <child link="RearLeftStrutInside_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
   </joint>
   <joint name="RearLeftStrutToTopPlate" type="fixed">
     <parent link="RearRightStrut_link"/>
