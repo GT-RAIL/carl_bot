@@ -310,13 +310,13 @@ If you are reading this, it means I forgot to update the collision model. Remind
   <joint name="RearLeftStrutToLeftSideWall" type="fixed">
     <parent link="RearLeftStrut_link"/>
     <child link="LeftSideWall_link"/>
-    <origin xyz="0.229 0.025 0.078" rpy="0 0 0" />
+    <origin xyz="0.229 0.026 0.447" rpy="0 0 0" />
   </joint>
   
   <joint name="RearRightStrutToRightSideWall" type="fixed">
     <parent link="RearRightStrut_link"/>
     <child link="RightSideWall_link"/>
-    <origin xyz="0.229 -0.025 0.078" rpy="0 0 0" />
+    <origin xyz="0.229 -0.026 0.447" rpy="0 0 0" />
   </joint>
 
   <joint name="BaseToFrontCover" type="fixed">
@@ -328,7 +328,7 @@ If you are reading this, it means I forgot to update the collision model. Remind
   <joint name="BaseToBackCover" type="fixed">
     <parent link="base_link"/>
     <child link="BackCover_link"/>
-    <origin xyz="0 0 -0.012" rpy="0 0 0" />
+    <origin xyz="-.237 0 -0.102" rpy="0 0 0" />
   </joint>
 
   <xacro:jaco_arm  parent="JacoMount_link"/>
