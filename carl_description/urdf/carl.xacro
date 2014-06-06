@@ -46,7 +46,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 1.5708"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/casterPlate.dae" />
+        <mesh filename="package://carl_description/meshes/CasterPlate.dae" />
       </geometry>
     </visual>
   </link>
@@ -55,7 +55,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 1.5708"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/caster.dae" />
+        <mesh filename="package://carl_description/meshes/Caster.dae" />
       </geometry>
     </visual>
     <collision>

@@ -283,10 +283,10 @@
     </library_effects>
     <library_images>
         <image id="ID7">
-            <init_from>caster/material_1.jpg</init_from>
+            <init_from>Caster/material_1.jpg</init_from>
         </image>
         <image id="ID36">
-            <init_from>caster/Metal_Corrogated_Shiny.jpg</init_from>
+            <init_from>Caster/Metal_Corrogated_Shiny.jpg</init_from>
         </image>
     </library_images>
     <scene>
