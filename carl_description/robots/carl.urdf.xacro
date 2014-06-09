@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="carl">
 
-  <xacro:include filename="$(find carl_description)/urdf/components/carl_wheel.urdf.xacro" />
   <xacro:include filename="$(find carl_description)/urdf/carl_base/carl_base.urdf.xacro" />
   <xacro:include filename="$(find jaco_model)/urdf/jaco_arm.xacro" />
   
