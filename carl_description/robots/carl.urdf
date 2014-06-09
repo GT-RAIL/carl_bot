@@ -4,14 +4,80 @@
 <!-- |    EDITING THIS FILE BY HAND IS NOT RECOMMENDED                                 | -->
 <!-- =================================================================================== -->
 <robot name="carl" xmlns:body="http://playerstage.sourceforge.net/gazebo/xmlschema/#body" xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller" xmlns:gazebo="http://playerstage.sourceforge.net/gazebo/xmlschema/#gz" xmlns:geom="http://playerstage.sourceforge.net/gazebo/xmlschema/#geom" xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface" xmlns:joint="http://playerstage.sourceforge.net/gazebo/xmlschema/#joint" xmlns:model="http://playerstage.sourceforge.net/gazebo/xmlschema/#model" xmlns:physics="http://playerstage.sourceforge.net/gazebo/xmlschema/#physics" xmlns:renderable="http://playerstage.sourceforge.net/gazebo/xmlschema/#renderable" xmlns:rendering="http://playerstage.sourceforge.net/gazebo/xmlschema/#rendering" xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor" xmlns:xacro="http://ros.org/wiki/xacro" xmlns:xi="http://www.w3.org/2001/XInclude">
-  <link name="base_link">
+  <joint name="base_link_left_rear_strut_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="-0.222 0.200 -0.102"/>
+    <parent link="base_link"/>
+    <child link="left_rear_strut_link"/>
+  </joint>
+  <joint name="left_rear_strut_link_left_rear_strut_link_inside_joint" type="fixed">
+    <parent link="left_rear_strut_link"/>
+    <child link="left_rear_strut_inside_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </joint>
+  <link name="left_rear_strut_inside_link">
     <visual>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0 0 0.5275"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/base.dae"/>
+        <box size="0.02 0.045 1"/>
       </geometry>
     </visual>
   </link>
+  <link name="left_rear_strut_link">
+    <visual>
+      <origin rpy="0 0 -1.5708" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/rear_strut.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0.5275"/>
+      <geometry>
+        <box size="0.027 0.054 1.055"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="base_link_right_rear_strut_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="-0.222 -0.200 -0.102"/>
+    <parent link="base_link"/>
+    <child link="right_rear_strut_link"/>
+  </joint>
+  <joint name="right_rear_strut_link_right_rear_strut_link_inside_joint" type="fixed">
+    <parent link="right_rear_strut_link"/>
+    <child link="right_rear_strut_inside_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </joint>
+  <link name="right_rear_strut_inside_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0.5275"/>
+      <geometry>
+        <box size="0.02 0.045 1"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="right_rear_strut_link">
+    <visual>
+      <origin rpy="0 0 -1.5708" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/rear_strut.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0.5275"/>
+      <geometry>
+        <box size="0.027 0.054 1.055"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_rear_strut_top_plate_joint" type="fixed">
+    <parent link="right_rear_strut_link"/>
+    <child link="top_plate_link"/>
+    <origin rpy="0 0 0" xyz="0.516 0.20 0.598"/>
+  </joint>
+  <joint name="top_plate_jaco_mount" type="fixed">
+    <parent link="top_plate_link"/>
+    <child link="jaco_mount_link"/>
+    <origin rpy="0 0 0" xyz="0 0 -0.13"/>
+  </joint>
   <link name="top_plate_link">
     <visual>
       <origin rpy="0 0 -1.5708" xyz="0 0 0"/>
@@ -25,6 +91,81 @@
         <box size="0.495 0.59 0.65"/>
       </geometry>
     </collision>
+  </link>
+  <link name="jaco_mount_link">
+    <visual>
+      <origin rpy="0 0 1.5708" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/jaco_mount.dae"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="right_rear_strut_link_right_side_cover_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0.229 -0.026 0.447"/>
+    <parent link="right_rear_strut_link"/>
+    <child link="right_side_cover_link"/>
+  </joint>
+  <link name="right_side_cover_link">
+    <visual>
+      <origin rpy="0 0 1.5708" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/side_cover.dae"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="left_rear_strut_link_left_side_cover_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0.229 -0.026 0.447"/>
+    <parent link="left_rear_strut_link"/>
+    <child link="left_side_cover_link"/>
+  </joint>
+  <link name="left_side_cover_link">
+    <visual>
+      <origin rpy="0 0 1.5708" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/side_cover.dae"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="base_front_cover_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="FrontCover_link"/>
+    <origin rpy="0 0 0" xyz=".247 0 0.242"/>
+  </joint>
+  <joint name="base_back_cover" type="fixed">
+    <parent link="base_link"/>
+    <child link="BackCover_link"/>
+    <origin rpy="0 0 0" xyz="-.237 0 -0.102"/>
+  </joint>
+  <link name="FrontCover_link">
+    <visual>
+      <origin rpy="0 0 1.5708" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/front_cover.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-.245 0 -.241"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/front_cover_collision.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="BackCover_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <!--<box size="0.005 0.45 0.6" />-->
+        <mesh filename="package://carl_description/meshes/back_cover.dae"/>
+      </geometry>
+    </visual>
+  </link>
+  <link name="base_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/base.dae"/>
+      </geometry>
+    </visual>
   </link>
   <link name="CameraLift_link">
     <visual>
@@ -56,37 +197,6 @@
         <mesh filename="package://carl_description/meshes/camera_plate.dae"/>
       </geometry>
     </collision>
-  </link>
-  <link name="jaco_mount_link">
-    <visual>
-      <origin rpy="0 0 1.5708" xyz="0 0 0"/>
-      <geometry>
-        <mesh filename="package://carl_description/meshes/jaco_mount.dae"/>
-      </geometry>
-    </visual>
-  </link>
-  <link name="FrontCover_link">
-    <visual>
-      <origin rpy="0 0 1.5708" xyz="0 0 0"/>
-      <geometry>
-        <mesh filename="package://carl_description/meshes/front_cover.dae"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin rpy="0 0 0" xyz="-.245 0 -.241"/>
-      <geometry>
-        <mesh filename="package://carl_description/meshes/front_cover_collision.stl"/>
-      </geometry>
-    </collision>
-  </link>
-  <link name="BackCover_link">
-    <visual>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <!--<box size="0.005 0.45 0.6" />-->
-        <mesh filename="package://carl_description/meshes/back_cover.dae"/>
-      </geometry>
-    </visual>
   </link>
   <joint name="base_link_left_wheel_joint" type="continuous">
     <origin rpy="-1.5708 0 0" xyz="0 0.25 0"/>
@@ -161,75 +271,6 @@
       </geometry>
     </collision>
   </link>
-  <joint name="base_link_left_rear_strut_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="-0.222 0.200 -0.102"/>
-    <parent link="base_link"/>
-    <child link="left_rear_strut_link"/>
-  </joint>
-  <joint name="left_rear_strut_link_left_rear_strut_link_inside_joint" type="fixed">
-    <parent link="left_rear_strut_link"/>
-    <child link="left_rear_strut_inside_link"/>
-    <origin rpy="0 0 0" xyz="0 0 0"/>
-  </joint>
-  <link name="left_rear_strut_inside_link">
-    <visual>
-      <origin rpy="0 0 0" xyz="0 0 0.5275"/>
-      <geometry>
-        <box size="0.02 0.045 1"/>
-      </geometry>
-    </visual>
-  </link>
-  <link name="left_rear_strut_link">
-    <visual>
-      <origin rpy="0 0 -1.5708" xyz="0 0 0"/>
-      <geometry>
-        <mesh filename="package://carl_description/meshes/rear_strut.dae"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin rpy="0 0 0" xyz="0 0 0.5275"/>
-      <geometry>
-        <box size="0.027 0.054 1.055"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="base_link_right_rear_strut_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="-0.222 -0.200 -0.102"/>
-    <parent link="base_link"/>
-    <child link="right_rear_strut_link"/>
-  </joint>
-  <joint name="right_rear_strut_link_right_rear_strut_link_inside_joint" type="fixed">
-    <parent link="right_rear_strut_link"/>
-    <child link="right_rear_strut_inside_link"/>
-    <origin rpy="0 0 0" xyz="0 0 0"/>
-  </joint>
-  <link name="right_rear_strut_inside_link">
-    <visual>
-      <origin rpy="0 0 0" xyz="0 0 0.5275"/>
-      <geometry>
-        <box size="0.02 0.045 1"/>
-      </geometry>
-    </visual>
-  </link>
-  <link name="right_rear_strut_link">
-    <visual>
-      <origin rpy="0 0 -1.5708" xyz="0 0 0"/>
-      <geometry>
-        <mesh filename="package://carl_description/meshes/rear_strut.dae"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin rpy="0 0 0" xyz="0 0 0.5275"/>
-      <geometry>
-        <box size="0.027 0.054 1.055"/>
-      </geometry>
-    </collision>
-  </link>
-  <joint name="left_rear_strut_top_plate_joint" type="fixed">
-    <parent link="right_rear_strut_link"/>
-    <child link="top_plate_link"/>
-    <origin rpy="0 0 0" xyz="0.516 0.20 0.598"/>
-  </joint>
   <joint name="RearLeftStrutToCameraLift" type="fixed">
     <parent link="right_rear_strut_link"/>
     <child link="CameraLift_link"/>
@@ -246,11 +287,6 @@
     <child link="CameraTiltPlate_link"/>
     <origin rpy="0 0 0" xyz="0.11 0 -0.10"/>
   </joint>
-  <joint name="top_plate_jaco_mount" type="fixed">
-    <parent link="top_plate_link"/>
-    <child link="jaco_mount_link"/>
-    <origin rpy="0 0 0" xyz="0 0 -0.13"/>
-  </joint>
   <joint name="caster_plate_link_hokuyo_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0.07 0 0.035"/>
     <parent link="caster_plate_link"/>
@@ -264,42 +300,6 @@
       </geometry>
     </visual>
   </link>
-  <joint name="right_rear_strut_link_right_side_cover_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.229 -0.026 0.447"/>
-    <parent link="right_rear_strut_link"/>
-    <child link="right_side_cover_link"/>
-  </joint>
-  <link name="right_side_cover_link">
-    <visual>
-      <origin rpy="0 0 1.5708" xyz="0 0 0"/>
-      <geometry>
-        <mesh filename="package://carl_description/meshes/side_cover.dae"/>
-      </geometry>
-    </visual>
-  </link>
-  <joint name="left_rear_strut_link_left_side_cover_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.229 -0.026 0.447"/>
-    <parent link="left_rear_strut_link"/>
-    <child link="left_side_cover_link"/>
-  </joint>
-  <link name="left_side_cover_link">
-    <visual>
-      <origin rpy="0 0 1.5708" xyz="0 0 0"/>
-      <geometry>
-        <mesh filename="package://carl_description/meshes/side_cover.dae"/>
-      </geometry>
-    </visual>
-  </link>
-  <joint name="base_front_cover_joint" type="fixed">
-    <parent link="base_link"/>
-    <child link="FrontCover_link"/>
-    <origin rpy="0 0 0" xyz=".247 0 0.242"/>
-  </joint>
-  <joint name="base_back_cover" type="fixed">
-    <parent link="base_link"/>
-    <child link="BackCover_link"/>
-    <origin rpy="0 0 0" xyz="-.237 0 -0.102"/>
-  </joint>
   <link name="jaco_link_base">
     <visual>
       <geometry>
