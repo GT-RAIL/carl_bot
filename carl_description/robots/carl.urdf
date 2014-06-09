@@ -12,7 +12,7 @@
       </geometry>
     </visual>
   </link>
-  <link name="TopPlate_link">
+  <link name="top_plate_link">
     <visual>
       <origin rpy="0 0 -1.5708" xyz="0 0 0"/>
       <geometry>
@@ -57,35 +57,11 @@
       </geometry>
     </collision>
   </link>
-  <link name="JacoMount_link">
+  <link name="jaco_mount_link">
     <visual>
       <origin rpy="0 0 1.5708" xyz="0 0 0"/>
       <geometry>
         <mesh filename="package://carl_description/meshes/jaco_mount.dae"/>
-      </geometry>
-    </visual>
-  </link>
-  <link name="Hokuyo_link">
-    <visual>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <mesh filename="package://carl_description/meshes/hokuyo.dae"/>
-      </geometry>
-    </visual>
-  </link>
-  <link name="LeftSideCover_link">
-    <visual>
-      <origin rpy="0 0 1.5708" xyz="0 0 0"/>
-      <geometry>
-        <mesh filename="package://carl_description/meshes/side_cover.dae"/>
-      </geometry>
-    </visual>
-  </link>
-  <link name="RightSideCover_link">
-    <visual>
-      <origin rpy="0 0 1.5708" xyz="0 0 0"/>
-      <geometry>
-        <mesh filename="package://carl_description/meshes/side_cover.dae"/>
       </geometry>
     </visual>
   </link>
@@ -249,9 +225,9 @@
       </geometry>
     </collision>
   </link>
-  <joint name="RearLeftStrutToTopPlate" type="fixed">
+  <joint name="left_rear_strut_top_plate_joint" type="fixed">
     <parent link="right_rear_strut_link"/>
-    <child link="TopPlate_link"/>
+    <child link="top_plate_link"/>
     <origin rpy="0 0 0" xyz="0.516 0.20 0.598"/>
   </joint>
   <joint name="RearLeftStrutToCameraLift" type="fixed">
@@ -270,26 +246,50 @@
     <child link="CameraTiltPlate_link"/>
     <origin rpy="0 0 0" xyz="0.11 0 -0.10"/>
   </joint>
-  <joint name="TopPlateToJacoMount" type="fixed">
-    <parent link="TopPlate_link"/>
-    <child link="JacoMount_link"/>
+  <joint name="top_plate_jaco_mount" type="fixed">
+    <parent link="top_plate_link"/>
+    <child link="jaco_mount_link"/>
     <origin rpy="0 0 0" xyz="0 0 -0.13"/>
   </joint>
-  <joint name="caster_hokuyo_joint" type="fixed">
-    <parent link="caster_plate_link"/>
-    <child link="Hokuyo_link"/>
+  <joint name="caster_plate_link_hokuyo_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0.07 0 0.035"/>
+    <parent link="caster_plate_link"/>
+    <child link="hokuyo_link"/>
   </joint>
-  <joint name="left_rear_strut_left_side_cover_joint" type="fixed">
-    <parent link="left_rear_strut_link"/>
-    <child link="LeftSideCover_link"/>
-    <origin rpy="0 0 0" xyz="0.229 0.026 0.447"/>
-  </joint>
-  <joint name="right_right_strut_right_side_cover" type="fixed">
-    <parent link="right_rear_strut_link"/>
-    <child link="RightSideCover_link"/>
+  <link name="hokuyo_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/hokuyo.dae"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="right_rear_strut_link_right_side_cover_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0.229 -0.026 0.447"/>
+    <parent link="right_rear_strut_link"/>
+    <child link="right_side_cover_link"/>
   </joint>
+  <link name="right_side_cover_link">
+    <visual>
+      <origin rpy="0 0 1.5708" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/side_cover.dae"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="left_rear_strut_link_left_side_cover_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0.229 -0.026 0.447"/>
+    <parent link="left_rear_strut_link"/>
+    <child link="left_side_cover_link"/>
+  </joint>
+  <link name="left_side_cover_link">
+    <visual>
+      <origin rpy="0 0 1.5708" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/side_cover.dae"/>
+      </geometry>
+    </visual>
+  </link>
   <joint name="base_front_cover_joint" type="fixed">
     <parent link="base_link"/>
     <child link="FrontCover_link"/>
@@ -316,7 +316,7 @@
     </collision>
   </link>
   <joint name="jaco_joint_base" type="fixed">
-    <parent link="JacoMount_link"/>
+    <parent link="jaco_mount_link"/>
     <child link="jaco_link_base"/>
     <axis xyz="0 0 0"/>
     <origin rpy="0 0 0" xyz="0 0 0"/>

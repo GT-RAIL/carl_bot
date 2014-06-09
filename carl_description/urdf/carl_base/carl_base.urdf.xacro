@@ -8,7 +8,8 @@
 <xacro:include filename="$(find carl_description)/urdf/components/carl_wheel.urdf.xacro" />
 <xacro:include filename="$(find carl_description)/urdf/components/carl_rear_strut.urdf.xacro" />
 <xacro:include filename="$(find carl_description)/urdf/components/carl_caster_assembly.urdf.xacro" />
-
+<xacro:include filename="$(find carl_description)/urdf/components/carl_side_cover.urdf.xacro" />
+<xacro:include filename="$(find carl_description)/urdf/sensors/hokuyo.urdf.xacro" />
 
 <xacro:macro name="carl_base" params="name">
   
@@ -21,7 +22,7 @@
     </visual>
   </link>
       
-  <link name="TopPlate_link">
+  <link name="top_plate_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 -1.5708" />
       <geometry>
@@ -70,7 +71,7 @@
     </collision>
   </link>
   
-  <link name="JacoMount_link">
+  <link name="jaco_mount_link">
     <visual>      
       <origin xyz="0 0 0" rpy="0 0 1.5708" />
       <geometry>
@@ -78,34 +79,7 @@
       </geometry>
     </visual>
   </link>
-
-  <link name="Hokuyo_link">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <geometry>
-        <mesh filename="package://carl_description/meshes/hokuyo.dae" />
-      </geometry>
-    </visual>
-  </link>
- 
-   <link name="LeftSideCover_link">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 1.5708" />
-      <geometry>
-        <mesh filename="package://carl_description/meshes/side_cover.dae" />
-      </geometry>
-    </visual>
-  </link>
-
-   <link name="RightSideCover_link">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 1.5708" />
-      <geometry>
-        <mesh filename="package://carl_description/meshes/side_cover.dae" />
-      </geometry>
-    </visual>
-  </link>
-  
+   
   <link name="FrontCover_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 1.5708" />
@@ -157,9 +131,9 @@
    </xacro:carl_rear_strut>
     
   
-  <joint name="RearLeftStrutToTopPlate" type="fixed">
+  <joint name="left_rear_strut_top_plate_joint" type="fixed">
     <parent link="right_rear_strut_link"/>
-    <child link="TopPlate_link"/>
+    <child link="top_plate_link"/>
     <origin xyz="0.516 0.20 0.598" rpy="0 0 0" />
   </joint>
   
@@ -182,29 +156,27 @@
     <origin xyz="0.11 0 -0.10" rpy="0 0 0" />
   </joint>
 
-  <joint name="TopPlateToJacoMount" type="fixed">
-    <parent link="TopPlate_link"/>
-    <child link="JacoMount_link"/>
+  <joint name="top_plate_jaco_mount" type="fixed">
+    <parent link="top_plate_link"/>
+    <child link="jaco_mount_link"/>
     <origin xyz="0 0 -0.13" rpy="0 0 0" />
   </joint>
+    
+   <!-- hokuyo -->
+   <xacro:hokuyo parent="caster_plate_link">  
+     <origin xyz="0.07 0 0.035" rpy="0 0 0" />
+   </xacro:hokuyo>
 
-  <joint name="caster_hokuyo_joint" type="fixed">
-    <parent link="caster_plate_link"/>
-    <child link="Hokuyo_link"/>
-    <origin xyz="0.07 0 0.035" rpy="0 0 0" />
-  </joint>
-  
-  <joint name="left_rear_strut_left_side_cover_joint" type="fixed">
-    <parent link="left_rear_strut_link"/>
-    <child link="LeftSideCover_link"/>
-    <origin xyz="0.229 0.026 0.447" rpy="0 0 0" />
-  </joint>
-  
-  <joint name="right_right_strut_right_side_cover" type="fixed">
-    <parent link="right_rear_strut_link"/>
-    <child link="RightSideCover_link"/>
-    <origin xyz="0.229 -0.026 0.447" rpy="0 0 0" />
-  </joint>
+   <!-- right side cover -->
+   <xacro:carl_side_cover suffix="right" parent="right_rear_strut_link">
+     <origin xyz="0.229 -0.026 0.447" rpy="0 0 0" />
+   </xacro:carl_side_cover>
+
+   <!-- left side cover -->
+   <xacro:carl_side_cover suffix="left" parent="left_rear_strut_link">
+     <origin xyz="0.229 -0.026 0.447" rpy="0 0 0" />
+   </xacro:carl_side_cover>
+
 
   <joint name="${name}_front_cover_joint" type="fixed">
     <parent link="${name}_link"/>

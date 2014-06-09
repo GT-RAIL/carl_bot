@@ -6,6 +6,6 @@
   <xacro:include filename="$(find jaco_model)/urdf/jaco_arm.xacro" />
   
   <xacro:carl_base name="base"/>
-  <xacro:jaco_arm  parent="JacoMount_link"/>
+  <xacro:jaco_arm  parent="jaco_mount_link"/>
 
 </robot>
