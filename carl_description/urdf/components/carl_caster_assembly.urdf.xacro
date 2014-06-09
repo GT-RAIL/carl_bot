@@ -28,7 +28,7 @@
 
     <link name="caster_link">
       <visual>
-        <origin xyz="0 0 0" rpy="0 0 1.5708"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
           <mesh filename="package://carl_description/meshes/caster.dae" />
         </geometry>

@@ -233,7 +233,7 @@
     </visual>
   </link>
   <joint name="left_rear_strut_link_left_side_cover_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.229 -0.026 0.447"/>
+    <origin rpy="0 0 0" xyz="0.229 0.026 0.447"/>
     <parent link="left_rear_strut_link"/>
     <child link="left_side_cover_link"/>
   </joint>
@@ -347,7 +347,7 @@
   </link>
   <link name="caster_link">
     <visual>
-      <origin rpy="0 0 1.5708" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
         <mesh filename="package://carl_description/meshes/caster.dae"/>
       </geometry>
