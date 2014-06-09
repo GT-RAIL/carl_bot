@@ -10,8 +10,8 @@
   <xacro:macro name="carl_camera_mount">
   
     <xacro:sensor_asus_xtion_pro parent="camera_tilt_plate_link">
-	      <origin xyz=".025 -.02 -.02" rpy="-1.5708 0 -1.5708" />
-	</xacro:sensor_asus_xtion_pro>
+      <origin xyz=".025 -.02 -.02" rpy="-1.5708 0 -1.5708" />
+    </xacro:sensor_asus_xtion_pro>
 	
     <link name="camera_lift_link">
       <visual>
