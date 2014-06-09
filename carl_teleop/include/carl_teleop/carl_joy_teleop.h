@@ -32,7 +32,6 @@ public:
    * ROS nodes, services, and publishers are created and maintained within this object.
    */
   carl_joy_teleop();
-  void joy_check();
 
 private:
   /*!

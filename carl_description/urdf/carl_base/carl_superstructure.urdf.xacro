@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+        xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+        xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+        xmlns:xacro="http://ros.org/wiki/xacro">
+        
+  <xacro:include filename="$(find carl_description)/urdf/components/carl_rear_strut.urdf.xacro" />
+
+  <xacro:macro name="carl_superstructure">
+
+    <!-- left rear strut -->
+    <xacro:carl_rear_strut suffix="left" parent="${name}_link">
+      <origin xyz="-0.222 0.200 -0.102" rpy="0 0 0" />
+    </xacro:carl_rear_strut>
+
+    <!-- right rear strut -->
+    <xacro:carl_rear_strut suffix="right" parent="${name}_link">  
+      <origin xyz="-0.222 -0.200 -0.102" rpy="0 0 0" />
+    </xacro:carl_rear_strut>
+
+    <joint name="left_rear_strut_top_plate_joint" type="fixed">
+      <parent link="right_rear_strut_link"/>
+      <child link="top_plate_link"/>
+      <origin xyz="0.516 0.20 0.598" rpy="0 0 0" />
+    </joint>
+
+    <joint name="top_plate_jaco_mount" type="fixed">
+      <parent link="top_plate_link"/>
+      <child link="jaco_mount_link"/>
+      <origin xyz="0 0 -0.13" rpy="0 0 0" />
+    </joint>
+
+    <link name="top_plate_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 -1.5708" />
+        <geometry>
+          <mesh filename="package://carl_description/meshes/table_plate.dae" />
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="-.29 0 -0.299" rpy="0 0 0" />
+        <geometry>
+          <box size="0.495 0.59 0.65" />
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="jaco_mount_link">
+      <visual>      
+        <origin xyz="0 0 0" rpy="0 0 1.5708" />
+        <geometry>
+          <mesh filename="package://carl_description/meshes/jaco_mount.dae" />
+        </geometry>
+      </visual>
+    </link>
+    
+  </xacro:macro>
+</robot>

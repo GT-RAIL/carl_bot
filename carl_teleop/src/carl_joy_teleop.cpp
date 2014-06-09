@@ -64,7 +64,7 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
   {
     // left joystick controls the linear and angular movement
     twist.linear.x = joy->axes.at(1) * MAX_TRANS_VEL * linear_throttle_factor;
-    twist.angular.z = joy->axes.at(0) * MAX_ANG_VEL * angular_throttle_factor;
+    twist.angular.z = -joy->axes.at(2) * MAX_ANG_VEL * angular_throttle_factor;
   }
   else
   {
@@ -83,15 +83,6 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
   cmd_vel.publish(twist);
 }
 
-void carl_joy_teleop::joy_check()
-{
-  if ((receivedmsg) && ((ros::Time::now().toSec() - T.toSec()) > .15))
-  {
-    geometry_msgs::Twist zero;
-    cmd_vel.publish(zero);
-  }
-}
-
 int main(int argc, char **argv)
 {
   // initialize ROS and the node
@@ -100,11 +91,5 @@ int main(int argc, char **argv)
   //initialize the joystick controller
   carl_joy_teleop controller;
 
-  // continue until a ctrl-c has occurred
-  /*while(ros::ok()) {
-   controller.joy_check();
-
-   ros::spinOnce();
-   }*/
   ros::spin();
 }
