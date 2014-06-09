@@ -5,99 +5,48 @@
         xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
         xmlns:xacro="http://ros.org/wiki/xacro">
         
-<xacro:include filename="$(find carl_description)/urdf/components/carl_wheel.urdf.xacro" />
-<xacro:include filename="$(find carl_description)/urdf/components/carl_caster_assembly.urdf.xacro" />
-<xacro:include filename="$(find carl_description)/urdf/sensors/hokuyo.urdf.xacro" />
-<xacro:include filename="$(find carl_description)/urdf/carl_base/carl_superstructure.urdf.xacro" />
-<xacro:include filename="$(find carl_description)/urdf/carl_base/carl_covers.urdf.xacro" />
+  <xacro:include filename="$(find carl_description)/urdf/components/carl_wheel.urdf.xacro" />
+  <xacro:include filename="$(find carl_description)/urdf/components/carl_caster_assembly.urdf.xacro" />
+  <xacro:include filename="$(find carl_description)/urdf/sensors/hokuyo.urdf.xacro" />
+  <xacro:include filename="$(find carl_description)/urdf/carl_base/carl_superstructure.urdf.xacro" />
+  <xacro:include filename="$(find carl_description)/urdf/carl_base/carl_covers.urdf.xacro" />
+  <xacro:include filename="$(find carl_description)/urdf/carl_base/carl_camera_mount.urdf.xacro" />
 
-<xacro:macro name="carl_base" params="name">
+  <xacro:macro name="carl_base" params="name">
   
-  <xacro:carl_superstructure/>
-  <xacro:carl_covers name="${name}"/>
+    <xacro:carl_superstructure/>
+    <xacro:carl_camera_mount/>
+    <xacro:carl_covers name="${name}"/>
   
-  <link name="${name}_link">
-   <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <mesh filename="package://carl_description/meshes/base.dae" />
-      </geometry>
-    </visual>
-  </link>
-       
-  <link name="CameraLift_link">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 1.5708" />
-      <geometry>
-        <mesh filename="package://carl_description/meshes/camera_lift.dae" />
-      </geometry>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 1.5708" />
-      <geometry>
-        <mesh filename="package://carl_description/meshes/camera_lift.dae" />
-      </geometry>
-    </collision>
-  </link>
-  
-  <link name="CameraTiltBracket_link">
-	<!--exists to move center of rotation for camera mount-->
-  </link>
-  
-  <link name="CameraTiltPlate_link">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 1.5708 0" />
-      <geometry>
-        <mesh filename="package://carl_description/meshes/camera_plate.dae" />
-      </geometry>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 1.5708 0" />
-      <geometry>
-        <mesh filename="package://carl_description/meshes/camera_plate.dae" />
-      </geometry>
-    </collision>
-  </link>
-  
-   <!-- left wheel -->
-   <xacro:carl_wheel suffix="left" parent="${name}_link">
-     <origin xyz="0 0.25 0" rpy="-1.5708 0 0" />
-   </xacro:carl_wheel>
+    <link name="${name}_link">
+     <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://carl_description/meshes/base.dae" />
+        </geometry>
+      </visual>
+    </link>
+      
+     <!-- left wheel -->
+     <xacro:carl_wheel suffix="left" parent="${name}_link">
+       <origin xyz="0 0.25 0" rpy="-1.5708 0 0" />
+     </xacro:carl_wheel>
 
-   <!-- right wheel -->
-   <xacro:carl_wheel suffix="right" parent="${name}_link">
-     <origin xyz="0 -0.25 0" rpy="1.5708 0 0" />
-   </xacro:carl_wheel>
+     <!-- right wheel -->
+     <xacro:carl_wheel suffix="right" parent="${name}_link">
+       <origin xyz="0 -0.25 0" rpy="1.5708 0 0" />
+     </xacro:carl_wheel>
     
-   <!-- caster assembly -->
-   <xacro:carl_caster_assembly parent="${name}_link">
-     <origin xyz="0.2883 0 0" rpy="0 0 0" />
-   </xacro:carl_caster_assembly>
-       
-  <joint name="RearLeftStrutToCameraLift" type="fixed">
-    <parent link="right_rear_strut_link"/>
-    <child link="CameraLift_link"/>
-    <origin xyz="0.01 0.20 1.461" rpy="0 0 0" />
-  </joint>
-  
-  <joint name="CameraLiftToCameraTiltBracket" type="continuous">
-    <parent link="CameraLift_link"/>
-    <child link="CameraTiltBracket_link"/>
-    <origin xyz="0.03 -0.10 0" rpy="1.5708 0 0" />
-    <axis xyz="0 0 1" />
-  </joint>
-  
-  <joint name="CameraLiftBracketToCameraTiltPlate" type="fixed">
-    <parent link="CameraTiltBracket_link"/>
-    <child link="CameraTiltPlate_link"/>
-    <origin xyz="0.11 0 -0.10" rpy="0 0 0" />
-  </joint>
-    
-   <!-- hokuyo -->
-   <xacro:hokuyo parent="caster_plate_link">  
-     <origin xyz="0.07 0 0.035" rpy="0 0 0" />
-   </xacro:hokuyo>
+     <!-- caster assembly -->
+     <xacro:carl_caster_assembly parent="${name}_link">
+       <origin xyz="0.2883 0 0" rpy="0 0 0" />
+     </xacro:carl_caster_assembly>
+      
+     <!-- hokuyo -->
+     <xacro:hokuyo parent="caster_plate_link">  
+       <origin xyz="0.07 0 0.035" rpy="0 0 0" />
+     </xacro:hokuyo>
 
-</xacro:macro>
+  </xacro:macro>
 
 </robot>

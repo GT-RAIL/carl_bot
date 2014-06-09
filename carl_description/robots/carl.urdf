@@ -100,6 +100,53 @@
       </geometry>
     </visual>
   </link>
+  <link name="camera_lift_link">
+    <visual>
+      <origin rpy="0 0 1.5708" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/camera_lift.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 1.5708" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/camera_lift.dae"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="camera_tilt_bracket_link">
+    <!--exists to move center of rotation for camera mount-->
+  </link>
+  <link name="camera_tilt_plate_link">
+    <visual>
+      <origin rpy="0 1.5708 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/camera_plate.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 1.5708 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://carl_description/meshes/camera_plate.dae"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_rear_strut_camera_lift_joint" type="fixed">
+    <parent link="right_rear_strut_link"/>
+    <child link="camera_lift_link"/>
+    <origin rpy="0 0 0" xyz="0.01 0.20 1.461"/>
+  </joint>
+  <joint name="camera_lift_camera_tilt_bracket_joint" type="continuous">
+    <parent link="camera_lift_link"/>
+    <child link="camera_tilt_bracket_link"/>
+    <origin rpy="1.5708 0 0" xyz="0.03 -0.10 0"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+  <joint name="camera_lift_bracket_camera_tilt_plate_joint" type="fixed">
+    <parent link="camera_tilt_bracket_link"/>
+    <child link="camera_tilt_plate_link"/>
+    <origin rpy="0 0 0" xyz="0.11 0 -0.10"/>
+  </joint>
   <joint name="right_rear_strut_link_right_side_cover_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0.229 -0.026 0.447"/>
     <parent link="right_rear_strut_link"/>
@@ -166,37 +213,6 @@
         <mesh filename="package://carl_description/meshes/base.dae"/>
       </geometry>
     </visual>
-  </link>
-  <link name="CameraLift_link">
-    <visual>
-      <origin rpy="0 0 1.5708" xyz="0 0 0"/>
-      <geometry>
-        <mesh filename="package://carl_description/meshes/camera_lift.dae"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin rpy="0 0 1.5708" xyz="0 0 0"/>
-      <geometry>
-        <mesh filename="package://carl_description/meshes/camera_lift.dae"/>
-      </geometry>
-    </collision>
-  </link>
-  <link name="CameraTiltBracket_link">
-    <!--exists to move center of rotation for camera mount-->
-  </link>
-  <link name="CameraTiltPlate_link">
-    <visual>
-      <origin rpy="0 1.5708 0" xyz="0 0 0"/>
-      <geometry>
-        <mesh filename="package://carl_description/meshes/camera_plate.dae"/>
-      </geometry>
-    </visual>
-    <collision>
-      <origin rpy="0 1.5708 0" xyz="0 0 0"/>
-      <geometry>
-        <mesh filename="package://carl_description/meshes/camera_plate.dae"/>
-      </geometry>
-    </collision>
   </link>
   <joint name="base_link_left_wheel_joint" type="continuous">
     <origin rpy="-1.5708 0 0" xyz="0 0.25 0"/>
@@ -271,22 +287,6 @@
       </geometry>
     </collision>
   </link>
-  <joint name="RearLeftStrutToCameraLift" type="fixed">
-    <parent link="right_rear_strut_link"/>
-    <child link="CameraLift_link"/>
-    <origin rpy="0 0 0" xyz="0.01 0.20 1.461"/>
-  </joint>
-  <joint name="CameraLiftToCameraTiltBracket" type="continuous">
-    <parent link="CameraLift_link"/>
-    <child link="CameraTiltBracket_link"/>
-    <origin rpy="1.5708 0 0" xyz="0.03 -0.10 0"/>
-    <axis xyz="0 0 1"/>
-  </joint>
-  <joint name="CameraLiftBracketToCameraTiltPlate" type="fixed">
-    <parent link="CameraTiltBracket_link"/>
-    <child link="CameraTiltPlate_link"/>
-    <origin rpy="0 0 0" xyz="0.11 0 -0.10"/>
-  </joint>
   <joint name="caster_plate_link_hokuyo_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0.07 0 0.035"/>
     <parent link="caster_plate_link"/>

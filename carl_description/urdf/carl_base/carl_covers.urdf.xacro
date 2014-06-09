@@ -19,7 +19,6 @@
       <origin xyz="0.229 -0.026 0.447" rpy="0 0 0" />
     </xacro:carl_side_cover>
 
-
     <joint name="${name}_front_cover_joint" type="fixed">
       <parent link="${name}_link"/>
       <child link="FrontCover_link"/>
