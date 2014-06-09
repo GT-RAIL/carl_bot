@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+  <root xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="carl_wheel" params="suffix parent *origin">
+  
+    <joint name="${parent}_${suffix}_wheel_joint" type="continuous">
+      <xacro:insert_block name="origin" />
+      <axis xyz="0 0 1" />
+      <parent link="${parent}" />
+      <child link="${suffix}_wheel_link" />
+    </joint>
+
+    <link name="${suffix}_wheel_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://carl_description/meshes/wheel.dae" />
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 .025" rpy="0 0 0" />
+        <geometry>
+          <cylinder radius="0.25" length="0.1" />
+        </geometry>
+      </collision>
+    </link>
+    
+  </xacro:macro>
+</root>
