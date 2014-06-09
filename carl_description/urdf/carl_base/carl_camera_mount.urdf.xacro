@@ -5,8 +5,14 @@
         xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
         xmlns:xacro="http://ros.org/wiki/xacro">
         
+  <xacro:include filename="$(find carl_description)/urdf/sensors/asus_xtion_pro.urdf.xacro" />
+  
   <xacro:macro name="carl_camera_mount">
-
+  
+    <xacro:sensor_asus_xtion_pro parent="camera_tilt_plate_link">
+	      <origin xyz=".025 -.02 -.02" rpy="-1.5708 0 -1.5708" />
+	</xacro:sensor_asus_xtion_pro>
+	
     <link name="camera_lift_link">
       <visual>
         <origin xyz="0 0 0" rpy="0 0 1.5708" />
