@@ -1,21 +1,30 @@
 <?xml version="1.0"?>
 <package>
-  <name>carl_description</name>
+  <name>carl_bringup</name>
   <version>0.0.0</version>
-  <description>The robot model for CARL</description>
+  <description>Package containing bringup launch files for carl.</description>
 
   <maintainer email="spkordell@wpi.edu">Steven Kordell</maintainer>
   <author email="spkordell@wpi.edu">Steven Kordell</author>
   <license>BSD</license>
 
-  <url type="website">http://ros.org/wiki/carl_description</url>
+  <url type="website">http://ros.org/wiki/carl_bringup</url>
   <url type="bugtracker">https://github.com/WPI-RAIL/carl_bot/issues</url>
   <url type="repository">https://github.com/WPI-RAIL/carl_bot</url>
-  
+ 
   <buildtool_depend>catkin</buildtool_depend>
-  <build_depend>urdf</build_depend>
-  <run_depend>urdf</run_depend>
+  
+  <!--ROBOT MODEL -->
   <run_depend>robot_state_publisher</run_depend>
   <run_depend>joint_state_publisher</run_depend>
-
+  <run_depend>carl_description</run_depend>
+  
+  <!--SENSORS-->
+  <run_depend>urg_node</run_depend>
+  <run_depend>openni_launch</run_depend>
+  <run_depend>depthimage_to_laserscan</run_depend>
+  
+   <!--SEGWAY-->
+   <run_depend>ros_ethernet_rmp</run_depend>
+  
 </package>
