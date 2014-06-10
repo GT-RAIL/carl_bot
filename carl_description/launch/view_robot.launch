@@ -1,0 +1,17 @@
+<launch>
+  <!--Joint state publisher gui-->
+  <arg name="gui" default="False" />
+
+  <arg name="urdf_file" default="$(find xacro)/xacro.py '$(find carl_description)/robots/carl.urdf.xacro'" />
+  <param name="robot_description" command="$(arg urdf_file)" />
+  
+  <param name="robot/name" value="$(optenv ROBOT carl)"/>
+  <param name="robot/type" value="carl"/>
+  
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+    <param name="publish_frequency" type="double" value="5.0" />
+  </node>
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+  
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find carl_description)/rviz/view_robot.rviz" required="true" />
+</launch>
