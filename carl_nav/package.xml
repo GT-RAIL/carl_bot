@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package>
+  <name>carl_nav</name>
+  <version>0.0.0</version>
+  <description>Implementation of ROS navigation stack for CARL</description>
+  
+  <maintainer email="spkordell@wpi.edu">Steven Kordell</maintainer>
+  <author email="spkordell@wpi.edu">Steven Kordell</author>
+  <license>BSD</license>
+
+  <url type="website">http://ros.org/wiki/carl_nav</url>
+  <url type="bugtracker">https://github.com/WPI-RAIL/carl_bot/issues</url>
+  <url type="repository">https://github.com/WPI-RAIL/carl_bot</url>
+ 
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <run_depend>carl_description</run_depend>
+  
+  <run_depend>gmapping</run_depend>
+  <run_depend>move_base</run_depend>
+  <run_depend>amcl</run_depend>
+    
+</package>
