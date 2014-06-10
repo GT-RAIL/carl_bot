@@ -2,16 +2,12 @@
  * \carl_joy_teleop.cpp
  * \brief Allows for control of CARL with a joystick.
  *
- * carl_joy_teleop creates a ROS node that allows the control of CARL with a joystick.
- * This node listens to a /joy topic and sends messages to the /cmd_vel topic.
+ * carl_joy_teleop creates a ROS node that allows the control of CARL with a joystick. This node listens to a /joy topic
+ * and sends messages to the /cmd_vel topic.
  *
- *
- * \author Russell Toris, WPI - rctoris@wpi.edu
- * \date May 21, 2013
- *
+ * \author Russell Toris, WPI - rctoris@wpi.edu *
  * \author Steven Kordell, WPI - spkordell@wpi.edu
- * \date May 23, 2014
- *
+ * \date June 10, 2014
  */
 
 #include <geometry_msgs/Twist.h>
@@ -19,16 +15,13 @@
 #include <sensor_msgs/Joy.h>
 #include <carl_teleop/carl_joy_teleop.h>
 
-ros::Time T;
-bool receivedmsg = false;
-
 using namespace std;
 
 carl_joy_teleop::carl_joy_teleop()
 {
   // create the ROS topics
-  cmd_vel = node.advertise < geometry_msgs::Twist > ("cmd_vel", 10);
-  joy_sub = node.subscribe < sensor_msgs::Joy > ("joy", 10, &carl_joy_teleop::joy_cback, this);
+  cmd_vel = node.advertise<geometry_msgs::Twist>("cmd_vel", 10);
+  joy_sub = node.subscribe<sensor_msgs::Joy>("joy", 10, &carl_joy_teleop::joy_cback, this);
 
   //read in throttle value
   double temp;
@@ -46,12 +39,6 @@ carl_joy_teleop::carl_joy_teleop()
 
 void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
 {
-  if (!receivedmsg)
-  {
-    receivedmsg = true;
-  }
-  T = ros::Time::now();
-
   // create the twist message
   geometry_msgs::Twist twist;
 
