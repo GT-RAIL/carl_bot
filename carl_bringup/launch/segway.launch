@@ -1,0 +1,3 @@
+<launch>  
+	<include file="$(find ros_ethernet_rmp)/launch/carl_params.launch"/>
+</launch>
