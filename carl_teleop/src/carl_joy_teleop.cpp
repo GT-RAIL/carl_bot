@@ -23,7 +23,7 @@ carl_joy_teleop::carl_joy_teleop()
   cmd_vel = node.advertise<geometry_msgs::Twist>("cmd_vel", 10);
   joy_sub = node.subscribe<sensor_msgs::Joy>("joy", 10, &carl_joy_teleop::joy_cback, this);
 
-  //read in throttle value
+  // read in throttle values
   double temp;
   if (node.getParam("/carl_joy_teleop/linear_throttle_factor", temp))
     linear_throttle_factor = (float)temp;
@@ -75,8 +75,10 @@ int main(int argc, char **argv)
   // initialize ROS and the node
   ros::init(argc, argv, "carl_joy_teleop");
 
-  //initialize the joystick controller
+  // initialize the joystick controller
   carl_joy_teleop controller;
 
   ros::spin();
+
+  return EXIT_SUCCESS;
 }

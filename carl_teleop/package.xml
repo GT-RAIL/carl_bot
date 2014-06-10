@@ -2,7 +2,7 @@
 <package>
   <name>carl_teleop</name>
   <version>0.0.0</version>
-  <description>Control and Query the Movement Devices on CARL</description>
+  <description>Control the Movement Devices on CARL</description>
 
   <maintainer email="spkordell@wpi.edu">Steven Kordell</maintainer>
   <author email="spkordell@wpi.edu">Steven Kordell</author>
@@ -25,5 +25,4 @@
   <run_depend>geometry_msgs</run_depend>
   <run_depend>sensor_msgs</run_depend>
   <run_depend>joy</run_depend>
-  
 </package>

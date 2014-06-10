@@ -31,8 +31,8 @@
  * \carl_key_teleop.cpp
  * \brief Allows for control of CARL with a keyboard.
  *
- * carl_joy_teleop creates a ROS node that allows the control of CARL with a keyboard.
- * This node listens to a /joy topic and sends messages to the /cmd_vel topic.
+ * carl_joy_teleop creates a ROS node that allows the control of CARL with a keyboard. This node listens to a /joy topic
+ * and sends messages to the /cmd_vel topic.
  *
  * \author Steven Kordell, WPI - spkordell@wpi.edu
  * \date May 23, 2014
@@ -43,27 +43,18 @@
 #include <signal.h>
 #include <termios.h>
 #include <stdio.h>
-#include "boost/thread/mutex.hpp"
-#include "boost/thread/thread.hpp"
+#include <boost/thread/mutex.hpp>
+#include <boost/thread/thread.hpp>
 #include <carl_teleop/carl_key_teleop.h>
 
-#define KEYCODE_R 0x43
-#define KEYCODE_L 0x44
-#define KEYCODE_U 0x41
-#define KEYCODE_D 0x42
-#define KEYCODE_Q 0x71
-
-carl_key_teleop::carl_key_teleop() :
-    ph_("~"), linear_(0), angular_(0), l_scale_(1.0), a_scale_(1.0)
-{
-  ph_.param("scale_angular", a_scale_, a_scale_);
-  ph_.param("scale_linear", l_scale_, l_scale_);
-
-  vel_pub_ = nh_.advertise < geometry_msgs::Twist > ("cmd_vel", 1);
-}
-
+// used for capturing keyboard input
 int kfd = 0;
 struct termios cooked, raw;
+
+carl_key_teleop::carl_key_teleop()
+{
+  vel_pub_ = nh_.advertise<geometry_msgs::Twist>("cmd_vel", 1);
+}
 
 void carl_key_teleop::watchdog()
 {
@@ -73,10 +64,8 @@ void carl_key_teleop::watchdog()
     publish(0, 0);
 }
 
-void carl_key_teleop::keyLoop()
+void carl_key_teleop::loop()
 {
-  char c;
-
   // get the console in raw mode
   tcgetattr(kfd, &cooked);
   memcpy(&raw, &cooked, sizeof(struct termios));
@@ -86,86 +75,86 @@ void carl_key_teleop::keyLoop()
   raw.c_cc[VEOF] = 2;
   tcsetattr(kfd, TCSANOW, &raw);
 
-  puts("Reading from keyboard");
-  puts("---------------------------");
-  puts("Use arrow keys to move carl.");
+  puts("    Reading from Keyboard    ");
+  puts("-----------------------------");
+  puts(" Use Arrow Keys to Move CARL ");
 
   while (ros::ok())
   {
     // get the next event from the keyboard
+    char c;
     if (read(kfd, &c, 1) < 0)
     {
-      perror("read():");
+      ROS_ERROR("Could not read input from keyboard.");
       exit(-1);
     }
 
-    linear_ = angular_ = 0;
-    ROS_DEBUG("value: 0x%02X\n", c);
-
+    // determine the speed
+    double linear = 0;
+    double angular = 0;
     switch (c)
     {
       case KEYCODE_L:
-        ROS_DEBUG("LEFT");
-        angular_ = 1.0;
+        angular = MAX_ANG_VEL;
         break;
       case KEYCODE_R:
-        ROS_DEBUG("RIGHT");
-        angular_ = -1.0;
+        angular = -MAX_ANG_VEL;
         break;
       case KEYCODE_U:
-        ROS_DEBUG("UP");
-        linear_ = 1.0;
+        linear = MAX_TRANS_VEL;
         break;
       case KEYCODE_D:
-        ROS_DEBUG("DOWN");
-        linear_ = -1.0;
+        linear = -MAX_TRANS_VEL;
         break;
     }
+
+    // attempt to publish the speed
     boost::mutex::scoped_lock lock(publish_mutex_);
     if (ros::Time::now() > last_publish_ + ros::Duration(1.0))
     {
       first_publish_ = ros::Time::now();
     }
     last_publish_ = ros::Time::now();
-    publish(angular_, linear_);
+    publish(angular, linear);
   }
-
-  return;
 }
 
 void carl_key_teleop::publish(double angular, double linear)
 {
   geometry_msgs::Twist vel;
-  vel.angular.z = a_scale_ * angular;
-  vel.linear.x = l_scale_ * linear;
-
+  vel.angular.z = angular;
+  vel.linear.x = linear;
+  // send the command
   vel_pub_.publish(vel);
-  return;
 }
 
-void quit(int sig)
+void shutdown(int sig)
 {
+  // shut everything down
   tcsetattr(kfd, TCSANOW, &cooked);
   ros::shutdown();
-  exit(0);
 }
 
 int main(int argc, char** argv)
 {
+  // initialize ROS and the node
   ros::init(argc, argv, "carl_key_teleop");
+
+  // initialize the keyboard controller
   carl_key_teleop key_controller;
   ros::NodeHandle n;
 
-  signal(SIGINT, quit);
+  // setup the SIGINT signal for exiting
+  signal(SIGINT, shutdown);
 
-  boost::thread my_thread(boost::bind(&carl_key_teleop::keyLoop, &key_controller));
-
+  // setup the watchdog and key loop in a thread
+  boost::thread my_thread(boost::bind(&carl_key_teleop::loop, &key_controller));
   ros::Timer timer = n.createTimer(ros::Duration(0.1), boost::bind(&carl_key_teleop::watchdog, &key_controller));
-
   ros::spin();
 
+  // wait for everything to end
   my_thread.interrupt();
   my_thread.join();
 
-  return (0);
+  return EXIT_SUCCESS;
 }
