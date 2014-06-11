@@ -27,60 +27,86 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-/*
+/*!
  * \carl_key_teleop.h
  * \brief Allows for control of CARL with a keyboard.
  *
- * carl_joy_teleop creates a ROS node that allows the control of CARL with a keyboard.
- * This node listens to a /joy topic and sends messages to the /cmd_vel topic.
+ * carl_joy_teleop creates a ROS node that allows the control of CARL with a keyboard. This node listens to a /joy topic
+ * and sends messages to the /cmd_vel topic.
  *
  * \author Steven Kordell, WPI - spkordell@wpi.edu
  * \date May 23, 2014
  */
 
-#ifndef CARL_JOY_TELEOP_H_
-#define CARL_JOY_TELEOP_H_
+#ifndef CARL_KEY_TELEOP_H_
+#define CARL_KEY_TELEOP_H_
 
 #include <geometry_msgs/Twist.h>
 #include <ros/ros.h>
 #include <sensor_msgs/Joy.h>
 
+/*!
+ * \def KEYCODE_R
+ *
+ * Keycode value for right.
+ */
+#define KEYCODE_R 0x43
+
+/*!
+ * \def KEYCODE_L
+ *
+ * Keycode value for left.
+ */
+#define KEYCODE_L 0x44
+
+/*!
+ * \def KEYCODE_U
+ *
+ * Keycode value for up.
+ */
+#define KEYCODE_U 0x41
+
+/*!
+ * \def KEYCODE_D
+ *
+ * Keycode value for down.
+ */
+#define KEYCODE_D 0x42
+
+/*!
+ * \def MAX_TRANS_VEL
+ *
+ * The maximum translational velocity.
+ */
 #define MAX_TRANS_VEL .8
+
+/*!
+ * \def MAX_ANG_VEL
+ *
+ * The maximum angular velocity.
+ */
 #define MAX_ANG_VEL 1.2
 
 class carl_key_teleop
 {
 public:
   /*!
-   * \brief Creates a carl_key_teleop.
-   *
-   * Creates a carl_key_teleop object that can be used control carl with a keyboard.
-   * ROS nodes, services, and publishers are created and maintained within this object.
+   * Creates a carl_key_teleop object that can be used control carl with a keyboard. ROS nodes, services, and publishers
+   * are created and maintained within this object.
    */
   carl_key_teleop();
 
   /*!
-   * \brief monitors the keyboard and publishes cmd_vels.
-   *
-   * Monitors the keyboard and publishes cmd_vels whenever a key corresponding to a motion
-   * command is pressed.
+   * Monitors the keyboard and publishes cmd_vels whenever a key corresponding to a motion command is pressed.
    */
-  void keyLoop();
+  void loop();
 
   /*!
-   * \brief Stops the robot when no key is pressed
-   *
    * Publishes cmd_vels to stop the robot if no key is pressed after a short time period.
    */
   void watchdog();
 
 private:
-  ros::NodeHandle nh_, ph_;
-  double linear_, angular_;
-  ros::Time first_publish_;
-  ros::Time last_publish_;
-  double l_scale_, a_scale_;
-  ros::Publisher vel_pub_;
 
   /*!
    * \brief Publishes a cmd_vels
@@ -88,8 +114,20 @@ private:
    * Helper function for publishing cmd_vels.
    */
   void publish(double, double);
-  boost::mutex publish_mutex_;
+
+  ros::NodeHandle nh_;  /*! Public node handle. */
+  ros::Time first_publish_, last_publish_; /*! Publish times used by the watchdog. */
+  ros::Publisher vel_pub_; /*! The publisher for the twist topic. */
+
+  boost::mutex publish_mutex_; /*! The mutex for the twist topic. */
 };
+
+/*!
+ * A function to close ROS and exit the program.
+ *
+ * \param sig The signal value.
+ */
+void shutdown(int sig);
 
 /*!
  * Creates and runs the carl_key_teleop node.
