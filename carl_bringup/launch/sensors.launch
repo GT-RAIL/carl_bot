@@ -10,5 +10,7 @@
 	</node>
 	
 	<!--HOKUYO-->
-	<node name="urg_node" pkg="urg_node" type="urg_node" output="screen"/>
+	<node name="urg_node" pkg="urg_node" type="urg_node" output="screen">
+	      <param name="frame_id" value="hokuyo_link"/>
+	</node>
 </launch>
