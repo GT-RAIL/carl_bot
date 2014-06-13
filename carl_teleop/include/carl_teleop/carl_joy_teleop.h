@@ -16,6 +16,8 @@
 #include <geometry_msgs/Twist.h>
 #include <ros/ros.h>
 #include <sensor_msgs/Joy.h>
+#include <actionlib/client/simple_action_client.h>
+#include <move_base_msgs/MoveBaseAction.h>
 
 /*!
  * \def MAX_TRANS_VEL
@@ -30,6 +32,8 @@
  * The maximum angular velocity.
  */
 #define MAX_ANG_VEL 1.2
+
+typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> ActionClient;
 
 /*!
  * \class carl_joy_teleop
@@ -60,10 +64,13 @@ private:
   ros::Publisher cmd_vel; /*!< the cmd_vel topic */
   ros::Subscriber joy_sub; /*!< the joy topic */
 
+  ActionClient* actionClient; /*!< A handle for the move_base action client thread */
+
   float linear_throttle_factor; /*!< factor for reducing the maximum linear speed */
   float angular_throttle_factor; /*!< factor for reducing the maximum angular speed */
 
   bool deadmanPressed; /*!< save state of deadman switch */
+
 };
 
 /*!

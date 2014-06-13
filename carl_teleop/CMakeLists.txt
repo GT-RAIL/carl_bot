@@ -4,7 +4,7 @@ project(carl_teleop)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp joy geometry_msgs sensor_msgs)
+find_package(catkin REQUIRED COMPONENTS roscpp joy geometry_msgs sensor_msgs actionlib move_base_msgs)
 
 ###################################################
 ## Declare things to be passed to other projects ##

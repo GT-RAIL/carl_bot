@@ -37,6 +37,9 @@ carl_joy_teleop::carl_joy_teleop()
   //initialize state of deadman switch
   deadmanPressed = false;
 
+  // Connect to the move_base action server
+  actionClient = new ActionClient("move_base", true); // create a thread to handle subscriptions.
+
   ROS_INFO("Carl Joystick Teleop Started");
 }
 
@@ -52,6 +55,16 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
 
   //Latch the deadman switch state
   bool oldDeadmanPressed = deadmanPressed;
+
+  //If button 1 on the controller is pressed, cancel the navigation goal planning
+  if (joy->buttons.at(0) == 1)
+  {
+    twist.linear.x = 0;
+    twist.angular.z = 0;
+    cmd_vel.publish(twist);
+    actionClient->waitForServer();
+    actionClient->cancelAllGoals();
+  }
 
   if (joy->buttons.at(4) == 1)
   {
