@@ -70,7 +70,7 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
   {
     // left joystick controls the linear and angular movement
     twist.linear.x = joy->axes.at(1) * MAX_TRANS_VEL * linear_throttle_factor;
-    twist.angular.z = -joy->axes.at(2) * MAX_ANG_VEL * angular_throttle_factor;
+    twist.angular.z = joy->axes.at(2) * MAX_ANG_VEL * angular_throttle_factor;
     deadmanPressed = true;
   }
   else

@@ -4,13 +4,9 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /Global Options1
-        - /Status1
-        - /LaserScan1
         - /LaserScan1/Status1
         - /global cost map1/Status1
         - /TF1/Status1
-        - /Odometry1
       Splitter Ratio: 0.5
     Tree Height: 627
   - Class: rviz/Selection
@@ -93,195 +89,26 @@ Visualization Manager:
     - Alpha: 1
       Class: rviz/RobotModel
       Collision Enabled: false
-      Enabled: true
+      Enabled: false
       Links:
         All Links Enabled: true
-        BackCover_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
         Expand Joint Details: false
         Expand Link Details: false
         Expand Tree: false
-        FrontCover_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
         Link Tree Style: Links in Alphabetic Order
-        base_footprint:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        camera_depth_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        camera_depth_optical_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        camera_lift_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        camera_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        camera_rgb_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        camera_rgb_optical_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        camera_tilt_bracket_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        camera_tilt_plate_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        caster_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        caster_plate_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        hokuyo_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        jaco_link_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        jaco_link_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        jaco_link_3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        jaco_link_4:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        jaco_link_5:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        jaco_link_base:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        jaco_link_finger_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        jaco_link_finger_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        jaco_link_finger_3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        jaco_link_hand:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        jaco_mount_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_rear_strut_inside_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_rear_strut_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_side_cover_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_wheel_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_rear_strut_inside_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_rear_strut_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_side_cover_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_wheel_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        top_plate_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
       Name: RobotModel
       Robot Description: robot_description
       TF Prefix: ""
       Update Interval: 0
-      Value: true
+      Value: false
       Visual Enabled: true
     - Arrow Length: 0.3
       Class: rviz/PoseArray
       Color: 255; 25; 0
-      Enabled: true
-      Name: PoseArray
+      Enabled: false
+      Name: Particles
       Topic: /particlecloud
-      Value: true
+      Value: false
     - Alpha: 0.7
       Class: rviz/Map
       Color Scheme: costmap
@@ -328,7 +155,7 @@ Visualization Manager:
       Enabled: true
       Head Length: 0.3
       Head Radius: 0.1
-      Name: Pose
+      Name: Nav Goal
       Shaft Length: 1
       Shaft Radius: 0.05
       Shape: Arrow
@@ -346,7 +173,7 @@ Visualization Manager:
       Class: rviz/Polygon
       Color: 25; 255; 0
       Enabled: true
-      Name: Polygon
+      Name: Footprint
       Topic: /move_base/global_costmap/obstacle_layer_footprint/footprint_stamped
       Value: true
     - Angle Tolerance: 0.1
@@ -383,22 +210,22 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 13.9373
+      Distance: 5.99564
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 1.13818
-        Y: 0.264457
-        Z: 0.398814
+        X: 1.07343
+        Y: -0.259247
+        Z: 0.533585
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 1.5148
+      Pitch: 0.589797
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 5.79221
+      Yaw: 2.94221
     Saved: ~
 Window Geometry:
   Displays:
