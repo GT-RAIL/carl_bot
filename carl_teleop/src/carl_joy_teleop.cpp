@@ -34,6 +34,9 @@ carl_joy_teleop::carl_joy_teleop()
   else
     angular_throttle_factor = 1.0;
 
+  //initialize state of deadman switch
+  deadmanPressed = false;
+
   ROS_INFO("Carl Joystick Teleop Started");
 }
 
@@ -47,27 +50,34 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
   twist.angular.x = 0;
   twist.angular.y = 0;
 
+  //Latch the deadman switch state
+  bool oldDeadmanPressed = deadmanPressed;
+
   if (joy->buttons.at(4) == 1)
   {
     // left joystick controls the linear and angular movement
     twist.linear.x = joy->axes.at(1) * MAX_TRANS_VEL * linear_throttle_factor;
     twist.angular.z = -joy->axes.at(2) * MAX_ANG_VEL * angular_throttle_factor;
+    deadmanPressed = true;
   }
   else
   {
     twist.linear.x = 0;
     twist.angular.z = 0;
+    deadmanPressed = false;
   }
 
   //boost button
   if (joy->buttons.at(5) == 1)
   {
-    twist.linear.x *= 2;
-    twist.angular.z *= 2;
+    twist.linear.x *= 3;
+    twist.angular.z *= 3;
   }
 
   // send the twist command
-  cmd_vel.publish(twist);
+  if (deadmanPressed || oldDeadmanPressed) {
+    cmd_vel.publish(twist);
+  }
 }
 
 int main(int argc, char **argv)

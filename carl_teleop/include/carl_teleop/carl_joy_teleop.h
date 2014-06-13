@@ -62,6 +62,8 @@ private:
 
   float linear_throttle_factor; /*!< factor for reducing the maximum linear speed */
   float angular_throttle_factor; /*!< factor for reducing the maximum angular speed */
+
+  bool deadmanPressed; /*!< save state of deadman switch */
 };
 
 /*!
