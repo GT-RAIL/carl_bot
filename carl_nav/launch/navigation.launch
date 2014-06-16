@@ -4,8 +4,10 @@
 		<param name="sensor_frame_id" value="camera_node" />
 		<param name="camera_height" value="1.0" />
 		<param name="camera_pitch" value="0.0" />
+		<param name="base_link_frame_id" value="base_footprint" />
+		<remap from="/image" to="/rgb/image" />
 	</node>	
-
+<!--
 	<node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
     	<param name="output_frame" value="odom"/>
 	    <param name="freq" value="30.0"/>
@@ -16,9 +18,9 @@
     	<param name="debug" value="false"/>
   		<param name="self_diagnose" value="false"/>
 	</node>
-
+-->
+<!--
 	<node pkg="amcl" type="amcl" name="amcl" output="screen">
-	 	 <!-- Publish scans from best pose at a max of 10 Hz -->
 	  	<param name="odom_model_type" value="diff"/>
 	  	<param name="odom_alpha5" value="0.1"/>
 	  	<param name="gui_publish_rate" value="10.0"/>
@@ -29,7 +31,6 @@
 	  	<param name="kld_z" value="0.99"/>
 	  	<param name="odom_alpha1" value="10.0"/>
 	  	<param name="odom_alpha2" value="4.0"/>
-	  	<!-- translation std dev, m -->
 	  	<param name="odom_alpha3" value="1.0"/>
 	  	<param name="odom_alpha4" value="1.0"/>
 	  	<param name="laser_z_hit" value="0.95"/>
@@ -40,7 +41,6 @@
 	  	<param name="laser_lambda_short" value="0.1"/>
 	  	<param name="laser_lambda_short" value="0.1"/>
 	  	<param name="laser_model_type" value="likelihood_field"/>
-	  	<!-- <param name="laser_model_type" value="beam"/> -->
 	  	<param name="laser_likelihood_max_dist" value="2.0"/>
 	  	<param name="update_min_d" value="0.1"/>
 	  	<param name="update_min_a" value="0.1"/>
@@ -49,7 +49,7 @@
 	  	<param name="resample_interval" value="1"/>
 	  	<param name="transform_tolerance" value="0.2"/>
 	  	<param name="recovery_alpha_slow" value="0.01"/>
-	  <param name="recovery_alpha_fast" value="0.2"/>
+  		<param name="recovery_alpha_fast" value="0.2"/>
 	</node>
 
 	<node name="move_base" pkg="move_base" type="move_base" output="screen">
@@ -60,4 +60,5 @@
       	<rosparam file="$(find carl_nav)/cfg/base_local_planner_params.yaml" command="load" />
 		<param name="controller_frequency" value="10.0" />
 	</node>
+-->
 </launch>
