@@ -47,7 +47,7 @@ void odom_covariance_converter::convert_cback(const nav_msgs::Odometry::ConstPtr
                                                   (0)   (0)  (0)  (0) (1e6) (0)
                                                   (0)   (0)  (0)  (0)  (0) (1e3);
 
-  odom_out.publish(odom);
+  odom_out.publish(odometry);
 }
 
 int main(int argc, char **argv)
