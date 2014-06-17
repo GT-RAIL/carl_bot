@@ -4,10 +4,11 @@ project(carl_nav)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
+
 find_package(catkin REQUIRED roscpp)
 
 ## System dependencies are found with CMake's conventions
-# find_package(Boost REQUIRED COMPONENTS system)
+find_package(Boost 1.54.0 COMPONENTS system REQUIRED)
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -79,7 +80,7 @@ catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES carl_nav
 #  CATKIN_DEPENDS other_catkin_pkg
-#  DEPENDS system_lib
+  DEPENDS Boost
 )
 
 ###########
@@ -89,14 +90,15 @@ catkin_package(
 ## Specify additional locations of header files
 include_directories(
   include
-  ${catkin_INCLUDE_DIRS}	
+  ${catkin_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIRS}
 )
 
 ## Declare a cpp executable
-add_executable(odom_covarience_converter src/odom_covarience_converter.cpp)
+add_executable(odom_covariance_converter src/odom_covariance_converter.cpp)
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(odom_covarience_converter ${catkin_LIBRARIES})
+target_link_libraries(odom_covariance_converter ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 
 
 ## Specify additional locations of header files
@@ -125,7 +127,7 @@ target_link_libraries(odom_covarience_converter ${catkin_LIBRARIES})
 #############
 
 ## Mark executables and/or libraries for installation
-install(TARGETS odom_covarience_converter
+install(TARGETS odom_covariance_converter
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
