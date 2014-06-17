@@ -18,8 +18,13 @@ using namespace std;
 odom_covariance_converter::odom_covariance_converter()
 {
   // create the ROS topics
-  odom_in = node.subscribe<nav_msgs::Odometry>("odom", 10, &odom_covariance_converter::convert_cback, this);
-  odom_out = node.advertise<nav_msgs::Odometry>("covariance_odom", 10);
+  string odom_in_topic;
+  string odom_out_topic;
+  node.param("in_topic", odom_in_topic, odom_in_topic);
+  node.param("out_topic", odom_out_topic, odom_out_topic);
+
+  odom_in = node.subscribe<nav_msgs::Odometry>(odom_in_topic, 10, &odom_covariance_converter::convert_cback, this);
+  odom_out = node.advertise<nav_msgs::Odometry>(odom_out_topic, 10);
 
   ROS_INFO("Odometry covariance Converter Started");
 }
