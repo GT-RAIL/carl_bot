@@ -18,13 +18,8 @@ using namespace std;
 odom_covariance_converter::odom_covariance_converter()
 {
   // create the ROS topics
-  string odom_in_topic;
-  string odom_out_topic;
-  node.param("in_topic", odom_in_topic, odom_in_topic);
-  node.param("out_topic", odom_out_topic, odom_out_topic);
-
-  odom_in = node.subscribe<nav_msgs::Odometry>(odom_in_topic, 10, &odom_covariance_converter::convert_cback, this);
-  odom_out = node.advertise<nav_msgs::Odometry>(odom_out_topic, 10);
+  odom_in = node.subscribe<nav_msgs::Odometry>("odom_in", 10, &odom_covariance_converter::convert_cback, this);
+  odom_out = node.advertise<nav_msgs::Odometry>("odom_out", 10);
 
   ROS_INFO("Odometry covariance Converter Started");
 }
@@ -33,19 +28,19 @@ void odom_covariance_converter::convert_cback(const nav_msgs::Odometry::ConstPtr
 {
   nav_msgs::Odometry odometry = *odom;
 
-  odometry.pose.covariance =  boost::assign::list_of(1e-3) (0)  (0)  (0)  (0)  (0)
-                                                  (0) (1e-3) (0)  (0)  (0)  (0)
-                                                  (0)   (0) (1e6) (0)  (0)  (0)
-                                                  (0)   (0)  (0) (1e6) (0)  (0)
-                                                  (0)   (0)  (0)  (0) (1e6) (0)
-                                                  (0)   (0)  (0)  (0)  (0) (1e3);
+  odometry.pose.covariance =  boost::assign::list_of(1e-6) (0)  (0)  (0)  (0)  (0)
+                                                  (0) (1e-6) (0)  (0)  (0)  (0)
+                                                  (0)   (0) (1e-6) (0)  (0)  (0)
+                                                  (0)   (0)  (0) (1e-6) (0)  (0)
+                                                  (0)   (0)  (0)  (0) (1e-6) (0)
+                                                  (0)   (0)  (0)  (0)  (0) (1e-6);
 
-  odometry.twist.covariance =  boost::assign::list_of(1e-3) (0)  (0)  (0)  (0)  (0)
-                                                  (0) (1e-3) (0)  (0)  (0)  (0)
-                                                  (0)   (0) (1e6) (0)  (0)  (0)
-                                                  (0)   (0)  (0) (1e6) (0)  (0)
-                                                  (0)   (0)  (0)  (0) (1e6) (0)
-                                                  (0)   (0)  (0)  (0)  (0) (1e3);
+  odometry.twist.covariance =  boost::assign::list_of(1e-6) (0)  (0)  (0)  (0)  (0)
+                                                  (0) (1e-6) (0)  (0)  (0)  (0)
+                                                  (0)   (0) (1e-6) (0)  (0)  (0)
+                                                  (0)   (0)  (0) (1e-6) (0)  (0)
+                                                  (0)   (0)  (0)  (0) (1e-6) (0)
+                                                  (0)   (0)  (0)  (0)  (0) (1e-6);
 
   odom_out.publish(odometry);
 }

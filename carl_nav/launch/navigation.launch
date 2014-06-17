@@ -5,29 +5,39 @@
 		<param name="camera_height" value="1.0" />
 		<param name="camera_pitch" value="0.0" />
 		<param name="base_link_frame_id" value="base_footprint" />
+		<param name="publish_tf" value="false" />
 		<remap from="/image" to="/rgb/image" />
 	</node>	
 
+	<node pkg="carl_nav" type="odom_covariance_converter" name="odom_convert" output="screen">
+		<remap from="odom_in" to="odom" />
+		<remap from="odom_out" to="covariance_odom" />
+	</node>	
+
+	<node pkg="carl_nav" type="odom_covariance_converter" name="vo_convert" output="screen">
+		<remap from="odom_in" to="/mono_odometer/odometry" />
+		<remap from="odom_out" to="/covariance_vo" />
+	</node>	
+
 	<node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
-	    	<param name="output_frame" value="odom"/>
+	    	<param name="output_frame" value="odom_combined"/>
 	        <param name="freq" value="30.0"/>
 	        <param name="sensor_timeout" value="1.0"/>
 	        <param name="odom_used" value="true"/>
 	       	<param name="imu_used" value="false"/>
 	    	<param name="vo_used" value="true"/>
 	    	<param name="debug" value="true"/>
-  		<param name="self_diagnose" value="false"/>
-		<remap from="/vo" to="/mono_odometer/odometry"/>
+  		<param name="self_diagnose" value="true"/>
+		<remap from="/vo" to="/covariance_vo"/>
 		<remap from="/odom" to="/covariance_odom" />
 	</node>
 
-<!--
 	<node pkg="amcl" type="amcl" name="amcl" output="screen">
 	  	<param name="odom_model_type" value="diff"/>
 	  	<param name="odom_alpha5" value="0.1"/>
 	  	<param name="gui_publish_rate" value="10.0"/>
 	  	<param name="laser_max_beams" value="30"/>
-	  	<param name="min_particles" value="1500"/>
+	  	<param name="min_particles" value="500"/>
 	  	<param name="max_particles" value="5000"/>
 	  	<param name="kld_err" value="0.05"/>
 	  	<param name="kld_z" value="0.99"/>
@@ -46,13 +56,15 @@
 	  	<param name="laser_likelihood_max_dist" value="2.0"/>
 	  	<param name="update_min_d" value="0.1"/>
 	  	<param name="update_min_a" value="0.1"/>
-	  	<param name="odom_frame_id" value="odom"/>
+	  	<param name="odom_frame_id" value="odom_combined"/>
 	  	<param name="base_frame_id" value="base_footprint"/>
 	  	<param name="resample_interval" value="1"/>
 	  	<param name="transform_tolerance" value="0.2"/>
-	  	<param name="recovery_alpha_slow" value="0.01"/>
-  		<param name="recovery_alpha_fast" value="0.2"/>
+	  	<param name="recovery_alpha_slow" value="0.0"/>
+  		<param name="recovery_alpha_fast" value="0.0"/>
 	</node>
+
+<!--
 
 	<node name="move_base" pkg="move_base" type="move_base" output="screen">
     	<rosparam file="$(find carl_nav)/cfg/costmap_common_params.yaml" command="load" ns="global_costmap" />
