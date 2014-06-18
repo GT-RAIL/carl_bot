@@ -28,20 +28,21 @@ void odom_covariance_converter::convert_cback(const nav_msgs::Odometry::ConstPtr
 {
   nav_msgs::Odometry odometry = *odom;
 
-  odometry.pose.covariance =  boost::assign::list_of(1e-6) (0)  (0)  (0)  (0)  (0)
-                                                  (0) (1e-6) (0)  (0)  (0)  (0)
-                                                  (0)   (0) (1e-6) (0)  (0)  (0)
-                                                  (0)   (0)  (0) (1e-6) (0)  (0)
-                                                  (0)   (0)  (0)  (0) (1e-6) (0)
-                                                  (0)   (0)  (0)  (0)  (0) (1e-6);
+  odometry.pose.covariance =  boost::assign::list_of (1e-6)  (0)  (0)  (0)  (0)  (0)
+                                                       (0) (1e-6) (0)  (0)  (0)  (0)
+                                                       (0)  (0) (1e-6) (0)  (0)  (0)
+                                                       (0)  (0)  (0) (1e-6) (0)  (0)
+                                                       (0)  (0)  (0)  (0) (1e-6) (0)
+                                                       (0)  (0)  (0)  (0)  (0) (1e-6);
 
-  odometry.twist.covariance =  boost::assign::list_of(1e-6) (0)  (0)  (0)  (0)  (0)
-                                                  (0) (1e-6) (0)  (0)  (0)  (0)
-                                                  (0)   (0) (1e-6) (0)  (0)  (0)
-                                                  (0)   (0)  (0) (1e-6) (0)  (0)
-                                                  (0)   (0)  (0)  (0) (1e-6) (0)
-                                                  (0)   (0)  (0)  (0)  (0) (1e-6);
-
+  /*
+  odometry.twist.covariance =  boost::assign::list_of (1e-6) (0)  (0)  (0)  (0)  (0)
+                                                       (0) (1e-6) (0)  (0)  (0)  (0)
+                                                       (0)  (0) (1e-6) (0)  (0)  (0)
+                                                       (0)  (0)  (0) (1e-6) (0)  (0)
+                                                       (0)  (0)  (0)  (0) (1e-6) (0)
+                                                       (0)  (0)  (0)  (0)  (0) (1e-6);
+  */
   odom_out.publish(odometry);
 }
 
