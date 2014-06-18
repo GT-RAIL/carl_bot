@@ -41,22 +41,12 @@ odom_covariance_converter::odom_covariance_converter()
 void odom_covariance_converter::convert_cback(const nav_msgs::Odometry::ConstPtr& odom)
 {
   nav_msgs::Odometry odometry = *odom;
-
-  odometry.pose.covariance =  boost::assign::list_of (cov_x)  (0)  (0)  (0)  (0)  (0)
-                                                       (0) (cov_y) (0)  (0)  (0)  (0)
-                                                       (0)  (0) (cov_z) (0)  (0)  (0)
-                                                       (0)  (0)  (0) (cov_rx) (0)  (0)
-                                                       (0)  (0)  (0)  (0) (cov_ry) (0)
-                                                       (0)  (0)  (0)  (0)  (0) (cov_rz);
-
-  /*
-  odometry.twist.covariance =  boost::assign::list_of (1e-6) (0)  (0)  (0)  (0)  (0)
-                                                       (0) (1e-6) (0)  (0)  (0)  (0)
-                                                       (0)  (0) (1e-6) (0)  (0)  (0)
-                                                       (0)  (0)  (0) (1e-6) (0)  (0)
-                                                       (0)  (0)  (0)  (0) (1e-6) (0)
-                                                       (0)  (0)  (0)  (0)  (0) (1e-6);
-  */
+  odometry.pose.covariance =  boost::assign::list_of (cov_x)  (0)    (0)    (0)     (0)     (0)
+                                                       (0)  (cov_y)  (0)    (0)     (0)     (0)
+                                                       (0)    (0)  (cov_z)  (0)     (0)     (0)
+                                                       (0)    (0)    (0)  (cov_rx)  (0)     (0)
+                                                       (0)    (0)    (0)    (0)   (cov_ry)  (0)
+                                                       (0)    (0)    (0)    (0)     (0)   (cov_rz);
   odom_out.publish(odometry);
 }
 
