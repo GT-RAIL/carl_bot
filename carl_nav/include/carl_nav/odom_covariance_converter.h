@@ -33,7 +33,6 @@ private:
    */
   void convert_cback(const nav_msgs::Odometry::ConstPtr& odom);
 
-
   ros::Subscriber odom_in; /*!< the odom_in topic */
   ros::Publisher odom_out; /*!< the odom_out topic */
 

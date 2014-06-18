@@ -19,20 +19,19 @@ using namespace std;
 
 carl_joy_teleop::carl_joy_teleop()
 {
+  //a private handle for this ROS node (allows retrieval of relative parameters)
+  ros::NodeHandle privNode("~");
+
   // create the ROS topics
   cmd_vel = node.advertise<geometry_msgs::Twist>("cmd_vel", 10);
   joy_sub = node.subscribe<sensor_msgs::Joy>("joy", 10, &carl_joy_teleop::joy_cback, this);
 
   // read in throttle values
   double temp;
-  if (node.getParam("/carl_joy_teleop/linear_throttle_factor", temp))
-    linear_throttle_factor = (float)temp;
-  else
-    linear_throttle_factor = 1.0;
-  if (node.getParam("/carl_joy_teleop/angular_throttle_factor", temp))
-    angular_throttle_factor = (float)temp;
-  else
-    angular_throttle_factor = 1.0;
+  privNode.param<double>("linear_throttle_factor", temp, 1.0);
+  linear_throttle_factor = (float)temp;
+  privNode.param<double>("angular_throttle_factor", temp, 1.0);
+  angular_throttle_factor = (float)temp;
 
   //initialize state of deadman switch
   deadmanPressed = false;

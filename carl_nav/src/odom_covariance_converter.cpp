@@ -17,21 +17,21 @@ using namespace std;
 
 odom_covariance_converter::odom_covariance_converter()
 {
-
-  ros::NodeHandle node("~"); /*!< a handle for this ROS node */
+  //a private handle for this ROS node
+  ros::NodeHandle node("~");
 
   // create the ROS topics
   odom_in = node.subscribe<nav_msgs::Odometry>("odom_in", 10, &odom_covariance_converter::convert_cback, this);
   odom_out = node.advertise<nav_msgs::Odometry>("odom_out", 10);
 
   // read in covariance parameters
-  //const double defaultCov = 1e9;
-  node.getParam("cov_x", cov_x);
-  node.getParam("cov_y", cov_y);
-  node.getParam("cov_z", cov_z);
-  node.getParam("cov_rx", cov_rx);
-  node.getParam("cov_ry", cov_ry);
-  node.getParam("cov_rz", cov_rz);
+  const double defaultCov = 1e9;
+  node.param<double>("cov_x", cov_x, defaultCov);
+  node.param<double>("cov_y", cov_y, defaultCov);
+  node.param<double>("cov_z", cov_z,defaultCov);
+  node.param<double>("cov_rx", cov_rx, defaultCov);
+  node.param<double>("cov_ry", cov_ry, defaultCov);
+  node.param<double>("cov_rz", cov_rz, defaultCov);
 
   ROS_INFO("Odometry covariance Converter Started");
 
