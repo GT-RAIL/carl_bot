@@ -6,11 +6,10 @@
 	      <remap from="/camera/depth_registered/camera_info" to="$(arg camera)/depth_registered/camera_info" />
 	      <remap from="/camera/depth_registered/image_rect" to="$(arg camera)/depth_registered/hw_registered/image_rect_raw" />      
 	      <param name="approximate_sync" type="bool" value="True" />	     
-	      <param name="base_link_frame_id" value="base_footprint" />
-	      	      
-	      <param name="odom_frame_id" value="vo" />
+	      <param name="base_link_frame_id" value="camera_link" />	   
+	      <param name="odom_frame_id" value="vo_frame" />
 	      
- 	      <param name="publish_tf" value="true" />
+ 	      <param name="publish_tf" value="false" />
 	</node>
 
 	<node pkg="carl_nav" type="odom_covariance_converter" name="odom_convert" output="screen">
