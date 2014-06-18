@@ -21,19 +21,31 @@ odom_covariance_converter::odom_covariance_converter()
   odom_in = node.subscribe<nav_msgs::Odometry>("odom_in", 10, &odom_covariance_converter::convert_cback, this);
   odom_out = node.advertise<nav_msgs::Odometry>("odom_out", 10);
 
+
+  // read in covariance parameters
+  //const double defaultCov = 1e9;
+  node.getParam("cov_x", cov_x);
+  node.getParam("cov_y", cov_y);
+  node.getParam("cov_z", cov_z);
+  node.getParam("cov_rx", cov_rx);
+  node.getParam("cov_ry", cov_ry);
+  node.getParam("cov_rz", cov_rz);
+
   ROS_INFO("Odometry covariance Converter Started");
+
+  ROS_INFO("Covarience parameters [%f, %f, %f, %f, %f, %f]", cov_x, cov_y, cov_z, cov_rx, cov_ry, cov_rz);
 }
 
 void odom_covariance_converter::convert_cback(const nav_msgs::Odometry::ConstPtr& odom)
 {
   nav_msgs::Odometry odometry = *odom;
 
-  odometry.pose.covariance =  boost::assign::list_of (1e-6)  (0)  (0)  (0)  (0)  (0)
-                                                       (0) (1e-6) (0)  (0)  (0)  (0)
-                                                       (0)  (0) (1e-6) (0)  (0)  (0)
-                                                       (0)  (0)  (0) (1e-6) (0)  (0)
-                                                       (0)  (0)  (0)  (0) (1e-6) (0)
-                                                       (0)  (0)  (0)  (0)  (0) (1e-6);
+  odometry.pose.covariance =  boost::assign::list_of (cov_x)  (0)  (0)  (0)  (0)  (0)
+                                                       (0) (cov_y) (0)  (0)  (0)  (0)
+                                                       (0)  (0) (cov_z) (0)  (0)  (0)
+                                                       (0)  (0)  (0) (cov_rx) (0)  (0)
+                                                       (0)  (0)  (0)  (0) (cov_ry) (0)
+                                                       (0)  (0)  (0)  (0)  (0) (cov_rz);
 
   /*
   odometry.twist.covariance =  boost::assign::list_of (1e-6) (0)  (0)  (0)  (0)  (0)

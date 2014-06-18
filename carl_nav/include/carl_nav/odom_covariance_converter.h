@@ -37,6 +37,14 @@ private:
 
   ros::Subscriber odom_in; /*!< the odom_in topic */
   ros::Publisher odom_out; /*!< the odom_out topic */
+
+  //Variables to store covariance parameters
+  double cov_x;
+  double cov_y;
+  double cov_z;
+  double cov_rx;
+  double cov_ry;
+  double cov_rz;
 };
 
 /*!

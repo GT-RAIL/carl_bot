@@ -24,11 +24,23 @@
 	<node pkg="carl_nav" type="odom_covariance_converter" name="odom_convert" output="screen">
 		<remap from="odom_in" to="odom" />
 		<remap from="odom_out" to="covariance_odom" />
+		<param name="cov_x" value="1e9" />
+		<param name="cov_y" value="1e9" />
+		<param name="cov_z" value="1e9" />
+		<param name="cov_rx" value="1e9" />
+		<param name="cov_ry" value="1e9" />
+		<param name="cov_rz" value="1e9" />
 	</node>	
 
 	<node pkg="carl_nav" type="odom_covariance_converter" name="vo_convert" output="screen">
 		<remap from="odom_in" to="/visual_odometer/odometry" />
 		<remap from="odom_out" to="/covariance_vo" />
+		<param name="cov_x" value="1e9" />
+		<param name="cov_y" value="1e9" />
+		<param name="cov_z" value="1e9" />
+		<param name="cov_rx" value="1e9" />
+		<param name="cov_ry" value="1e9" />
+		<param name="cov_rz" value="1e9" />
 	</node>	
 
 	<!--
