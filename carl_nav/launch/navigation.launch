@@ -6,11 +6,11 @@
 	      <remap from="/camera/depth_registered/camera_info" to="$(arg camera)/depth_registered/camera_info" />
 	      <remap from="/camera/depth_registered/image_rect" to="$(arg camera)/depth_registered/hw_registered/image_rect_raw" />      
 	      <param name="approximate_sync" type="bool" value="True" />	     
-	      <!--
+	      
 	      <param name="base_link_frame_id" value="base_footprint" />
 	      <param name="odom_frame_id" value="vo" />
-	      -->
- 	      <param name="publish_tf" value="false" />
+	      
+ 	      <param name="publish_tf" value="true" />
 	</node>
 	<!--
 	<node pkg="viso2_ros" type="mono_odometer" name="mono_odometer" output="screen">
@@ -23,9 +23,10 @@
 	</node>	
 	-->
 
+<!--
 	<node pkg="carl_nav" type="odom_covariance_converter" name="odom_convert" output="screen">
-		<remap from="odom_in" to="odom" />
-		<remap from="odom_out" to="covariance_odom" />
+		<remap from="/odom_convert/odom_in" to="odom" />
+		<remap from="/odom_convert/odom_out" to="covariance_odom" />
 		<param name="cov_x" type="double" value="1e6" />
 		<param name="cov_y" type="double" value="1e6" />
 		<param name="cov_z" type="double" value="1e6" />
@@ -35,8 +36,8 @@
 	</node>	
 
 	<node pkg="carl_nav" type="odom_covariance_converter" name="vo_convert" output="screen">
-		<remap from="odom_in" to="/visual_odometer/odometry" />
-		<remap from="odom_out" to="/covariance_vo" />
+		<remap from="/vo_convert/odom_in" to="/visual_odometer/odometry" />
+		<remap from="/vo_convert/odom_out" to="/covariance_vo" />
 		<param name="cov_x" type="double" value="1e6" />
 		<param name="cov_y" type="double" value="1e6" />
 		<param name="cov_z" type="double" value="1e6" />
@@ -58,7 +59,6 @@
 		<remap from="/odom" to="/covariance_odom" />
 	</node>
 
-	
 	<node pkg="amcl" type="amcl" name="amcl" output="screen">
 	  	<param name="odom_model_type" value="diff"/>
 	  	<param name="odom_alpha5" value="0.1"/>
@@ -91,7 +91,7 @@
   		<param name="recovery_alpha_fast" value="0.0"/>
 	</node>
 
-	<!--
+
 	<node name="move_base" pkg="move_base" type="move_base" output="screen">
     	<rosparam file="$(find carl_nav)/cfg/costmap_common_params.yaml" command="load" ns="global_costmap" />
     	<rosparam file="$(find carl_nav)/cfg/costmap_common_params.yaml" command="load" ns="local_costmap" />
