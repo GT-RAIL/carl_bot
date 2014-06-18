@@ -17,10 +17,12 @@ using namespace std;
 
 odom_covariance_converter::odom_covariance_converter()
 {
+
+  ros::NodeHandle node("~"); /*!< a handle for this ROS node */
+
   // create the ROS topics
   odom_in = node.subscribe<nav_msgs::Odometry>("odom_in", 10, &odom_covariance_converter::convert_cback, this);
   odom_out = node.advertise<nav_msgs::Odometry>("odom_out", 10);
-
 
   // read in covariance parameters
   //const double defaultCov = 1e9;
