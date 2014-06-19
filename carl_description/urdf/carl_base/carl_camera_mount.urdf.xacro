@@ -56,7 +56,7 @@
     <joint name="camera_lift_camera_tilt_bracket_joint" type="continuous">
       <parent link="camera_lift_link"/>
       <child link="camera_tilt_bracket_link"/>
-      <origin xyz="0.03 -0.10 0" rpy="1.5708 0 0" />
+      <origin xyz="0.03 -0.10 0" rpy="1.5708 -1.5708 0" />
       <axis xyz="0 0 1" />
     </joint>
   
