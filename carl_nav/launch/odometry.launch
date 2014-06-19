@@ -6,7 +6,7 @@
 	      <remap from="/camera/depth_registered/camera_info" to="$(arg camera)/depth_registered/camera_info" />
 	      <remap from="/camera/depth_registered/image_rect" to="$(arg camera)/depth_registered/hw_registered/image_rect_raw" />      
 	      <param name="approximate_sync" type="bool" value="True" />	     
-	      <param name="base_link_frame_id" value="camera_link" />	   
+	      <param name="base_link_frame_id" value="base_footprint" />	   
 	      <param name="odom_frame_id" value="vo_frame" />
 	      
  	      <param name="publish_tf" value="false" />
@@ -15,11 +15,11 @@
 	<node pkg="carl_nav" type="odom_covariance_converter" name="odom_convert" output="screen">
 		<remap from="/odom_convert/odom_in" to="odom" />
 		<remap from="/odom_convert/odom_out" to="covariance_odom" />
-		<param name="cov_x" type="double" value="1e6" />
-		<param name="cov_y" type="double" value="1e6" />
-		<param name="cov_z" type="double" value="1e6" />
-		<param name="cov_rx" type="double" value="1e6" />
-		<param name="cov_ry" type="double" value="1e6" />
+		<param name="cov_x" type="double" value="1e-3" />
+		<param name="cov_y" type="double" value="1e-3" />
+		<param name="cov_z" type="double" value="1e-3" />
+		<param name="cov_rx" type="double" value="1e9" />
+		<param name="cov_ry" type="double" value="1e9" />
 		<param name="cov_rz" type="double" value="1e6" />
 	</node>	
 
@@ -29,9 +29,9 @@
 		<param name="cov_x" type="double" value="1e6" />
 		<param name="cov_y" type="double" value="1e6" />
 		<param name="cov_z" type="double" value="1e6" />
-		<param name="cov_rx" type="double" value="1e6" />
-		<param name="cov_ry" type="double" value="1e6" />
-		<param name="cov_rz" type="double" value="1e6" />
+		<param name="cov_rx" type="double" value="1e9" />
+		<param name="cov_ry" type="double" value="1e9" />
+		<param name="cov_rz" type="double" value="1e3" />
 	</node>	
 
 	<node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">

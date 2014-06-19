@@ -5,10 +5,7 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
-        - /RobotModel1/Status1
-        - /global cost map1/Status1
         - /Odometry1
-        - /Odometry1/Status1
       Splitter Ratio: 0.5
     Tree Height: 627
   - Class: rviz/Selection
@@ -29,7 +26,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: Image
+    SyncSource: LaserScan
 Visualization Manager:
   Class: ""
   Displays:
@@ -260,10 +257,10 @@ Visualization Manager:
     - Arrow Length: 0.3
       Class: rviz/PoseArray
       Color: 255; 25; 0
-      Enabled: false
+      Enabled: true
       Name: Particles
       Topic: /particlecloud
-      Value: false
+      Value: true
     - Alpha: 0.7
       Class: rviz/Map
       Color Scheme: costmap
@@ -383,15 +380,15 @@ Visualization Manager:
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.940265
-        Y: -0.529081
-        Z: 0.345104
+        X: 0.706715
+        Y: -0.220936
+        Z: -0.533244
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.4698
+      Pitch: 1.5098
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 2.41221
+      Yaw: 2.46721
     Saved: ~
 Window Geometry:
   Displays:
