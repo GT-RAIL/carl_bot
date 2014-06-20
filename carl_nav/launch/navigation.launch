@@ -1,4 +1,7 @@
 <launch>
+
+	<include file="$(find carl_nav)/launch/odometry.launch"/>
+
 	<node pkg="amcl" type="amcl" name="amcl" output="screen">
 	  	<param name="odom_model_type" value="diff"/>
 	  	<param name="odom_alpha5" value="0.1"/>
@@ -37,7 +40,7 @@
 		<rosparam file="$(find carl_nav)/cfg/local_costmap_params.yaml" command="load" />
      	<rosparam file="$(find carl_nav)/cfg/global_costmap_params.yaml" command="load" />
       	<rosparam file="$(find carl_nav)/cfg/base_local_planner_params.yaml" command="load" />
-	<param name="controller_frequency" value="25.0" />
+		<param name="controller_frequency" value="25.0" />
 	</node>
 	
 </launch>
