@@ -5,6 +5,7 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
+        - /Pose1
       Splitter Ratio: 0.5
     Tree Height: 627
   - Class: rviz/Selection
@@ -87,195 +88,42 @@ Visualization Manager:
     - Alpha: 1
       Class: rviz/RobotModel
       Collision Enabled: false
-      Enabled: true
+      Enabled: false
       Links:
         All Links Enabled: true
-        BackCover_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
         Expand Joint Details: false
         Expand Link Details: false
         Expand Tree: false
-        FrontCover_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
         Link Tree Style: Links in Alphabetic Order
-        base_footprint:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        camera_lift_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        camera_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        camera_tilt_bracket_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        camera_tilt_plate_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        caster_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        caster_plate_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        hokuyo_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        jaco_link_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        jaco_link_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        jaco_link_3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        jaco_link_4:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        jaco_link_5:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        jaco_link_base:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        jaco_link_finger_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        jaco_link_finger_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        jaco_link_finger_3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        jaco_link_hand:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        jaco_mount_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_rear_strut_inside_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_rear_strut_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_side_cover_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_wheel_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_rear_strut_inside_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_rear_strut_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_side_cover_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_wheel_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        top_plate_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
       Name: RobotModel
       Robot Description: robot_description
       TF Prefix: ""
       Update Interval: 0
-      Value: true
+      Value: false
       Visual Enabled: true
     - Arrow Length: 0.3
       Class: rviz/PoseArray
       Color: 255; 25; 0
-      Enabled: true
+      Enabled: false
       Name: Particles
       Topic: /particlecloud
-      Value: true
+      Value: false
     - Alpha: 0.7
       Class: rviz/Map
       Color Scheme: costmap
       Draw Behind: false
-      Enabled: true
+      Enabled: false
       Name: local cost map
       Topic: /move_base/local_costmap/costmap
-      Value: true
+      Value: false
     - Alpha: 0.7
       Class: rviz/Map
       Color Scheme: costmap
       Draw Behind: false
-      Enabled: true
+      Enabled: false
       Name: global cost map
       Topic: /move_base/global_costmap/costmap
-      Value: true
+      Value: false
     - Alpha: 1
       Buffer Length: 1
       Class: rviz/Path
@@ -353,15 +201,15 @@ Visualization Manager:
       Axes Radius: 0.1
       Class: rviz/Pose
       Color: 255; 25; 0
-      Enabled: false
+      Enabled: true
       Head Length: 0.3
       Head Radius: 0.1
       Name: Pose
       Shaft Length: 1
       Shaft Radius: 0.05
-      Shape: Axes
+      Shape: Arrow
       Topic: /visual_odometer/pose
-      Value: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -385,7 +233,7 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Angle: -2.1
+      Angle: -2.075
       Class: rviz/TopDownOrtho
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
@@ -394,11 +242,11 @@ Visualization Manager:
         Value: false
       Name: Current View
       Near Clip Distance: 0.01
-      Scale: 130.453
+      Scale: 102.16
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz)
-      X: 0.958353
-      Y: -0.118228
+      X: 0.87273
+      Y: -0.309076
     Saved: ~
 Window Geometry:
   Displays:

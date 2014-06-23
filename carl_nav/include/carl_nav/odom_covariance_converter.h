@@ -20,7 +20,7 @@ class odom_covariance_converter
 {
 public:
   /*!
-   * Creates a carl_joy_teleop object that can be used control carl with a joystick. ROS nodes, services, and publishers
+   * Creates an odom_covariance_converter object which adds covariance matrices onto Odometry messages. ROS nodes, services, and publishers
    * are created and maintained within this object.
    */
   odom_covariance_converter();
