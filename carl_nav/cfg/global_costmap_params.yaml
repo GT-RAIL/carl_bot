@@ -5,14 +5,14 @@ global_costmap:
   publish_frequency: 1.0
   static_map: true
 
-  inflation_layer: {cost_scaling_factor: 10.0, enabled: true, inflation_radius: 0.15}
-  inflation_radius: 0.15
+  inflation_layer: {cost_scaling_factor: 10.0, enabled: true, inflation_radius: 0.444}
+  inflation_radius: 0.444
   laser_scan_sensor: {clearing: true, data_type: LaserScan, marking: true, sensor_frame: hokuyo_link,
     topic: scan}
   obstacle_layer:
     observation_sources: laser_scan_sensor
 
-  static_layer: {map_topic: /map}
+  static_layer: {map_topic: /markers_to_map/ar_localization_map}
 
   ar_layer: {map_topic: /markers_to_map/ar_global_cost_map}
 

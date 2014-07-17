@@ -9,7 +9,7 @@ local_costmap:
   height: 6.0
   resolution: 0.025
 
-  inflation_layer: {cost_scaling_factor: 10.0, enabled: true, inflation_radius: 0.2}
+  inflation_layer: {cost_scaling_factor: 10.0, enabled: true, inflation_radius: 0.444}
 
   obstacle_layer:
     combination_method: 1
@@ -25,8 +25,8 @@ local_costmap:
   ar_layer: {map_topic: /markers_to_map/ar_local_cost_map}
 
   plugins:
-  - {name: ar_layer, type: 'ceiling_layer_namespace::CeilingLayer'}
   - {name: obstacle_layer, type: 'costmap_2d::ObstacleLayer'}
+  - {name: ar_layer, type: 'ceiling_layer_namespace::CeilingLayer'}
   - {name: inflation_layer, type: 'costmap_2d::InflationLayer'}
 
  

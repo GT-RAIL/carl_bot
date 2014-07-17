@@ -28,10 +28,14 @@
 	  	<param name="update_min_a" value="0.1"/>
 	  	<param name="odom_frame_id" value="odom_combined"/>
 	  	<param name="base_frame_id" value="base_footprint"/>
+		<param name="global_frame_id" value="map"/>
 	  	<param name="resample_interval" value="1"/>
 	  	<param name="transform_tolerance" value="1.0"/>
 	  	<param name="recovery_alpha_slow" value="0.0"/>
   		<param name="recovery_alpha_fast" value="0.0"/>
+		<param name="use_map_topic" value="true" />
+		<param name="first_map_only" value="true"/>
+		<remap from="/map" to="/markers_to_map/ar_localization_map"/> 
 	</node>
 
 	<node name="move_base" pkg="move_base" type="move_base">
