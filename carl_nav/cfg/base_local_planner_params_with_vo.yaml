@@ -14,4 +14,4 @@ TrajectoryPlannerROS:
   vx_samples: 3
   vtheta_samples: 10
 
-  global_frame_id: odom
+  global_frame_id: odom_combined 

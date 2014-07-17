@@ -1,5 +1,5 @@
 local_costmap:
-  global_frame: odom
+  global_frame: odom_combined
   robot_base_frame: base_footprint
   update_frequency: 5.0
   publish_frequency: 1.0
@@ -27,3 +27,5 @@ local_costmap:
   - {name: obstacle_layer, type: 'costmap_2d::ObstacleLayer'}
   - {name: ar_layer, type: 'ceiling_layer_namespace::CeilingLayer'}
   - {name: inflation_layer, type: 'costmap_2d::InflationLayer'}
+
+ 

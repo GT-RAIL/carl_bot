@@ -1,7 +1,8 @@
 <launch>
 	  
 	<include file="$(find ros_ethernet_rmp)/launch/ros_ethernet_rmp.launch">
-		<param name="publish_tf" value="false" />
+	<!-- If using visual odometry (vo), set publish_tf to false (defaults to true)-->
+	<!-- <param name="publish_tf" value="false" /> -->
 	</include>
 	
 </launch>
