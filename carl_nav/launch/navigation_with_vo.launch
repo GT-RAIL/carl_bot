@@ -2,6 +2,14 @@
 
 	<include file="$(find carl_nav)/launch/odometry.launch"/>
 
+	<node pkg="carl_nav" type="virtual_fence" name="virtual_fence" output="screen" respawn="true">
+		<param name="fence_x" type="double" value="0.25" />
+		<param name="fence_y" type="double" value="2.0" />
+		<param name="fence_width" type="double" value="5.8" />
+		<param name="fence_height" type="double" value="4.65" />
+		<remap from="/nav_goal" to="/move_base_simple/goal" />		
+	</node>
+
 	<node pkg="amcl" type="amcl" name="amcl" output="screen">
 	  	<param name="odom_model_type" value="diff"/>
 	  	<param name="odom_alpha5" value="0.1"/>

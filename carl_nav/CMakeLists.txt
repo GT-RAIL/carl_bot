@@ -4,7 +4,7 @@ project(carl_nav)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED roscpp)
+find_package(catkin REQUIRED roscpp geometry_msgs actionlib move_base_msgs)
 
 ## System dependencies are found with CMake's conventions
 find_package(Boost 1.54.0 COMPONENTS system REQUIRED)
@@ -94,11 +94,12 @@ include_directories(
 )
 
 ## Declare a cpp executable
+add_executable(virtual_fence src/virtual_fence.cpp)
 add_executable(odom_covariance_converter src/odom_covariance_converter.cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(odom_covariance_converter ${catkin_LIBRARIES} ${Boost_LIBRARIES})
-
+target_link_libraries(virtual_fence ${catkin_LIBRARIES})
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
@@ -109,8 +110,6 @@ target_link_libraries(odom_covariance_converter ${catkin_LIBRARIES} ${Boost_LIBR
 #   src/${PROJECT_NAME}/carl_nav.cpp
 # )
 
-## Declare a cpp executable
-# add_executable(carl_nav_node src/carl_nav_node.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes

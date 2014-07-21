@@ -1,4 +1,12 @@
 <launch>
+	<node pkg="carl_nav" type="virtual_fence" name="virtual_fence" output="screen" respawn="true">
+		<param name="fence_x" type="double" value="0.25" />
+		<param name="fence_y" type="double" value="2.0" />
+		<param name="fence_width" type="double" value="5.8" />
+		<param name="fence_height" type="double" value="4.65" />
+		<remap from="/nav_goal" to="/move_base_simple/goal" />		
+	</node>
+	
 	<node pkg="amcl" type="amcl" name="amcl" output="screen">
 	  	<param name="odom_model_type" value="diff"/>
 	  	<param name="odom_alpha5" value="0.1"/>
@@ -29,10 +37,10 @@
 	  	<param name="transform_tolerance" value="1.0"/>
 	  	<param name="recovery_alpha_slow" value="0.0"/>
   		<param name="recovery_alpha_fast" value="0.0"/>
-                <param name="use_map_topic" value="true" />
-                <param name="first_map_only" value="false"/>
-                <param name="save_pose_rate" value="5" />
-                <remap from="/map" to="/markers_to_map/ar_localization_map"/>  
+        <param name="use_map_topic" value="true" />
+        <param name="first_map_only" value="false"/>
+        <param name="save_pose_rate" value="5" />
+        <remap from="/map" to="/markers_to_map/ar_localization_map"/>  
 	</node>
 
 	<node name="move_base" pkg="move_base" type="move_base">
