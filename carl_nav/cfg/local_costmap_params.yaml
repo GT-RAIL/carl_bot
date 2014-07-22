@@ -24,6 +24,6 @@ local_costmap:
   ar_layer: {map_topic: /markers_to_map/ar_local_cost_map}
 
   plugins:
-  - {name: obstacle_layer, type: 'costmap_2d::ObstacleLayer'}
   - {name: ar_layer, type: 'ceiling_layer_namespace::CeilingLayer'}
+  - {name: obstacle_layer, type: 'costmap_2d::ObstacleLayer'}
   - {name: inflation_layer, type: 'costmap_2d::InflationLayer'}
