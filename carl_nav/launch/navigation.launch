@@ -16,10 +16,10 @@
 	  	<param name="max_particles" value="5000"/>
 	  	<param name="kld_err" value="0.05"/>
 	  	<param name="kld_z" value="0.99"/>
-	  	<param name="odom_alpha1" value="2.0"/>
+	  	<param name="odom_alpha1" value="4.0"/>
 	  	<param name="odom_alpha2" value="2.0"/>
 	  	<param name="odom_alpha3" value="1.1"/>
-	  	<param name="odom_alpha4" value="1.5"/>
+	  	<param name="odom_alpha4" value="2.5"/>
 	  	<param name="laser_z_hit" value="0.95"/>
 	  	<param name="laser_z_short" value="0.05"/>
 	  	<param name="laser_z_max" value="0.05"/>
@@ -28,9 +28,9 @@
 	  	<param name="laser_lambda_short" value="0.1"/>
 	  	<param name="laser_lambda_short" value="0.1"/>
 	  	<param name="laser_model_type" value="likelihood_field"/>
-	  	<param name="laser_likelihood_max_dist" value="2.0"/>
+	  	<param name="laser_likelihood_max_dist" value="20.0"/>
 	  	<param name="update_min_d" value="0.1"/>
-	  	<param name="update_min_a" value="0.1"/>
+	  	<param name="update_min_a" value="0.05"/>
 	  	<param name="odom_frame_id" value="odom"/>
 	  	<param name="base_frame_id" value="base_footprint"/>
 	  	<param name="resample_interval" value="1"/>
@@ -52,6 +52,8 @@
 		<param name="controller_frequency" value="25.0" />
 		<param name="recovery_behavior_enabled" value="false" />
 		<param name="clearing_rotation_allowed" value="false" />
+		<param name="prune_plan" value="false" />
+		<param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
 	</node>
 	
 </launch>

@@ -31,8 +31,8 @@ virtual_fence::virtual_fence()
   node.param<double>("fence_width", fence_width, 2.0);
   node.param<double>("fence_height", fence_height, 2.0);
 
-  ROS_INFO("Virtual Fence Started with x = %f, y = %f, width = %f, height = %f", fence_x, fence_y, fence_width,
-           fence_height);
+  /*  ROS_INFO("Virtual Fence Started with x = %f, y = %f, width = %f, height = %f", fence_x, fence_y, fence_width,
+      fence_height);*/
 
   //publish the fence as a polygon
   geometry_msgs::PolygonStamped fence_polygon;
