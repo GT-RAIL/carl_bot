@@ -6,6 +6,7 @@
 
   <maintainer email="spkordell@wpi.edu">Steven Kordell</maintainer>
   <author email="spkordell@wpi.edu">Steven Kordell</author>
+  <author email="rctoris@wpi.edu">Russell Toris</author>
 
   <license>BSD</license>
 
@@ -18,16 +19,11 @@
   <build_depend>std_msgs</build_depend>
   <build_depend>roscpp</build_depend>
   <build_depend>geometry_msgs</build_depend>
-  <build_depend>sensor_msgs</build_depend> 
-  <run_depend>actionlib</run_depend>
-  <run_depend>move_base_msgs</run_depend>
+  <build_depend>sensor_msgs</build_depend>
 
   <run_depend>std_msgs</run_depend>
   <run_depend>roscpp</run_depend>
   <run_depend>geometry_msgs</run_depend>
   <run_depend>sensor_msgs</run_depend>
   <run_depend>joy</run_depend>
-  <run_depend>actionlib</run_depend>
-  <run_depend>move_base_msgs</run_depend>
-
 </package>
