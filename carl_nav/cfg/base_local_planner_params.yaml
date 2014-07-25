@@ -47,13 +47,13 @@ DWAPlannerROS:
   vth_samples: 20
   sim_time: 1.5
   penalize_negative_x: true
-  path_distance_bias: 6.0
-  goal_distance_bias: 54.0
+  path_distance_bias: 1.0
+  goal_distance_bias: 50.0
   sim_granularity: 0.025
 
   yaw_goal_tolerance: 0.15
   xy_goal_tolerance: 0.15
-  occdist_scale: 5.0
+  occdist_scale: 5.5
   scaling_speed: 0.4
   max_scaling_factor: 0.30
   stop_time_buffer: 0.2
