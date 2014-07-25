@@ -1,15 +1,15 @@
 local_costmap:
   global_frame: odom
   robot_base_frame: base_footprint
-  update_frequency: 15.0
-  publish_frequency: 1.0
+  update_frequency: 30.0
+  publish_frequency: 30.0
   static_map: false
   rolling_window: true
-  width: 4.0
-  height: 4.0
+  width: 3.0
+  height: 3.0
   resolution: 0.025
 
-  inflation_layer: {cost_scaling_factor: 5.0, enabled: true, inflation_radius: 0.46}
+  inflation_layer: {cost_scaling_factor: 0.0, enabled: true, inflation_radius: 0.47}
 
   obstacle_layer:
     combination_method: 1

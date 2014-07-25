@@ -35,8 +35,8 @@
 	  	<param name="odom_frame_id" value="odom"/>
 	  	<param name="base_frame_id" value="base_footprint"/>
 	  	<param name="transform_tolerance" value="1.0"/>
-	  	<param name="recovery_alpha_slow" value="0.0"/>
-  		<param name="recovery_alpha_fast" value="0.0"/>
+	  	<param name="recovery_alpha_slow" value="0.001"/>
+  		<param name="recovery_alpha_fast" value="0.1"/>
         <param name="use_map_topic" value="true" />
         <param name="first_map_only" value="false"/>
         <param name="save_pose_rate" value="20" />
@@ -53,9 +53,10 @@
 		<param name="planner_patience" value="7.0" />
 		<param name="controller_patience" value="7.0" />
 		<param name="recovery_behavior_enabled" value="true" />
-		<param name="clearing_rotation_allowed" value="false" />
-<!--		<param name="prune_plan" value="false" />-->
-		<param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
+		<param name="clearing_rotation_allowed" value="true" />
+		<param name="prune_plan" value="false" />
+ 		<param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
+		<param name="planner_frequency" value="0.6" />
 	</node>
 	
 </launch>
