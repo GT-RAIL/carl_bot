@@ -13,19 +13,20 @@
       <origin xyz=".025 -.02 -.02" rpy="-1.5708 0 -1.5708" />
     </xacro:sensor_asus_xtion_pro>
 	
+	
     <link name="camera_lift_link">
       <visual>
-        <origin xyz="0 0 0" rpy="0 0 1.5708" />
+        <origin xyz="0 0 0" rpy="0 1.5708 1.5708" />
         <geometry>
           <mesh filename="package://carl_description/meshes/camera_lift.dae" />
         </geometry>
       </visual>
-      <collision>
-        <origin xyz="0 0 0" rpy="0 0 1.5708" />
+	  <collision>
+        <origin xyz="0.0127 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://carl_description/meshes/camera_lift.dae" />
-        </geometry>
-      </collision>
+          <box size="0.027 0.454 0.054" />
+         </geometry>
+      </collision>         
     </link>
   
     <link name="camera_tilt_bracket_link">
@@ -36,13 +37,13 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 1.5708 0" />
         <geometry>
-          <mesh filename="package://carl_description/meshes/camera_plate.dae" />
+          <mesh filename="package://carl_description/meshes/camera_mount.dae" />
         </geometry>
       </visual>
       <collision>
         <origin xyz="0 0 0" rpy="0 1.5708 0" />
         <geometry>
-          <mesh filename="package://carl_description/meshes/camera_plate.dae" />
+          <mesh filename="package://carl_description/meshes/camera_mount.dae" />
         </geometry>
       </collision>
     </link>
@@ -50,7 +51,7 @@
     <joint name="left_rear_strut_camera_lift_joint" type="fixed">
       <parent link="right_rear_strut_link"/>
       <child link="camera_lift_link"/>
-      <origin xyz="0.01 0.20 1.461" rpy="0 0 0" />
+      <origin xyz="0.013 0.20 1.538" rpy="0 0 0" />
     </joint>
   
     <joint name="camera_lift_camera_tilt_bracket_joint" type="continuous">
