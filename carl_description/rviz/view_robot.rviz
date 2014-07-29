@@ -89,11 +89,7 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        camera_tilt_bracket_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        camera_tilt_plate_link:
+        camera_mount_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -218,6 +214,21 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        servo_arm_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        servo_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        servo_mount_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         top_plate_link:
           Alpha: 1
           Show Axes: false
@@ -267,22 +278,22 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 1.99632
+      Distance: 2.73225
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.556716
-        Y: -0.183506
-        Z: 1.19717
+        X: 0.018075
+        Y: -0.0034123
+        Z: 0.656925
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.330203
+      Pitch: 0.319796
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.725382
+      Yaw: 0.785384
     Saved: ~
 Window Geometry:
   Displays:
