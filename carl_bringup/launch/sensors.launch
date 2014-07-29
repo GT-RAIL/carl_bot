@@ -14,7 +14,7 @@
 	<!--HOKUYO-->
 	<node name="urg_node" pkg="urg_node" type="urg_node" output="screen">
 	      <param name="frame_id" value="hokuyo_link"/>
-	      <param name="angle_min" value="-1.755"/>
+	      <param name="angle_min" value="-1.669"/>
 	      <param name="angle_max" value="1.755"/>
 	</node>
 </launch>

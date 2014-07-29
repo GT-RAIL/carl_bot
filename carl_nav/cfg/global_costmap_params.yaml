@@ -1,12 +1,12 @@
 global_costmap:
   global_frame: /map
   robot_base_frame: base_footprint
-  update_frequency: 5.0
+  update_frequency: 2.0
   publish_frequency: 1.0
   static_map: true
 
-  inflation_layer: {cost_scaling_factor: 10.0, enabled: true, inflation_radius: 0.444}
-  inflation_radius: 0.444
+  inflation_layer: {cost_scaling_factor: 10.0, enabled: true, inflation_radius: 0.50}
+  inflation_radius: 0.50
   laser_scan_sensor: {clearing: true, data_type: LaserScan, marking: true, sensor_frame: hokuyo_link,
     topic: scan}
   obstacle_layer:
