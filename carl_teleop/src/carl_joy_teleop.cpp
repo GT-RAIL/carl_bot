@@ -61,7 +61,12 @@ carl_joy_teleop::carl_joy_teleop()
   puts(" ---------------------------------------------------");
 	puts("| CARL Joystick Teleop Help                         |");
 	puts("|---------------------------------------------------|*");
-	puts("| Current Mode: Arm Control                         |*");
+	if (mode == BASE_CONTROL)
+		puts("| Current Mode: Base Control                        |*");
+	else if (mode == ARM_CONTROL)
+		puts("| Current Mode: Arm Control                         |*");
+	else if (mode == FINGER_CONTROL)
+		puts("| Current Mode: Finger Control                      |*");
 	puts("|---------------------------------------------------|*");
 	puts("| For help and controls, press:                     |*");
 	puts("|                          _                        |*");
@@ -135,7 +140,7 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
 				puts("| Current Mode: Arm Control              |*");
 			else if (mode == FINGER_CONTROL)
 				puts("| Current Mode: Finger Control           |*");
-			else
+			else if (mode == BASE_CONTROL)
 			  puts(" Current Mode: Base Control              |*");
 			puts("|----------------------------------------|*");
 			puts("|              Arm Controls              |*");
@@ -175,7 +180,7 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
 				puts("| Current Mode: Arm Control              |*");
 			else if (mode == FINGER_CONTROL)
 				puts("| Current Mode: Finger Control           |*");
-			else
+			else if (mode == BASE_CONTROL)
 			  puts(" Current Mode: Base Control              |*");
 			puts("|----------------------------------------|*");
 			puts("|            Finger Controls             |*");
@@ -215,7 +220,7 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
 				puts("| Current Mode: Arm Control              |*");
 			else if (mode == FINGER_CONTROL)
 				puts("| Current Mode: Finger Control           |*");
-			else
+			else if (mode == BASE_CONTROL)
 			  puts(" Current Mode: Base Control              |*");
 			puts("|----------------------------------------|*");
 			puts("|             Base Controls              |*");

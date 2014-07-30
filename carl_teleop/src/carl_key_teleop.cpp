@@ -53,7 +53,24 @@ struct termios cooked, raw;
 
 carl_key_teleop::carl_key_teleop()
 {
+  // a private handle for this ROS node (allows retrieval of relative parameters)
+  ros::NodeHandle private_nh("~");
+
+  // create the ROS topics
+  angular_cmd = nh_.advertise<jaco_msgs::AngularCommand>("jaco_arm/angular_cmd", 10);
+  cartesian_cmd = nh_.advertise<jaco_msgs::CartesianCommand>("jaco_arm/cartesian_cmd", 10);
   vel_pub_ = nh_.advertise<geometry_msgs::Twist>("cmd_vel", 1);
+  
+  // read in throttle values
+  private_nh.param<double>("linear_throttle_factor_base", linear_throttle_factor_base, 1.0);
+  private_nh.param<double>("angular_throttle_factor_base", angular_throttle_factor_base, 1.0);
+  private_nh.param<double>("linear_throttle_factor_arm", linear_throttle_factor_arm, 1.0);
+  private_nh.param<double>("angular_throttle_factor_arm", angular_throttle_factor_arm, 1.0);
+  private_nh.param<double>("finger_throttle_factor", finger_throttle_factor, 1.0);
+  
+  mode = BASE_CONTROL;
+  
+  ROS_INFO("CARL Keyboard Teleop Started");
 }
 
 void carl_key_teleop::watchdog()
@@ -77,7 +94,7 @@ void carl_key_teleop::loop()
 
   puts("    Reading from Keyboard    ");
   puts("-----------------------------");
-  puts(" Use Arrow Keys to Move CARL ");
+  puts("   Press the H key for help ");
 
   while (ros::ok())
   {
@@ -89,33 +106,200 @@ void carl_key_teleop::loop()
       exit(-1);
     }
 
-    // determine the speed
-    double linear = 0;
-    double angular = 0;
-    switch (c)
+    //Display help message
+    if (c == KEYCODE_H)
     {
-      case KEYCODE_L:
-        angular = MAX_ANG_VEL;
-        break;
-      case KEYCODE_R:
-        angular = -MAX_ANG_VEL;
-        break;
-      case KEYCODE_U:
-        linear = MAX_TRANS_VEL;
-        break;
-      case KEYCODE_D:
-        linear = -MAX_TRANS_VEL;
-        break;
+      displayHelp();
     }
 
-    // attempt to publish the speed
-    boost::mutex::scoped_lock lock(publish_mutex_);
-    if (ros::Time::now() > last_publish_ + ros::Duration(1.0))
+    switch (mode)
     {
-      first_publish_ = ros::Time::now();
+      case BASE_CONTROL:
+      {
+        // determine the speed
+        double linear = 0;
+        double angular = 0;
+        switch (c)
+        {
+          case KEYCODE_LEFT:
+            angular = MAX_ANG_VEL_BASE * angular_throttle_factor_base;
+          break;
+          case KEYCODE_RIGHT:
+            angular = -MAX_ANG_VEL_BASE * angular_throttle_factor_base;
+          break;
+          case KEYCODE_UP:
+            linear = MAX_TRANS_VEL_BASE * linear_throttle_factor_base;
+          break;
+          case KEYCODE_DOWN:
+            linear = -MAX_TRANS_VEL_BASE * linear_throttle_factor_base;
+          break;
+          case KEYCODE_1:
+            mode = ARM_CONTROL;
+            ROS_INFO("Activated arm control mode");
+          break;
+          case KEYCODE_2:
+            mode = FINGER_CONTROL;
+            ROS_INFO("Activated finger control mode");
+          break;
+        }
+
+        // attempt to publish the speed
+        boost::mutex::scoped_lock lock(publish_mutex_);
+        if (ros::Time::now() > last_publish_ + ros::Duration(1.0))
+        {
+          first_publish_ = ros::Time::now();
+        }
+        last_publish_ = ros::Time::now();
+        publish(angular, linear);
+      }
+      break;
+      case ARM_CONTROL:
+      {
+        //initialize twist command
+        jaco_msgs::CartesianCommand cmd;
+        cmd.position = false;
+        cmd.armCommand = true;
+        cmd.fingerCommand = false;
+        cmd.repeat = true;
+        cmd.arm.linear.x = 0.0;
+        cmd.arm.linear.y = 0.0;
+        cmd.arm.linear.z = 0.0;
+        cmd.arm.angular.x = 0.0;
+        cmd.arm.angular.y = 0.0;
+        cmd.arm.angular.z = 0.0;
+
+        // w/s control forward/backward translation
+        // a/d control left/right translation
+        // r/f control up/down translation
+        // q/e controls roll
+        // up/down controls pitch
+        // left/right controls yaw
+        switch (c)
+        {
+          case KEYCODE_W:
+            cmd.arm.linear.x = MAX_TRANS_VEL_ARM * linear_throttle_factor_arm;
+          break;
+          case KEYCODE_S:
+            cmd.arm.linear.x = -MAX_TRANS_VEL_ARM * linear_throttle_factor_arm;
+          break;
+          case KEYCODE_A:
+            cmd.arm.linear.y = MAX_TRANS_VEL_ARM * linear_throttle_factor_arm;
+          break;
+          case KEYCODE_D:
+            cmd.arm.linear.y = -MAX_TRANS_VEL_ARM * linear_throttle_factor_arm;
+          break;
+          case KEYCODE_R:
+            cmd.arm.linear.z = MAX_TRANS_VEL_ARM * linear_throttle_factor_arm;
+          break;
+          case KEYCODE_F:
+            cmd.arm.linear.z = -MAX_TRANS_VEL_ARM * linear_throttle_factor_arm;
+          break;
+          case KEYCODE_Q:
+            cmd.arm.angular.z = -MAX_ANG_VEL_ARM * angular_throttle_factor_arm;
+          break;
+          case KEYCODE_E:
+            cmd.arm.angular.z = MAX_ANG_VEL_ARM * angular_throttle_factor_arm;
+          break;
+          case KEYCODE_UP:
+            cmd.arm.angular.x = -MAX_ANG_VEL_ARM * angular_throttle_factor_arm;
+          break;
+          case KEYCODE_DOWN:
+            cmd.arm.angular.x = MAX_ANG_VEL_ARM * angular_throttle_factor_arm;
+          break;
+          case KEYCODE_LEFT:
+            cmd.arm.angular.y = MAX_ANG_VEL_ARM * angular_throttle_factor_arm;
+          break;
+          case KEYCODE_RIGHT:
+            cmd.arm.angular.y = -MAX_ANG_VEL_ARM * angular_throttle_factor_arm;
+          break;
+          case KEYCODE_2:
+            mode = FINGER_CONTROL;
+            ROS_INFO("Activated finger control mode");
+          break;
+          case KEYCODE_3:
+            mode = BASE_CONTROL;
+            ROS_INFO("Activate base control mode");
+          break;
+        }
+
+        //publish twist to arm controller
+        boost::mutex::scoped_lock lock(publish_mutex_);
+        if (ros::Time::now() > last_publish_ + ros::Duration(1.0))
+        {
+          first_publish_ = ros::Time::now();
+        }
+        last_publish_ = ros::Time::now();
+        cartesian_cmd.publish(cmd);
+      }
+      break;
+      case FINGER_CONTROL:
+      {
+        //initialize finger command
+        jaco_msgs::AngularCommand cmd;
+        cmd.position = false;
+        cmd.armCommand = false;
+        cmd.fingerCommand = true;
+        cmd.repeat = true;
+        cmd.fingers.resize(3);
+        cmd.fingers[0] = 0.0;
+        cmd.fingers[1] = 0.0;
+        cmd.fingers[2] = 0.0;
+
+        // q/a controls finger 1
+        // w/s controls finger 2
+        // e/d controls finger 3
+        // r/f controls entire hand
+        switch (c)
+        {
+          case KEYCODE_Q:
+            cmd.fingers[0] = -MAX_FINGER_VEL * finger_throttle_factor;
+          break;
+          case KEYCODE_A:
+            cmd.fingers[0] = MAX_FINGER_VEL * finger_throttle_factor;
+          break;
+          case KEYCODE_W:
+            cmd.fingers[1] = -MAX_FINGER_VEL * finger_throttle_factor;
+          break;
+          case KEYCODE_S:
+            cmd.fingers[1] = MAX_FINGER_VEL * finger_throttle_factor;
+          break;
+          case KEYCODE_E:
+            cmd.fingers[2] = -MAX_FINGER_VEL * finger_throttle_factor;
+          break;
+          case KEYCODE_D:
+            cmd.fingers[2] = MAX_FINGER_VEL * finger_throttle_factor;
+          break;
+          case KEYCODE_R:
+            cmd.fingers[0] = -MAX_FINGER_VEL * finger_throttle_factor;
+            cmd.fingers[1] = cmd.fingers[0];
+            cmd.fingers[2] = cmd.fingers[0];
+          break;
+          case KEYCODE_F:
+            cmd.fingers[0] = MAX_FINGER_VEL * finger_throttle_factor;
+            cmd.fingers[1] = cmd.fingers[0];
+            cmd.fingers[2] = cmd.fingers[0];
+          break;
+          case KEYCODE_1:
+            mode = ARM_CONTROL;
+            ROS_INFO("Activated arm control mode");
+          break;
+          case KEYCODE_3:
+            mode = BASE_CONTROL;
+            ROS_INFO("Activate base control mode");
+          break;
+        }
+
+        //publish twist to finger controller
+        boost::mutex::scoped_lock lock(publish_mutex_);
+        if (ros::Time::now() > last_publish_ + ros::Duration(1.0))
+        {
+          first_publish_ = ros::Time::now();
+        }
+        last_publish_ = ros::Time::now();
+        angular_cmd.publish(cmd);
+      }
+      break;
     }
-    last_publish_ = ros::Time::now();
-    publish(angular, linear);
   }
 }
 
@@ -126,6 +310,60 @@ void carl_key_teleop::publish(double angular, double linear)
   vel.linear.x = linear;
   // send the command
   vel_pub_.publish(vel);
+}
+
+void carl_key_teleop::displayHelp()
+{
+  switch (mode)
+  {
+    case ARM_CONTROL:
+      puts(" ------------------------------------");
+      puts("| CARL Keyboard Teleop Help          |");
+      puts("|------------------------------------|*");
+      puts("| Current Mode: Arm Control          |*");
+      puts("|------------------------------------|*");
+      puts("| w/s : forward/backward translation |*");
+      puts("| a/d : left/right translation       |*");
+      puts("| r/f : up/down translation          |*");
+      puts("| q/e : roll                         |*");
+      puts("| up/down : pitch                    |*");
+      puts("| left/right : yaw                   |*");
+      puts("| 1 : switch to Arm Control          |*");
+      puts("| 2 : switch to Finger Control       |*");
+      puts("| 3 : switch to Base Control         |*");
+      puts(" ------------------------------------**");
+      puts("  *************************************");
+      break;
+    case FINGER_CONTROL:
+      puts(" ------------------------------------");
+      puts("| CARL Keyboard Teleop Help          |");
+      puts("|------------------------------------|*");
+      puts("| Current Mode: Finger Control       |*");
+      puts("|------------------------------------|*");
+      puts("| q/a : open/close thumb             |*");
+      puts("| w/s : open/close top finger        |*");
+      puts("| e/d : open/close bottom finger     |*");
+      puts("| r/f : open/close entire hand       |*");
+      puts("| 1 : switch to Arm Control          |*");
+      puts("| 2 : switch to Finger Control       |*");
+      puts("| 3 : switch to Base Control         |*");
+      puts(" ------------------------------------**");
+      puts("  *************************************");
+      break;
+     case BASE_CONTROL:
+      puts(" ------------------------------------");
+      puts("| CARL Keyboard Teleop Help          |");
+      puts("|------------------------------------|*");
+      puts("| Current Mode: Base Control         |*");
+      puts("|------------------------------------|*");
+      puts("| up/down : forward/backward         |*");
+      puts("| left/right : turn left/right       |*");
+      puts("| 1 : switch to Arm Control          |*");
+      puts("| 2 : switch to Finger Control       |*");
+      puts("| 3 : switch to Base Control         |*");
+      puts(" ------------------------------------**");
+      puts("  *************************************");
+  }
 }
 
 void shutdown(int sig)
