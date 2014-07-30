@@ -1,6 +1,0 @@
-<launch>
-
-    <rosparam file="$(find carl_dynamixel)/back_servos.yaml" command="load"/>
-    <node name="back_joints_node" pkg="carl_dynamixel" type="back_joints_node" output="screen"/>
-
-</launch>
