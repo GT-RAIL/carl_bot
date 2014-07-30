@@ -17,7 +17,6 @@
   <run_depend>carl_description</run_depend>
   <run_depend>carl_teleop</run_depend>
   <run_depend>carl_bringup</run_depend>
-  <run_depend>carl_nav</run_depend>
   
   <export>
     <metapackage />
