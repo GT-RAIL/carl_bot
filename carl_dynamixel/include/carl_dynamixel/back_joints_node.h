@@ -18,6 +18,7 @@
 #include "sensor_msgs/JointState.h"
 #include "dynamixel_msgs/MotorStateList.h"
 #include "dynamixel_msgs/MotorState.h"
+#include <math.h>
 
 class back_joints
 {
