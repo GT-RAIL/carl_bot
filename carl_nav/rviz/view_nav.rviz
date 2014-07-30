@@ -113,10 +113,10 @@ Visualization Manager:
       Class: rviz/Map
       Color Scheme: costmap
       Draw Behind: false
-      Enabled: true
+      Enabled: false
       Name: local cost map
       Topic: /move_base/local_costmap/costmap
-      Value: true
+      Value: false
     - Alpha: 0.7
       Class: rviz/Map
       Color Scheme: costmap
@@ -316,11 +316,11 @@ Visualization Manager:
         Value: false
       Name: Current View
       Near Clip Distance: 0.01
-      Scale: 120.74
+      Scale: 135.229
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz)
-      X: 3.23121
-      Y: 3.95386
+      X: 2.66506
+      Y: 3.66608
     Saved: ~
 Window Geometry:
   Asus:
