@@ -34,8 +34,8 @@ void back_joints::joints(const dynamixel_msgs::MotorStateList::ConstPtr& state){
 	sensor_msgs::JointState back_states;
 	for(int s = 0; s < state->motor_states.size(); s++){
 		dynamixel_msgs::MotorState servo = state->motor_states[s];
-		std:string name = back_servos[servo.id];
-		if(name.trim().size() == 0){
+		std::string name = back_servos[servo.id];
+		if(name.size() == 0){
 			name = "UNDEFINED";
 		}
 		back_states.name.push_back(name);
