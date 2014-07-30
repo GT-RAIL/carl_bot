@@ -2,45 +2,82 @@
  * \carl_joy_teleop.h
  * \brief Allows for control of CARL with a joystick.
  *
- * carl_joy_teleop creates a ROS node that allows the control of CARL with a joystick. This node listens to a /joy topic
- * and sends messages to the /cmd_vel topic.
+ * carl_joy_teleop creates a ROS node that allows the control of CARL with a joystick. 
+ * This node listens to a /joy topic and sends messages to the /cmd_vel topic.
  *
- * \author Russell Toris, WPI - rctoris@wpi.edu *
+ * \author David Kent, WPI - davidkent@wpi.edu
+ * \author Russell Toris, WPI - rctoris@wpi.edu
  * \author Steven Kordell, WPI - spkordell@wpi.edu
- * \date June 10, 2014
+ * \date July 24, 2014
  */
 
 #ifndef CARL_JOY_TELEOP_H_
 #define CARL_JOY_TELEOP_H_
 
 #include <geometry_msgs/Twist.h>
+#include <jaco_msgs/AngularCommand.h>
+#include <jaco_msgs/CartesianCommand.h>
 #include <ros/ros.h>
 #include <sensor_msgs/Joy.h>
-#include <actionlib/client/simple_action_client.h>
-#include <move_base_msgs/MoveBaseAction.h>
 
+//Control modes
+#define ARM_CONTROL 0 
+#define FINGER_CONTROL 1
+#define BASE_CONTROL 2
+
+//Joystick types
+#define ANALOG 0 //analog triggers
+#define DIGITAL 1 //digital triggers
+
+//Arm Parameters
+/*!
+ * \def MAX_TRANS_VEL_ARM
+ *
+ * The maximum translational velocity.
+ */
+#define MAX_TRANS_VEL_ARM .175
+
+/*!
+ * \def MAX_ANG_VEL_ARM
+ *
+ * The maximum angular velocity.
+ */
+#define MAX_ANG_VEL_ARM 1.047
+
+/*!
+ * \def MAX_FINGER_VEL
+ * The maximum velocity for a finger.
+ */
+#define MAX_FINGER_VEL 30
+
+//Base Parameters
 /*!
  * \def MAX_TRANS_VEL
  *
  * The maximum translational velocity.
  */
-#define MAX_TRANS_VEL .8
+#define MAX_TRANS_VEL_BASE 1.0
 
 /*!
  * \def MAX_ANG_VEL
  *
  * The maximum angular velocity.
  */
-#define MAX_ANG_VEL 1.2
+#define MAX_ANG_VEL_BASE 1.0
 
-typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> ActionClient;
+/*!
+ * \def NON_BOOST_THROTTLE
+ *
+ * The throttle factor for a non-boost command.
+ */
+#define NON_BOOST_THROTTLE 0.8
 
 /*!
  * \class carl_joy_teleop
  * \brief Allows for control of CARL with a joystick.
  *
- * carl_joy_teleop creates a ROS node that allows the control of CARL with a joystick. This node listens to a /joy topic
- * and sends messages to the /cmd_vel topic.
+ * carl_joy_teleop creates a ROS node that allows the control of CARL with a joystick. 
+ * This node listens to a /joy topic and sends messages to the /cmd_vel topic.
  */
 class carl_joy_teleop
 {
@@ -50,6 +87,11 @@ public:
    * are created and maintained within this object.
    */
   carl_joy_teleop();
+  
+  /*!
+   * Periodically publish velocity message to the arm controller
+   */
+  void publish_velocity();
 
 private:
   /*!
@@ -61,16 +103,29 @@ private:
 
   ros::NodeHandle node; /*!< a handle for this ROS node */
 
-  ros::Publisher cmd_vel; /*!< the cmd_vel topic */
+  ros::Publisher cmd_vel; /*!< the base cmd_vel topic */
+  ros::Publisher angular_cmd; /*!< angular arm command topic */
+  ros::Publisher cartesian_cmd; /*!< cartesian arm command topic */
   ros::Subscriber joy_sub; /*!< the joy topic */
-
-  ActionClient* actionClient; /*!< A handle for the move_base action client thread */
-
-  float linear_throttle_factor; /*!< factor for reducing the maximum linear speed */
-  float angular_throttle_factor; /*!< factor for reducing the maximum angular speed */
-
-  bool deadmanPressed; /*!< save state of deadman switch */
-
+  
+  jaco_msgs::AngularCommand angularCmd; /*!< angular movement command */
+  jaco_msgs::CartesianCommand cartesianCmd; /*!< cartesian movement command */
+  
+  int mode; /*!< the control mode */
+  int controllerType; /*!< the type of joystick controller */
+  double linear_throttle_factor_base; /*!< factor for reducing the base maximum linear speed */
+  double angular_throttle_factor_base; /*!< factor for reducing the base maximum angular speed */
+  double linear_throttle_factor_arm; /*!< factor for reducing the arm linear speed */
+  double angular_throttle_factor_arm; /*!< factor for reducing the arm angular speed */
+  double finger_throttle_factor; /*!< factor for reducing the finger speed */
+  bool stopMessageSentArm; /*!< flag to prevent the arm stop command from being sent repeatedly when the controller is in the neutral position */
+  bool stopMessageSentFinger; /*!< flag to prevent the finger stop command from being sent repeatedly when the controller is in the neutral position */
+  bool initLeftTrigger; /*!< flag for whether the left trigger is initialized */
+	bool initRightTrigger; /*!< flag for whether the right trigger is initialized */
+	bool calibrated; /*!< flag for whether the controller is calibrated, this only affects controllers with analog triggers */
+	bool EStopEnabled; /*!< software emergency stop for the arm*/
+	bool helpDisplayed; /*!< flag so help is not repeatedly displayed*/
+  bool deadman; /*!< save state of deadman switch */
 };
 
 /*!
