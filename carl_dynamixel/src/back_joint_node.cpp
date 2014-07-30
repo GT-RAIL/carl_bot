@@ -39,7 +39,7 @@ void back_joints::joints(const dynamixel_msgs::MotorStateList::ConstPtr& state){
 			name = "UNDEFINED";
 		}
 		back_states.name.push_back(name);
-		float servo_pos_deg = ((float)servo.position-512.0)*0.2929
+		float servo_pos_deg = ((float)servo.position-512.0)*0.2929;
 		back_states.position.push_back((servo_pos_deg*M_PI)/180.0);
 	}
 	back_states.header.stamp = ros::Time::now();
