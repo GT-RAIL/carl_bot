@@ -101,13 +101,16 @@ private:
    */
   void joy_cback(const sensor_msgs::Joy::ConstPtr& joy);
 
+  void displayHelp(int menuNumber);
+
   ros::NodeHandle node; /*!< a handle for this ROS node */
 
   ros::Publisher cmd_vel; /*!< the base cmd_vel topic */
   ros::Publisher angular_cmd; /*!< angular arm command topic */
   ros::Publisher cartesian_cmd; /*!< cartesian arm command topic */
   ros::Subscriber joy_sub; /*!< the joy topic */
-  
+
+  geometry_msgs::Twist twist; /*!< base movement command */
   wpi_jaco_msgs::AngularCommand angularCmd; /*!< angular movement command */
   wpi_jaco_msgs::CartesianCommand cartesianCmd; /*!< cartesian movement command */
   
