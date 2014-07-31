@@ -3,7 +3,8 @@
  * \brief Allows for control of CARL with a joystick.
  *
  * carl_joy_teleop creates a ROS node that allows the control of CARL with a joystick. 
- * This node listens to a /joy topic and sends messages to the /cmd_vel topic.
+ * This node listens to a /joy topic and sends messages to the /cmd_vel topic for 
+ * the base and angular_cmd and cartesian_cmd for the arm.
  *
  * \author David Kent, WPI - davidkent@wpi.edu
  * \author Russell Toris, WPI - rctoris@wpi.edu
@@ -14,11 +15,10 @@
 #ifndef CARL_JOY_TELEOP_H_
 #define CARL_JOY_TELEOP_H_
 
-#include <geometry_msgs/Twist.h>
-#include <jaco_msgs/AngularCommand.h>
-#include <jaco_msgs/CartesianCommand.h>
 #include <ros/ros.h>
 #include <sensor_msgs/Joy.h>
+#include <wpi_jaco_msgs/AngularCommand.h>
+#include <wpi_jaco_msgs/CartesianCommand.h>
 
 //Control modes
 #define ARM_CONTROL 0 
@@ -108,8 +108,8 @@ private:
   ros::Publisher cartesian_cmd; /*!< cartesian arm command topic */
   ros::Subscriber joy_sub; /*!< the joy topic */
   
-  jaco_msgs::AngularCommand angularCmd; /*!< angular movement command */
-  jaco_msgs::CartesianCommand cartesianCmd; /*!< cartesian movement command */
+  wpi_jaco_msgs::AngularCommand angularCmd; /*!< angular movement command */
+  wpi_jaco_msgs::CartesianCommand cartesianCmd; /*!< cartesian movement command */
   
   int mode; /*!< the control mode */
   int controllerType; /*!< the type of joystick controller */
