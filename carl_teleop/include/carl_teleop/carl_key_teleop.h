@@ -28,11 +28,12 @@
  */
 
 /*!
- * \carl_key_teleop.h
+ * \carl_key_teleop.cpp
  * \brief Allows for control of CARL with a keyboard.
  *
- * carl_joy_teleop creates a ROS node that allows the control of CARL with a keyboard. This node listens to a /joy topic
- * and sends messages to the /cmd_vel topic.
+ * carl_key_teleop creates a ROS node that allows the control of CARL with a keyboard. 
+ * This node takes input from the keyboard via the terminal and sends messages to the 
+ * /cmd_vel topic for the base and angular_cmd and cartesian_cmd for the arm.
  *
  * \author David Kent, WPI - davidkent@wpi.edu
  * \author Steven Kordell, WPI - spkordell@wpi.edu
@@ -45,13 +46,11 @@
 #include <ros/ros.h>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/thread.hpp>
-#include <geometry_msgs/Twist.h>
-#include <jaco_msgs/AngularCommand.h>
-#include <jaco_msgs/CartesianCommand.h>
 #include <sensor_msgs/Joy.h>
 #include <signal.h>
-#include <stdio.h>
 #include <termios.h>
+#include <wpi_jaco_msgs/AngularCommand.h>
+#include <wpi_jaco_msgs/CartesianCommand.h>
 
 //Keycodes
 #define KEYCODE_W 0x77

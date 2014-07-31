@@ -31,20 +31,15 @@
  * \carl_key_teleop.cpp
  * \brief Allows for control of CARL with a keyboard.
  *
- * carl_joy_teleop creates a ROS node that allows the control of CARL with a keyboard. This node listens to a /joy topic
- * and sends messages to the /cmd_vel topic.
+ * carl_key_teleop creates a ROS node that allows the control of CARL with a keyboard. 
+ * This node takes input from the keyboard via the terminal and sends messages to the 
+ * /cmd_vel topic for the base and angular_cmd and cartesian_cmd for the arm.
  *
+ * \author David Kent, WPI - davidkent@wpi.edu
  * \author Steven Kordell, WPI - spkordell@wpi.edu
  * \date May 23, 2014
  */
 
-#include <ros/ros.h>
-#include <geometry_msgs/Twist.h>
-#include <signal.h>
-#include <termios.h>
-#include <stdio.h>
-#include <boost/thread/mutex.hpp>
-#include <boost/thread/thread.hpp>
 #include <carl_teleop/carl_key_teleop.h>
 
 // used for capturing keyboard input
@@ -57,8 +52,8 @@ carl_key_teleop::carl_key_teleop()
   ros::NodeHandle private_nh("~");
 
   // create the ROS topics
-  angular_cmd = nh_.advertise<jaco_msgs::AngularCommand>("jaco_arm/angular_cmd", 10);
-  cartesian_cmd = nh_.advertise<jaco_msgs::CartesianCommand>("jaco_arm/cartesian_cmd", 10);
+  angular_cmd = nh_.advertise<wpi_jaco_msgs::AngularCommand>("jaco_arm/angular_cmd", 10);
+  cartesian_cmd = nh_.advertise<wpi_jaco_msgs::CartesianCommand>("jaco_arm/cartesian_cmd", 10);
   vel_pub_ = nh_.advertise<geometry_msgs::Twist>("cmd_vel", 1);
   
   // read in throttle values
@@ -156,7 +151,7 @@ void carl_key_teleop::loop()
       case ARM_CONTROL:
       {
         //initialize twist command
-        jaco_msgs::CartesianCommand cmd;
+        wpi_jaco_msgs::CartesianCommand cmd;
         cmd.position = false;
         cmd.armCommand = true;
         cmd.fingerCommand = false;
@@ -235,7 +230,7 @@ void carl_key_teleop::loop()
       case FINGER_CONTROL:
       {
         //initialize finger command
-        jaco_msgs::AngularCommand cmd;
+        wpi_jaco_msgs::AngularCommand cmd;
         cmd.position = false;
         cmd.armCommand = false;
         cmd.fingerCommand = true;

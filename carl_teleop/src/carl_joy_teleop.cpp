@@ -2,8 +2,9 @@
  * \carl_joy_teleop.cpp
  * \brief Allows for control of CARL with a joystick.
  *
- * carl_joy_teleop creates a ROS node that allows the control of CARL with a joystick. This node listens to a /joy topic
- * and sends messages to the /cmd_vel topic.
+ * carl_joy_teleop creates a ROS node that allows the control of CARL with a joystick. 
+ * This node listens to a /joy topic and sends messages to the /cmd_vel topic for 
+ * the base and angular_cmd and cartesian_cmd for the arm.
  *
  * \author David Kent, WPI - davidkent@wpi.edu
  * \author Russell Toris, WPI - rctoris@wpi.edu
@@ -22,8 +23,8 @@ carl_joy_teleop::carl_joy_teleop()
 
   // create the ROS topics
   cmd_vel = node.advertise<geometry_msgs::Twist>("cmd_vel", 10);
-  angular_cmd = node.advertise<jaco_msgs::AngularCommand>("jaco_arm/angular_cmd", 10);
-  cartesian_cmd = node.advertise<jaco_msgs::CartesianCommand>("jaco_arm/cartesian_cmd", 10);
+  angular_cmd = node.advertise<wpi_jaco_msgs::AngularCommand>("jaco_arm/angular_cmd", 10);
+  cartesian_cmd = node.advertise<wpi_jaco_msgs::CartesianCommand>("jaco_arm/cartesian_cmd", 10);
   joy_sub = node.subscribe<sensor_msgs::Joy>("joy", 10, &carl_joy_teleop::joy_cback, this);
 
   // read in throttle values
