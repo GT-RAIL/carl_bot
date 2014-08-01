@@ -1,0 +1,5 @@
+<launch>
+	  
+	<include file="$(find wpi_jaco_wrapper)/launch/arm.launch" />
+	
+</launch>

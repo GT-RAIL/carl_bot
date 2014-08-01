@@ -11,10 +11,16 @@
 	</node>
 	-->
 	
+	<!-- Sensor mounts -->
+	<include file="$(find carl_dynamixel)/launch/carl_servos.launch" />
+	
 	<!--HOKUYO-->
 	<node name="urg_node" pkg="urg_node" type="urg_node" output="screen">
 	      <param name="frame_id" value="hokuyo_link"/>
 	      <param name="angle_min" value="-1.669"/>
 	      <param name="angle_max" value="1.755"/>
 	</node>
+	
+	<!-- computer battery monitoring -->
+	<include file="$(find m4atx_battery_monitor)/launch/m4atx_battery_monitor.launch" />
 </launch>

@@ -110,7 +110,6 @@ add_executable(back_joints_node src/back_joint_node.cpp)
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 # add_dependencies(carl_dynamixel_node carl_dynamixel_generate_messages_cpp)
-add_dependencies(back_joints_node dynamixel_msgs_gencpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(back_joints_node

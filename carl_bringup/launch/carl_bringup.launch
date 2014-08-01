@@ -1,0 +1,6 @@
+<launch> 
+	<include file="$(find carl_bringup)/launch/arm.launch" />
+	<include file="$(find carl_bringup)/launch/base.launch" /> 
+	<include file="$(find carl_bringup)/launch/sensors.launch" />
+	<include file="$(find carl_bringup)/launch/robot_model.launch" />
+</launch>

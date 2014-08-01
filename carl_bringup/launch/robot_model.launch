@@ -10,7 +10,7 @@
   <param name="robot/type" value="carl"/>
 
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
-	  <rosparam param="source_list">[jaco_arm/joint_states]</rosparam>
+	  <rosparam param="source_list">[jaco_arm/joint_states, dynamixel_back, rmp_joint_states]</rosparam>
   </node>
   <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
     <param name="publish_frequency" type="double" value="50" />
