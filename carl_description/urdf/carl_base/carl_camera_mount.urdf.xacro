@@ -9,61 +9,109 @@
   
   <xacro:macro name="carl_camera_mount">
   
-    <xacro:sensor_asus_xtion_pro parent="camera_tilt_plate_link">
-      <origin xyz=".025 -.02 -.02" rpy="-1.5708 0 -1.5708" />
-    </xacro:sensor_asus_xtion_pro>
-	
     <link name="camera_lift_link">
       <visual>
-        <origin xyz="0 0 0" rpy="0 0 1.5708" />
+        <origin xyz="0 0 0" rpy="0 1.5708 1.5708" />
         <geometry>
           <mesh filename="package://carl_description/meshes/camera_lift.dae" />
         </geometry>
       </visual>
-      <collision>
-        <origin xyz="0 0 0" rpy="0 0 1.5708" />
+	  <collision>
+        <origin xyz="-0.0127 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://carl_description/meshes/camera_lift.dae" />
-        </geometry>
-      </collision>
+          <box size="0.027 0.454 0.054" />
+         </geometry>
+      </collision>         
     </link>
-  
-    <link name="camera_tilt_bracket_link">
-	  <!--exists to move center of rotation for camera mount-->
-    </link>
-  
-    <link name="camera_tilt_plate_link">
+    
+    <link name="camera_mount_link">
       <visual>
         <origin xyz="0 0 0" rpy="0 1.5708 0" />
         <geometry>
-          <mesh filename="package://carl_description/meshes/camera_plate.dae" />
+          <mesh filename="package://carl_description/meshes/camera_mount.dae" />
         </geometry>
       </visual>
-      <collision>
-        <origin xyz="0 0 0" rpy="0 1.5708 0" />
+    </link>
+  
+    <link name="servo_mount_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://carl_description/meshes/camera_plate.dae" />
+          <mesh filename="package://carl_description/meshes/servo_mount.dae" />
         </geometry>
+      </visual>
+	  <collision>
+        <origin xyz="0.023 0 0" rpy="0 0 0" />
+        <geometry>
+          <box size="0.08 0.055 0.09" />
+         </geometry>
       </collision>
     </link>
+  
+    <link name="servo_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://carl_description/meshes/servo.dae" />
+        </geometry>
+      </visual>
+	  <collision>
+        <origin xyz="0.01 -0.021 0" rpy="0 0 0" />
+        <geometry>
+          <box size="0.06 0.05 0.035" />
+         </geometry>
+      </collision>
+    </link>
+        
+    <link name="servo_arm_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://carl_description/meshes/servo_arm.dae" />
+        </geometry>
+      </visual>
+	  <collision>
+        <origin xyz="0 -0.01 -0.02" rpy="0 0 0" />
+        <geometry>
+          <box size="0.035 0.05 0.06" />
+         </geometry>
+      </collision>
+    </link>
+    
+    <xacro:sensor_asus_xtion_pro parent="camera_mount_link">
+      <origin xyz="-0.016 -0.008 0.018" rpy="0 -1.5708 0" />
+    </xacro:sensor_asus_xtion_pro>		
   
     <joint name="left_rear_strut_camera_lift_joint" type="fixed">
       <parent link="right_rear_strut_link"/>
       <child link="camera_lift_link"/>
-      <origin xyz="0.01 0.20 1.461" rpy="0 0 0" />
+      <origin xyz="0.013 0.20 1.538" rpy="0 0 0" />
     </joint>
   
-    <joint name="camera_lift_camera_tilt_bracket_joint" type="continuous">
+    <joint name="camera_lift_servo_mount_joint" type="fixed">
       <parent link="camera_lift_link"/>
-      <child link="camera_tilt_bracket_link"/>
-      <origin xyz="0.03 -0.10 0" rpy="1.5708 -1.5708 0" />
+      <child link="servo_mount_link"/>
+      <origin xyz="0 0 0" rpy="1.5708 0 0" />
       <axis xyz="0 0 1" />
     </joint>
-  
-    <joint name="camera_lift_bracket_camera_tilt_plate_joint" type="fixed">
-      <parent link="camera_tilt_bracket_link"/>
-      <child link="camera_tilt_plate_link"/>
-      <origin xyz="0.11 0 -0.10" rpy="0 0 0" />
+   
+    <joint name="servo_mount_servo_joint" type="fixed">
+      <parent link="servo_mount_link"/>
+      <child link="servo_link"/>
+      <origin xyz="0.073 0.013 0.0187" rpy="1.5708 0 3.92699" />
+    </joint>
+    
+    <joint name="servo_servo_arm_joint" type="continuous">
+      <parent link="servo_link"/>
+      <child link="servo_arm_link"/>
+      <origin xyz="0 -0.042 0" rpy="1.5708 1.5708 0" />
+      <axis xyz="0 0 1" />
+    </joint>
+    
+    <joint name="servo_arm_camera_mount_joint" type="fixed">
+      <parent link="servo_arm_link"/>
+      <child link="camera_mount_link"/>
+      <origin xyz="0 -0.053 -0.016" rpy="1.5708 0 1.5708" />
     </joint>
   
   </xacro:macro>
