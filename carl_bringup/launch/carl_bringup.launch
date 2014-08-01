@@ -3,4 +3,5 @@
 	<include file="$(find carl_bringup)/launch/base.launch" /> 
 	<include file="$(find carl_bringup)/launch/sensors.launch" />
 	<include file="$(find carl_bringup)/launch/robot_model.launch" />
+	<include file="$(find carl_teleop)/launch/carl_joy_teleop.launch" />
 </launch>

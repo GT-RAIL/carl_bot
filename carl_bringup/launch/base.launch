@@ -5,7 +5,4 @@
 	<!-- <param name="publish_tf" value="false" /> -->
 	</include>
 	
-	<!-- Segway battery monitor -->
-	<include file="$(find battery_monitor_rmp)/launch/battery_monitor_rmp.launch" />
-	
 </launch>
