@@ -6,6 +6,8 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
+        - /RobotModel1
+        - /TF1
       Splitter Ratio: 0.5
     Tree Height: 719
   - Class: rviz/Selection
@@ -77,14 +79,6 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        camera_depth_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        camera_depth_optical_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
         camera_lift_link:
           Alpha: 1
           Show Axes: false
@@ -95,19 +89,7 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        camera_rgb_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        camera_rgb_optical_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        camera_tilt_bracket_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        camera_tilt_plate_link:
+        camera_mount_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -192,6 +174,11 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        left_rear_strut_top_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         left_side_cover_link:
           Alpha: 1
           Show Axes: false
@@ -212,12 +199,32 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        right_rear_strut_top_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         right_side_cover_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
         right_wheel_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        servo_arm_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        servo_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        servo_mount_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -271,22 +278,22 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 4.55769
+      Distance: 2.63527
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.231772
-        Y: -0.0646478
-        Z: 0.391795
+        X: 0.199945
+        Y: 0.089067
+        Z: 0.723475
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.550398
+      Pitch: 0.4398
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.930398
+      Yaw: 0.83038
     Saved: ~
 Window Geometry:
   Displays:
