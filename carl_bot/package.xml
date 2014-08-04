@@ -5,7 +5,6 @@
 
   <maintainer email="rctoris@wpi.edu">Russell Toris</maintainer>
   <maintainer email="davidkent@wpi.edu">David Kent</maintainer>
-  <maintainer email="spkordell@wpi.edu">Steven Kordell</maintainer>
   <author email="spkordell@wpi.edu">Steven Kordell</author>
   <author email="cmdunkers@wpi.edu">Chris Dunkers</author>
   <author email="rctoris@wpi.edu">Russell Toris</author>
@@ -19,8 +18,9 @@
  
   <buildtool_depend>catkin</buildtool_depend>
 
-  <!-- <run_depend>carl_bringup</run_depend> -->
-  <!-- <run_depend>carl_description</run_depend> -->
+  <run_depend>carl_bringup</run_depend>
+  <run_depend>carl_description</run_depend>
+  <run_depend>carl_dynamixel</run_depend>
   <run_depend>carl_teleop</run_depend>
   
   <export>

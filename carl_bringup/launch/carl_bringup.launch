@@ -1,7 +1,13 @@
+<!--
+   Author: David Kent, Worcester Polytechnic Institute
+   Author: Russell Toris, Worcester Polytechnic Institute
+  Version: August 4, 2014
+-->
+
 <launch> 
-	<include file="$(find carl_bringup)/launch/arm.launch" />
-	<include file="$(find carl_bringup)/launch/base.launch" /> 
-	<include file="$(find carl_bringup)/launch/sensors.launch" />
-	<include file="$(find carl_bringup)/launch/robot_model.launch" />
-	<include file="$(find carl_teleop)/launch/carl_joy_teleop.launch" />
+  <include file="$(find carl_bringup)/launch/arm.launch" />
+  <include file="$(find carl_bringup)/launch/base.launch" /> 
+  <include file="$(find carl_bringup)/launch/sensors.launch" />
+  <include file="$(find carl_bringup)/launch/robot_model.launch" />
+  <include file="$(find carl_teleop)/launch/carl_joy_teleop.launch" />
 </launch>
