@@ -99,7 +99,7 @@
     </library_effects>
     <library_images>
         <image id="ID5">
-            <init_from>rear_strut_top/Metal_Corrogated_Shiny.jpg</init_from>
+            <init_from>materials/metal.jpg</init_from>
         </image>
     </library_images>
     <scene>

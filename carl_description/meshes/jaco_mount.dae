@@ -1387,7 +1387,7 @@
     </library_effects>
     <library_images>
         <image id="ID7">
-            <init_from>jaco_mount/Metal_Corrogated_Shiny.jpg</init_from>
+            <init_from>materials/metal.jpg</init_from>
         </image>
     </library_images>
     <scene>

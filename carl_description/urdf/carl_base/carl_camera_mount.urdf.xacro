@@ -1,14 +1,12 @@
 <?xml version="1.0"?>
-
 <robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
-        xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
-        xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
-        xmlns:xacro="http://ros.org/wiki/xacro">
-        
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+
   <xacro:include filename="$(find carl_description)/urdf/sensors/asus_xtion_pro.urdf.xacro" />
   
   <xacro:macro name="carl_camera_mount">
-  
     <link name="camera_lift_link">
       <visual>
         <origin xyz="0 0 0" rpy="0 1.5708 1.5708" />
@@ -83,36 +81,35 @@
     </xacro:sensor_asus_xtion_pro>		
   
     <joint name="left_rear_strut_camera_lift_joint" type="fixed">
-      <parent link="right_rear_strut_link"/>
-      <child link="camera_lift_link"/>
+      <parent link="right_rear_strut_link" />
+      <child link="camera_lift_link" />
       <origin xyz="0.013 0.20 1.538" rpy="0 0 0" />
     </joint>
   
     <joint name="camera_lift_servo_mount_joint" type="fixed">
-      <parent link="camera_lift_link"/>
-      <child link="servo_mount_link"/>
+      <parent link="camera_lift_link" />
+      <child link="servo_mount_link" />
       <origin xyz="0 0 0" rpy="1.5708 0 0" />
       <axis xyz="0 0 1" />
     </joint>
    
     <joint name="servo_mount_servo_joint" type="fixed">
-      <parent link="servo_mount_link"/>
-      <child link="servo_link"/>
+      <parent link="servo_mount_link" />
+      <child link="servo_link" />
       <origin xyz="0.073 0.013 0.0187" rpy="1.5708 0 3.92699" />
     </joint>
     
     <joint name="servo_servo_arm_joint" type="continuous">
-      <parent link="servo_link"/>
-      <child link="servo_arm_link"/>
+      <parent link="servo_link" />
+      <child link="servo_arm_link" />
       <origin xyz="0 -0.042 0" rpy="1.5708 1.5708 0" />
       <axis xyz="0 0 1" />
     </joint>
     
     <joint name="servo_arm_camera_mount_joint" type="fixed">
-      <parent link="servo_arm_link"/>
-      <child link="camera_mount_link"/>
+      <parent link="servo_arm_link" />
+      <child link="camera_mount_link" />
       <origin xyz="0 -0.053 -0.016" rpy="1.5708 0 1.5708" />
     </joint>
-  
   </xacro:macro>
 </robot>

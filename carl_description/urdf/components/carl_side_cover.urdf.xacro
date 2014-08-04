@@ -1,15 +1,11 @@
 <?xml version="1.0"?>
-
-  <root xmlns:xacro="http://ros.org/wiki/xacro">
-
+<root xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:macro name="carl_side_cover" params="suffix parent *origin">
-  
     <joint name="${parent}_${suffix}_side_cover_joint" type="fixed">
       <xacro:insert_block name="origin" />
       <parent link="${parent}" />
       <child link="${suffix}_side_cover_link" />
     </joint>
-    
     <link name="${suffix}_side_cover_link">
       <visual>
         <origin xyz="0 0 0" rpy="0 0 1.5708" />
@@ -18,6 +14,5 @@
         </geometry>
       </visual>
     </link>
-    
   </xacro:macro>
 </root>

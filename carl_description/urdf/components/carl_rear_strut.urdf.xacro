@@ -1,8 +1,6 @@
 <?xml version="1.0"?>
 <root xmlns:xacro="http://ros.org/wiki/xacro">
-
   <xacro:macro name="carl_rear_strut" params="suffix parent *origin">
-
     <joint name="${parent}_${suffix}_rear_strut_joint" type="fixed">
       <xacro:insert_block name="origin" />
       <parent link="${parent}" />
@@ -10,14 +8,14 @@
     </joint>
  
     <joint name="${suffix}_rear_strut_link_${suffix}_rear_strut_link_inside_joint" type="fixed">
-      <parent link="${suffix}_rear_strut_link"/>
-   	  <child link="${suffix}_rear_strut_inside_link"/>
+      <parent link="${suffix}_rear_strut_link" />
+   	  <child link="${suffix}_rear_strut_inside_link" />
       <origin xyz="0 0 0" rpy="0 0 0" />
     </joint>
     
     <joint name="${suffix}_rear_strut_link_${suffix}_rear_strut_top_link_joint" type="fixed">
-      <parent link="${suffix}_rear_strut_link"/>
-   	  <child link="${suffix}_rear_strut_top_link"/>
+      <parent link="${suffix}_rear_strut_link" />
+   	  <child link="${suffix}_rear_strut_top_link" />
       <origin xyz="0 0.001 1.055" rpy="0 0 0" />
     </joint>      
     
@@ -44,8 +42,7 @@
          </geometry>
       </collision>
     </link>
-    
-       
+
     <link name="${suffix}_rear_strut_top_link">
       <visual>
         <origin xyz="0 0 0" rpy="0 0 -1.5708" />
@@ -60,6 +57,5 @@
          </geometry>
       </collision>      
     </link>
-        
   </xacro:macro>
 </root>

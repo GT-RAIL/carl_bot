@@ -1,15 +1,11 @@
 <?xml version="1.0"?>
-
-  <root xmlns:xacro="http://ros.org/wiki/xacro">
-
+<root xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:macro name="hokuyo" params="parent *origin">
-  
     <joint name="${parent}_hokuyo_joint" type="fixed">
       <xacro:insert_block name="origin" />
       <parent link="${parent}" />
       <child link="hokuyo_link" />
     </joint>  
-
     <link name="hokuyo_link">
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
@@ -18,6 +14,5 @@
         </geometry>
       </visual>
     </link>
-   
   </xacro:macro>
 </root>

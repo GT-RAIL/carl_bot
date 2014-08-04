@@ -1,25 +1,22 @@
 <?xml version="1.0"?>
-
-  <root xmlns:xacro="http://ros.org/wiki/xacro">
-
+<root xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:macro name="carl_caster_assembly" params="parent *origin">
-  
     <joint name="${parent}_caster_plate_joint" type="fixed">
       <xacro:insert_block name="origin" />
-      <parent link="${parent}"/>
-      <child link="caster_plate_link"/>
+      <parent link="${parent}" />
+      <child link="caster_plate_link" />
     </joint>
 
     <joint name="caster_plate__caster_joint" type="continuous">
-      <parent link="caster_plate_link"/>
-      <child link="caster_link"/>
+      <parent link="caster_plate_link" />
+      <child link="caster_link" />
       <origin xyz="0.0267 0 -0.024" rpy="0 0 0" />
       <axis xyz="0 0 1" />
     </joint>
 
     <link name="caster_plate_link">
       <visual>
-        <origin xyz="0 0 0" rpy="0 0 1.5708"/>
+        <origin xyz="0 0 0" rpy="0 0 1.5708" />
         <geometry>
           <mesh filename="package://carl_description/meshes/caster_plate.dae" />
         </geometry>
@@ -28,7 +25,7 @@
 
     <link name="caster_link">
       <visual>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
           <mesh filename="package://carl_description/meshes/caster.dae" />
         </geometry>
@@ -40,6 +37,5 @@
          </geometry>
       </collision>
     </link>    
-    
   </xacro:macro>
 </root>
