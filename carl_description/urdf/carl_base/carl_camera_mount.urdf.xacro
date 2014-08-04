@@ -11,7 +11,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 1.5708 1.5708" />
         <geometry>
-          <mesh filename="package://carl_description/meshes/camera_lift.dae" />
+          <mesh filename="package://carl_description/meshes/camera_lift.min.dae" />
         </geometry>
       </visual>
 	  <collision>
@@ -26,7 +26,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 1.5708 0" />
         <geometry>
-          <mesh filename="package://carl_description/meshes/camera_mount.dae" />
+          <mesh filename="package://carl_description/meshes/camera_mount.min.dae" />
         </geometry>
       </visual>
     </link>
@@ -35,7 +35,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://carl_description/meshes/servo_mount.dae" />
+          <mesh filename="package://carl_description/meshes/servo_mount.min.dae" />
         </geometry>
       </visual>
 	  <collision>
@@ -50,7 +50,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://carl_description/meshes/servo.dae" />
+          <mesh filename="package://carl_description/meshes/servo.min.dae" />
         </geometry>
       </visual>
 	  <collision>
@@ -65,7 +65,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://carl_description/meshes/servo_arm.dae" />
+          <mesh filename="package://carl_description/meshes/servo_arm.min.dae" />
         </geometry>
       </visual>
 	  <collision>

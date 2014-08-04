@@ -24,7 +24,7 @@
      <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://carl_description/meshes/base.dae" />
+          <mesh filename="package://carl_description/meshes/base.min.dae" />
         </geometry>
       </visual>
     </link>

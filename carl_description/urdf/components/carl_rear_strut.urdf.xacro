@@ -32,7 +32,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 -1.5708" />
         <geometry>
-          <mesh filename="package://carl_description/meshes/rear_strut.dae" />
+          <mesh filename="package://carl_description/meshes/rear_strut.min.dae" />
         </geometry>
       </visual>
       <collision>
@@ -47,7 +47,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 -1.5708" />
         <geometry>
-          <mesh filename="package://carl_description/meshes/rear_strut_top.dae" />
+          <mesh filename="package://carl_description/meshes/rear_strut_top.min.dae" />
         </geometry>
       </visual>      
       <collision>

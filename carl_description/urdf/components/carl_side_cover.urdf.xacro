@@ -10,7 +10,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 1.5708" />
         <geometry>
-          <mesh filename="package://carl_description/meshes/side_cover.dae" />
+          <mesh filename="package://carl_description/meshes/side_cover.min.dae" />
         </geometry>
       </visual>
     </link>
