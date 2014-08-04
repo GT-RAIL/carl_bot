@@ -11,7 +11,7 @@
   </include>
   
   <!-- SENSOR MOUNTS -->
-  <include file="$(find carl_dynamixel)/launch/carl_servos.launch" />
+  <include file="$(find carl_dynamixel)/launch/carl_dynamixel.launch" />
   
   <!-- HOKUYO -->
   <node name="urg_node" pkg="urg_node" type="urg_node" output="screen">
