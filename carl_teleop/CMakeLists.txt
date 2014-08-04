@@ -34,16 +34,12 @@ add_executable(carl_key_teleop src/carl_key_teleop.cpp)
 add_dependencies(carl_key_teleop wpi_jaco_msgs_gencpp)
 target_link_libraries(carl_key_teleop ${catkin_LIBRARIES})
 
-
 #############
 ## Install ##
 #############
 
 ## Mark executables and/or libraries for installation
-install(TARGETS carl_joy_teleop
-  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
-install(TARGETS carl_key_teleop
+install(TARGETS carl_joy_teleop carl_key_teleop
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

@@ -58,7 +58,7 @@ carl_joy_teleop::carl_joy_teleop()
   cartesianCmd.repeat = true;
 
   ROS_INFO("CARL Joystick Teleop Started");
-  
+
   puts(" ---------------------------------------------------");
   puts("| CARL Joystick Teleop Help                         |");
   puts("|---------------------------------------------------|*");
@@ -78,14 +78,15 @@ carl_joy_teleop::carl_joy_teleop()
   puts("|                                                   |*");
   puts(" ---------------------------------------------------**");
   puts("  ****************************************************");
-  
+
   if (controllerType == ANALOG)
   {
     initLeftTrigger = false;
     initRightTrigger = false;
     calibrated = false;
-    
-    ROS_INFO("You specified a controller with analog triggers. This requires calibration before any teleoperation can begin.  Please press and release both triggers before continuing.");
+
+    ROS_INFO(
+        "You specified a controller with analog triggers. This requires calibration before any teleoperation can begin.  Please press and release both triggers before continuing.");
   }
   else
     calibrated = true;
@@ -98,19 +99,19 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
   {
     if (!initLeftTrigger && joy->axes.at(2) == 1.0)
       initLeftTrigger = true;
-    
+
     if (!initRightTrigger && joy->axes.at(5) == 1.0)
       initRightTrigger = true;
-    
+
     if (initLeftTrigger && initRightTrigger)
     {
       calibrated = true;
       ROS_INFO("Controller calibration complete!");
     }
-      
+
     return;
   }
-  
+
   //software emergency stop for arm
   if (controllerType == DIGITAL)
   {
@@ -126,10 +127,9 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
     else if (joy->buttons.at(7) == 1)
       EStopEnabled = false;
   }
-  
+
   //help menu
-  if ((controllerType == DIGITAL && joy->axes.at(5) == -1.0)
-    || (controllerType == ANALOG && joy->axes.at(7) == -1.0))
+  if ((controllerType == DIGITAL && joy->axes.at(5) == -1.0) || (controllerType == ANALOG && joy->axes.at(7) == -1.0))
   {
     if (!helpDisplayed)
     {
@@ -138,7 +138,7 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
     }
   }
   else if ((controllerType == DIGITAL && joy->axes.at(4) == 1.0)
-    || (controllerType == ANALOG && joy->axes.at(6) == 1.0))
+      || (controllerType == ANALOG && joy->axes.at(6) == 1.0))
   {
     if (!helpDisplayed)
     {
@@ -147,7 +147,7 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
     }
   }
   else if ((controllerType == DIGITAL && joy->axes.at(4) == -1.0)
-    || (controllerType == ANALOG && joy->axes.at(6) == -1.0))
+      || (controllerType == ANALOG && joy->axes.at(6) == -1.0))
   {
     if (!helpDisplayed)
     {
@@ -173,210 +173,210 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
     button2Index = 0;
     button3Index = 1;
   }
-  
+
   bool was_pressed;
-  
+
   switch (mode)
   {
-  case BASE_CONTROL:
-    // save the deadman switch state
-    was_pressed = deadman;
+    case BASE_CONTROL:
+      // save the deadman switch state
+      was_pressed = deadman;
 
-    if (joy->buttons.at(4) == 1)
-    {
-      // left joystick controls the linear and angular movement
-      twist.linear.x = joy->axes.at(1) * MAX_TRANS_VEL_BASE * linear_throttle_factor_base;
-      if (controllerType == DIGITAL)
-        twist.angular.z = joy->axes.at(2) * MAX_ANG_VEL_BASE * angular_throttle_factor_base;
-      else
-        twist.angular.z = joy->axes.at(3) * MAX_ANG_VEL_BASE * angular_throttle_factor_base;
-      
-      //boost throttle
-      if (joy->buttons.at(5) != 1)
+      if (joy->buttons.at(4) == 1)
       {
-        twist.linear.x *= NON_BOOST_THROTTLE;
-        twist.angular.z *= NON_BOOST_THROTTLE;
+        // left joystick controls the linear and angular movement
+        twist.linear.x = joy->axes.at(1) * MAX_TRANS_VEL_BASE * linear_throttle_factor_base;
+        if (controllerType == DIGITAL)
+          twist.angular.z = joy->axes.at(2) * MAX_ANG_VEL_BASE * angular_throttle_factor_base;
+        else
+          twist.angular.z = joy->axes.at(3) * MAX_ANG_VEL_BASE * angular_throttle_factor_base;
+
+        //boost throttle
+        if (joy->buttons.at(5) != 1)
+        {
+          twist.linear.x *= NON_BOOST_THROTTLE;
+          twist.angular.z *= NON_BOOST_THROTTLE;
+        }
+        deadman = true;
       }
-      deadman = true;
-    }
-    else
-      deadman = false;
-
-    //mode switching
-    modeChange = false;
-    if (joy->buttons.at(button1Index) == 1)
-    {
-      modeChange = true;
-      mode = FINGER_CONTROL;
-      ROS_INFO("Activated finger control mode");
-    }
-    else if (joy->buttons.at(button2Index) == 1)
-    {
-      modeChange = true;
-      mode = ARM_CONTROL;
-      ROS_INFO("Activated arm control mode");
-    }
-    
-    if (modeChange)
-    {
-      //cancel base motion
-      twist.linear.x = 0.0;
-      twist.angular.z = 0.0;
-    }
-
-    // send the twist command
-    if (deadman || was_pressed)
-      cmd_vel.publish(twist);
-    
-  break;
-  case ARM_CONTROL:
-    // left joystick controls the linear x and y movement
-    cartesianCmd.arm.linear.x = joy->axes.at(1) * MAX_TRANS_VEL_ARM * linear_throttle_factor_arm;
-    cartesianCmd.arm.linear.y = joy->axes.at(0) * MAX_TRANS_VEL_ARM * linear_throttle_factor_arm;
-
-    //triggers control the linear z movement
-    if (controllerType == DIGITAL)
-    {
-      if (joy->buttons.at(7) == 1)
-        cartesianCmd.arm.linear.z = MAX_TRANS_VEL_ARM * linear_throttle_factor_arm;
-      else if (joy->buttons.at(6) == 1)
-        cartesianCmd.arm.linear.z = -MAX_TRANS_VEL_ARM * linear_throttle_factor_arm;
       else
-        cartesianCmd.arm.linear.z = 0.0;
-    }
-    else
-    {
-      if (joy->axes.at(5) < 1.0)
-        cartesianCmd.arm.linear.z = (0.5 - joy->axes.at(5)/2.0) * MAX_ANG_VEL_ARM * angular_throttle_factor_arm;
-      else
-        cartesianCmd.arm.linear.z = -(0.5 - joy->axes.at(2)/2.0) * MAX_ANG_VEL_ARM * angular_throttle_factor_arm;
-    }
-    
-    //bumpers control roll
-    if (joy->buttons.at(5) == 1)
-      cartesianCmd.arm.angular.z = MAX_ANG_VEL_ARM * angular_throttle_factor_arm;
-    else if (joy->buttons.at(4) == 1)
-      cartesianCmd.arm.angular.z = -MAX_ANG_VEL_ARM * angular_throttle_factor_arm;
-    else
-      cartesianCmd.arm.angular.z = 0.0;
-    
-    //right joystick controls pitch and yaw
-    if (controllerType == DIGITAL)
-    {
-      cartesianCmd.arm.angular.x = -joy->axes.at(3) * MAX_ANG_VEL_ARM * angular_throttle_factor_arm;
-      cartesianCmd.arm.angular.y = joy->axes.at(2) * MAX_ANG_VEL_ARM * angular_throttle_factor_arm;
-    }
-    else
-    {
-      cartesianCmd.arm.angular.x = -joy->axes.at(4) * MAX_ANG_VEL_ARM * angular_throttle_factor_arm;
-      cartesianCmd.arm.angular.y = joy->axes.at(3) * MAX_ANG_VEL_ARM * angular_throttle_factor_arm;
-    }
-    
-    //mode switching
-    modeChange = false;
-    if (joy->buttons.at(button1Index) == 1)
-    {
-      modeChange = true;
-      mode = FINGER_CONTROL;
-      ROS_INFO("Activated finger control mode");
-    }
-    else if (joy->buttons.at(button3Index) == 1)
-    {
-      modeChange = true;
-      mode = BASE_CONTROL;
-      ROS_INFO("Activated base control mode");
-    }
-    
-    if (modeChange)
-    {
-      //cancel arm trajectory
-      cartesianCmd.arm.linear.x = 0.0;
-      cartesianCmd.arm.linear.y = 0.0;
-      cartesianCmd.arm.linear.z = 0.0;
-      cartesianCmd.arm.angular.x = 0.0;
-      cartesianCmd.arm.angular.y = 0.0;
-      cartesianCmd.arm.angular.z = 0.0;
-      cartesian_cmd.publish(cartesianCmd);
-    }
-  break;
-  case FINGER_CONTROL:
-    if (joy->axes.at(1) == 0.0)
-    {
-      //individual finger control
-      //thumb controlled by right thumbstick
-      if (controllerType == DIGITAL)
-        angularCmd.fingers[0] = -joy->axes.at(3) * MAX_FINGER_VEL * finger_throttle_factor;
-      else
-        angularCmd.fingers[0] = -joy->axes.at(4) * MAX_FINGER_VEL * finger_throttle_factor;
-    
-      //top finger controlled by left triggers
+        deadman = false;
+
+      //mode switching
+      modeChange = false;
+      if (joy->buttons.at(button1Index) == 1)
+      {
+        modeChange = true;
+        mode = FINGER_CONTROL;
+        ROS_INFO("Activated finger control mode");
+      }
+      else if (joy->buttons.at(button2Index) == 1)
+      {
+        modeChange = true;
+        mode = ARM_CONTROL;
+        ROS_INFO("Activated arm control mode");
+      }
+
+      if (modeChange)
+      {
+        //cancel base motion
+        twist.linear.x = 0.0;
+        twist.angular.z = 0.0;
+      }
+
+      // send the twist command
+      if (deadman || was_pressed)
+        cmd_vel.publish(twist);
+
+      break;
+    case ARM_CONTROL:
+      // left joystick controls the linear x and y movement
+      cartesianCmd.arm.linear.x = joy->axes.at(1) * MAX_TRANS_VEL_ARM * linear_throttle_factor_arm;
+      cartesianCmd.arm.linear.y = joy->axes.at(0) * MAX_TRANS_VEL_ARM * linear_throttle_factor_arm;
+
+      //triggers control the linear z movement
       if (controllerType == DIGITAL)
       {
-        if (joy->buttons.at(4) == 1)
-          angularCmd.fingers[1] = -MAX_FINGER_VEL * finger_throttle_factor;
+        if (joy->buttons.at(7) == 1)
+          cartesianCmd.arm.linear.z = MAX_TRANS_VEL_ARM * linear_throttle_factor_arm;
         else if (joy->buttons.at(6) == 1)
-          angularCmd.fingers[1] = MAX_FINGER_VEL * finger_throttle_factor;
+          cartesianCmd.arm.linear.z = -MAX_TRANS_VEL_ARM * linear_throttle_factor_arm;
         else
-          angularCmd.fingers[1] = 0.0;
+          cartesianCmd.arm.linear.z = 0.0;
       }
       else
       {
-        if (joy->buttons.at(4) == 1)
-          angularCmd.fingers[1] = -MAX_FINGER_VEL * finger_throttle_factor;
+        if (joy->axes.at(5) < 1.0)
+          cartesianCmd.arm.linear.z = (0.5 - joy->axes.at(5) / 2.0) * MAX_ANG_VEL_ARM * angular_throttle_factor_arm;
         else
-          angularCmd.fingers[1] = (0.5 - joy->axes.at(2)/2.0) * MAX_FINGER_VEL * finger_throttle_factor;
+          cartesianCmd.arm.linear.z = -(0.5 - joy->axes.at(2) / 2.0) * MAX_ANG_VEL_ARM * angular_throttle_factor_arm;
       }
-    
-      //bottom finger controlled by right bumpers
+
+      //bumpers control roll
+      if (joy->buttons.at(5) == 1)
+        cartesianCmd.arm.angular.z = MAX_ANG_VEL_ARM * angular_throttle_factor_arm;
+      else if (joy->buttons.at(4) == 1)
+        cartesianCmd.arm.angular.z = -MAX_ANG_VEL_ARM * angular_throttle_factor_arm;
+      else
+        cartesianCmd.arm.angular.z = 0.0;
+
+      //right joystick controls pitch and yaw
       if (controllerType == DIGITAL)
       {
-        if (joy->buttons.at(5) == 1)
-          angularCmd.fingers[2] = -MAX_FINGER_VEL * finger_throttle_factor;
-        else if (joy->buttons.at(7) == 1)
-          angularCmd.fingers[2] = MAX_FINGER_VEL * finger_throttle_factor;
-        else
-          angularCmd.fingers[2] = 0.0;
+        cartesianCmd.arm.angular.x = -joy->axes.at(3) * MAX_ANG_VEL_ARM * angular_throttle_factor_arm;
+        cartesianCmd.arm.angular.y = joy->axes.at(2) * MAX_ANG_VEL_ARM * angular_throttle_factor_arm;
       }
       else
       {
-        if (joy->buttons.at(5) == 1)
-          angularCmd.fingers[2] = -MAX_FINGER_VEL * finger_throttle_factor;
-        else
-          angularCmd.fingers[2] = (0.5 - joy->axes.at(5)/2.0) * MAX_FINGER_VEL * finger_throttle_factor;
+        cartesianCmd.arm.angular.x = -joy->axes.at(4) * MAX_ANG_VEL_ARM * angular_throttle_factor_arm;
+        cartesianCmd.arm.angular.y = joy->axes.at(3) * MAX_ANG_VEL_ARM * angular_throttle_factor_arm;
       }
-    }
-    else
-    {
-      //control full gripper (outprioritizes individual finger control)
-      angularCmd.fingers[0] = -joy->axes.at(1) * MAX_FINGER_VEL * finger_throttle_factor;
-      angularCmd.fingers[1] = angularCmd.fingers[0];
-      angularCmd.fingers[2] = angularCmd.fingers[0];
-    }
-  
-    //mode switching
-    modeChange = false;
-    if (joy->buttons.at(button2Index) == 1)
-    {
-      modeChange = true;
-      mode = ARM_CONTROL;
-      ROS_INFO("Activated arm control mode");
-    }
-    else if (joy->buttons.at(button3Index) == 1)
-    {
-      modeChange = true;
-      mode = BASE_CONTROL;
-      ROS_INFO("Activated base control mode");
-    }
-    
-    if (modeChange)
-    {
-      //cancel finger trajectory
-      angularCmd.fingers[0] = 0.0;
-      angularCmd.fingers[1] = 0.0;
-      angularCmd.fingers[2] = 0.0;
-      angular_cmd.publish(angularCmd);
-    }
-  break;
+
+      //mode switching
+      modeChange = false;
+      if (joy->buttons.at(button1Index) == 1)
+      {
+        modeChange = true;
+        mode = FINGER_CONTROL;
+        ROS_INFO("Activated finger control mode");
+      }
+      else if (joy->buttons.at(button3Index) == 1)
+      {
+        modeChange = true;
+        mode = BASE_CONTROL;
+        ROS_INFO("Activated base control mode");
+      }
+
+      if (modeChange)
+      {
+        //cancel arm trajectory
+        cartesianCmd.arm.linear.x = 0.0;
+        cartesianCmd.arm.linear.y = 0.0;
+        cartesianCmd.arm.linear.z = 0.0;
+        cartesianCmd.arm.angular.x = 0.0;
+        cartesianCmd.arm.angular.y = 0.0;
+        cartesianCmd.arm.angular.z = 0.0;
+        cartesian_cmd.publish(cartesianCmd);
+      }
+      break;
+    case FINGER_CONTROL:
+      if (joy->axes.at(1) == 0.0)
+      {
+        //individual finger control
+        //thumb controlled by right thumbstick
+        if (controllerType == DIGITAL)
+          angularCmd.fingers[0] = -joy->axes.at(3) * MAX_FINGER_VEL * finger_throttle_factor;
+        else
+          angularCmd.fingers[0] = -joy->axes.at(4) * MAX_FINGER_VEL * finger_throttle_factor;
+
+        //top finger controlled by left triggers
+        if (controllerType == DIGITAL)
+        {
+          if (joy->buttons.at(4) == 1)
+            angularCmd.fingers[1] = -MAX_FINGER_VEL * finger_throttle_factor;
+          else if (joy->buttons.at(6) == 1)
+            angularCmd.fingers[1] = MAX_FINGER_VEL * finger_throttle_factor;
+          else
+            angularCmd.fingers[1] = 0.0;
+        }
+        else
+        {
+          if (joy->buttons.at(4) == 1)
+            angularCmd.fingers[1] = -MAX_FINGER_VEL * finger_throttle_factor;
+          else
+            angularCmd.fingers[1] = (0.5 - joy->axes.at(2) / 2.0) * MAX_FINGER_VEL * finger_throttle_factor;
+        }
+
+        //bottom finger controlled by right bumpers
+        if (controllerType == DIGITAL)
+        {
+          if (joy->buttons.at(5) == 1)
+            angularCmd.fingers[2] = -MAX_FINGER_VEL * finger_throttle_factor;
+          else if (joy->buttons.at(7) == 1)
+            angularCmd.fingers[2] = MAX_FINGER_VEL * finger_throttle_factor;
+          else
+            angularCmd.fingers[2] = 0.0;
+        }
+        else
+        {
+          if (joy->buttons.at(5) == 1)
+            angularCmd.fingers[2] = -MAX_FINGER_VEL * finger_throttle_factor;
+          else
+            angularCmd.fingers[2] = (0.5 - joy->axes.at(5) / 2.0) * MAX_FINGER_VEL * finger_throttle_factor;
+        }
+      }
+      else
+      {
+        //control full gripper (outprioritizes individual finger control)
+        angularCmd.fingers[0] = -joy->axes.at(1) * MAX_FINGER_VEL * finger_throttle_factor;
+        angularCmd.fingers[1] = angularCmd.fingers[0];
+        angularCmd.fingers[2] = angularCmd.fingers[0];
+      }
+
+      //mode switching
+      modeChange = false;
+      if (joy->buttons.at(button2Index) == 1)
+      {
+        modeChange = true;
+        mode = ARM_CONTROL;
+        ROS_INFO("Activated arm control mode");
+      }
+      else if (joy->buttons.at(button3Index) == 1)
+      {
+        modeChange = true;
+        mode = BASE_CONTROL;
+        ROS_INFO("Activated base control mode");
+      }
+
+      if (modeChange)
+      {
+        //cancel finger trajectory
+        angularCmd.fingers[0] = 0.0;
+        angularCmd.fingers[1] = 0.0;
+        angularCmd.fingers[2] = 0.0;
+        angular_cmd.publish(angularCmd);
+      }
+      break;
   }
 }
 
@@ -396,52 +396,53 @@ void carl_joy_teleop::publish_velocity()
     angularCmd.fingers[0] = 0.0;
     angularCmd.fingers[1] = 0.0;
     angularCmd.fingers[2] = 0.0;
-    
+
     cartesian_cmd.publish(cartesianCmd);
     angular_cmd.publish(angularCmd);
-    
+
     return;
   }
-  
+
   switch (mode)
   {
-  case ARM_CONTROL:
-    //only publish stop message once; this allows other nodes to publish velocities
-    //while the controller is not being used
-    if (cartesianCmd.arm.linear.x == 0.0 && cartesianCmd.arm.linear.y == 0.0 && cartesianCmd.arm.linear.z == 0.0
-      && cartesianCmd.arm.angular.x == 0.0  && cartesianCmd.arm.angular.y == 0.0 && cartesianCmd.arm.angular.z == 0.0)
-    {
-      if (!stopMessageSentArm)
+    case ARM_CONTROL:
+      //only publish stop message once; this allows other nodes to publish velocities
+      //while the controller is not being used
+      if (cartesianCmd.arm.linear.x == 0.0 && cartesianCmd.arm.linear.y == 0.0 && cartesianCmd.arm.linear.z == 0.0
+          && cartesianCmd.arm.angular.x == 0.0 && cartesianCmd.arm.angular.y == 0.0
+          && cartesianCmd.arm.angular.z == 0.0)
       {
+        if (!stopMessageSentArm)
+        {
+          cartesian_cmd.publish(cartesianCmd);
+          stopMessageSentArm = true;
+        }
+      }
+      else
+      {
+        // send the arm command
         cartesian_cmd.publish(cartesianCmd);
-        stopMessageSentArm = true;
+        stopMessageSentArm = false;
       }
-    }
-    else
-    {
-      // send the arm command
-      cartesian_cmd.publish(cartesianCmd);
-      stopMessageSentArm = false;
-    }
-  break;
-  case FINGER_CONTROL:
-    //only publish stop message once; this allows other nodes to publish velocities
-    //while the controller is not being used
-    if (angularCmd.fingers[0] == 0.0 && angularCmd.fingers[1] == 0.0 && angularCmd.fingers[2] == 0.0)
-    {
-      if (!stopMessageSentFinger)
+      break;
+    case FINGER_CONTROL:
+      //only publish stop message once; this allows other nodes to publish velocities
+      //while the controller is not being used
+      if (angularCmd.fingers[0] == 0.0 && angularCmd.fingers[1] == 0.0 && angularCmd.fingers[2] == 0.0)
       {
-        angular_cmd.publish(angularCmd);
-        stopMessageSentFinger = true;
+        if (!stopMessageSentFinger)
+        {
+          angular_cmd.publish(angularCmd);
+          stopMessageSentFinger = true;
+        }
       }
-    }
-    else
-    {
-      //send the finger velocity command
-      angular_cmd.publish(angularCmd);
-      stopMessageSentFinger = false;
-    }
-  break;
+      else
+      {
+        //send the finger velocity command
+        angular_cmd.publish(angularCmd);
+        stopMessageSentFinger = false;
+      }
+      break;
   }
 }
 
@@ -449,108 +450,108 @@ void carl_joy_teleop::displayHelp(int menuNumber)
 {
   switch (menuNumber)
   {
-  case 1:
-    puts(" ----------------------------------------");
-    puts("| CARL Joystick Teleop Help              |");
-    puts("|----------------------------------------|*");
-    if (mode == ARM_CONTROL)
-      puts("| Current Mode: Arm Control              |*");
-    else if (mode == FINGER_CONTROL)
-      puts("| Current Mode: Finger Control           |*");
-    else if (mode == BASE_CONTROL)
-      puts(" Current Mode: Base Control              |*");
-    puts("|----------------------------------------|*");
-    puts("|              Arm Controls              |*");
-    puts("|   roll/down                 roll/up    |*");
-    puts("|    ________                ________    |*");
-    puts("|   /    _   \\______________/        \\   |*");
-    puts("|  |   _| |_    < >    < >     (4)    |  |*");
-    puts("|  |  |_   _|  Estop  start (1)   (3) |  |*");
-    puts("|  |    |_|    ___      ___    (2)    |  |*");
-    puts("|  |          /   \\    /   \\          |  |*");
-    puts("|  |          \\___/    \\___/          |  |*");
-    puts("|  |       x/y trans  pitch/yaw       |  |*");
-    puts("|  |        _______/--\\_______        |  |*");
-    puts("|  |       |                  |       |  |*");
-    puts("|   \\     /                    \\     /   |*");
-    puts("|    \\___/                      \\___/    |*");
-    puts("|                                        |*");
-    puts("| Buttons:                               |*");
-    puts("|   (1) Switch to finger control mode    |*");
-    puts("|   (2) Switch to arm control mode       |*");
-    puts("|   (3) Switch to base control mode      |*");
-    puts("|   (4) No function                      |*");
-    puts(" ----------------------------------------**");
-    puts("  *****************************************");
-  break;
-  case 2:
-    puts(" ----------------------------------------");
-    puts("| CARL Joystick Teleop Help              |");
-    puts("|----------------------------------------|*");
-    if (mode == ARM_CONTROL)
-      puts("| Current Mode: Arm Control              |*");
-    else if (mode == FINGER_CONTROL)
-      puts("| Current Mode: Finger Control           |*");
-    else if (mode == BASE_CONTROL)
-      puts(" Current Mode: Base Control              |*");
-    puts("|----------------------------------------|*");
-    puts("|            Finger Controls             |*");
-    puts("| finger1 open/close  finger2 open/close |*");
-    puts("|    ________                ________    |*");
-    puts("|   /    _   \\______________/        \\   |*");
-    puts("|  |   _| |_    < >    < >     (4)    |  |*");
-    puts("|  |  |_   _|  Estop  start (1)   (3) |  |*");
-    puts("|  |    |_|    ___      ___    (2)    |  |*");
-    puts("|  |          /   \\    /   \\          |  |*");
-    puts("|  |          \\___/    \\___/          |  |*");
-    puts("|  | hand open/close  thumb open/close|  |*");
-    puts("|  |        _______/--\\_______        |  |*");
-    puts("|  |       |                  |       |  |*");
-    puts("|   \\     /                    \\     /   |*");
-    puts("|    \\___/                      \\___/    |*");
-    puts("|                                        |*");
-    puts("| Buttons:                               |*");
-    puts("|   (1) Switch to finger control mode    |*");
-    puts("|   (2) Switch to arm control mode       |*");
-    puts("|   (3) Switch to base control mode      |*");
-    puts("|   (4) No function                      |*");
-    puts(" ----------------------------------------**");
-    puts("  *****************************************");
-  break;
-  case 3:
-    puts(" ----------------------------------------");
-    puts("| CARL Joystick Teleop Help              |");
-    puts("|----------------------------------------|*");
-    if (mode == ARM_CONTROL)
-      puts("| Current Mode: Arm Control              |*");
-    else if (mode == FINGER_CONTROL)
-      puts("| Current Mode: Finger Control           |*");
-    else if (mode == BASE_CONTROL)
-      puts(" Current Mode: Base Control              |*");
-    puts("|----------------------------------------|*");
-    puts("|             Base Controls              |*");
-    puts("| deadman/no function  boost/no function |*");
-    puts("|    ________                ________    |*");
-    puts("|   /    _   \\______________/        \\   |*");
-    puts("|  |   _| |_    < >    < >     (4)    |  |*");
-    puts("|  |  |_   _|  Estop  start (1)   (3) |  |*");
-    puts("|  |    |_|    ___      ___    (2)    |  |*");
-    puts("|  |          /   \\    /   \\          |  |*");
-    puts("|  |          \\___/    \\___/          |  |*");
-    puts("|  |        fwd/bkwd  left/right      |  |*");
-    puts("|  |        _______/--\\_______        |  |*");
-    puts("|  |       |                  |       |  |*");
-    puts("|   \\     /                    \\     /   |*");
-    puts("|    \\___/                      \\___/    |*");
-    puts("|                                        |*");
-    puts("| Buttons:                               |*");
-    puts("|   (1) Switch to finger control mode    |*");
-    puts("|   (2) Switch to arm control mode       |*");
-    puts("|   (3) Switch to base control mode      |*");
-    puts("|   (4) No function                      |*");
-    puts(" ----------------------------------------**");
-    puts("  *****************************************");
-  break;
+    case 1:
+      puts(" ----------------------------------------");
+      puts("| CARL Joystick Teleop Help              |");
+      puts("|----------------------------------------|*");
+      if (mode == ARM_CONTROL)
+        puts("| Current Mode: Arm Control              |*");
+      else if (mode == FINGER_CONTROL)
+        puts("| Current Mode: Finger Control           |*");
+      else if (mode == BASE_CONTROL)
+        puts(" Current Mode: Base Control              |*");
+      puts("|----------------------------------------|*");
+      puts("|              Arm Controls              |*");
+      puts("|   roll/down                 roll/up    |*");
+      puts("|    ________                ________    |*");
+      puts("|   /    _   \\______________/        \\   |*");
+      puts("|  |   _| |_    < >    < >     (4)    |  |*");
+      puts("|  |  |_   _|  Estop  start (1)   (3) |  |*");
+      puts("|  |    |_|    ___      ___    (2)    |  |*");
+      puts("|  |          /   \\    /   \\          |  |*");
+      puts("|  |          \\___/    \\___/          |  |*");
+      puts("|  |       x/y trans  pitch/yaw       |  |*");
+      puts("|  |        _______/--\\_______        |  |*");
+      puts("|  |       |                  |       |  |*");
+      puts("|   \\     /                    \\     /   |*");
+      puts("|    \\___/                      \\___/    |*");
+      puts("|                                        |*");
+      puts("| Buttons:                               |*");
+      puts("|   (1) Switch to finger control mode    |*");
+      puts("|   (2) Switch to arm control mode       |*");
+      puts("|   (3) Switch to base control mode      |*");
+      puts("|   (4) No function                      |*");
+      puts(" ----------------------------------------**");
+      puts("  *****************************************");
+      break;
+    case 2:
+      puts(" ----------------------------------------");
+      puts("| CARL Joystick Teleop Help              |");
+      puts("|----------------------------------------|*");
+      if (mode == ARM_CONTROL)
+        puts("| Current Mode: Arm Control              |*");
+      else if (mode == FINGER_CONTROL)
+        puts("| Current Mode: Finger Control           |*");
+      else if (mode == BASE_CONTROL)
+        puts(" Current Mode: Base Control              |*");
+      puts("|----------------------------------------|*");
+      puts("|            Finger Controls             |*");
+      puts("| finger1 open/close  finger2 open/close |*");
+      puts("|    ________                ________    |*");
+      puts("|   /    _   \\______________/        \\   |*");
+      puts("|  |   _| |_    < >    < >     (4)    |  |*");
+      puts("|  |  |_   _|  Estop  start (1)   (3) |  |*");
+      puts("|  |    |_|    ___      ___    (2)    |  |*");
+      puts("|  |          /   \\    /   \\          |  |*");
+      puts("|  |          \\___/    \\___/          |  |*");
+      puts("|  | hand open/close  thumb open/close|  |*");
+      puts("|  |        _______/--\\_______        |  |*");
+      puts("|  |       |                  |       |  |*");
+      puts("|   \\     /                    \\     /   |*");
+      puts("|    \\___/                      \\___/    |*");
+      puts("|                                        |*");
+      puts("| Buttons:                               |*");
+      puts("|   (1) Switch to finger control mode    |*");
+      puts("|   (2) Switch to arm control mode       |*");
+      puts("|   (3) Switch to base control mode      |*");
+      puts("|   (4) No function                      |*");
+      puts(" ----------------------------------------**");
+      puts("  *****************************************");
+      break;
+    case 3:
+      puts(" ----------------------------------------");
+      puts("| CARL Joystick Teleop Help              |");
+      puts("|----------------------------------------|*");
+      if (mode == ARM_CONTROL)
+        puts("| Current Mode: Arm Control              |*");
+      else if (mode == FINGER_CONTROL)
+        puts("| Current Mode: Finger Control           |*");
+      else if (mode == BASE_CONTROL)
+        puts(" Current Mode: Base Control              |*");
+      puts("|----------------------------------------|*");
+      puts("|             Base Controls              |*");
+      puts("| deadman/no function  boost/no function |*");
+      puts("|    ________                ________    |*");
+      puts("|   /    _   \\______________/        \\   |*");
+      puts("|  |   _| |_    < >    < >     (4)    |  |*");
+      puts("|  |  |_   _|  Estop  start (1)   (3) |  |*");
+      puts("|  |    |_|    ___      ___    (2)    |  |*");
+      puts("|  |          /   \\    /   \\          |  |*");
+      puts("|  |          \\___/    \\___/          |  |*");
+      puts("|  |        fwd/bkwd  left/right      |  |*");
+      puts("|  |        _______/--\\_______        |  |*");
+      puts("|  |       |                  |       |  |*");
+      puts("|   \\     /                    \\     /   |*");
+      puts("|    \\___/                      \\___/    |*");
+      puts("|                                        |*");
+      puts("| Buttons:                               |*");
+      puts("|   (1) Switch to finger control mode    |*");
+      puts("|   (2) Switch to arm control mode       |*");
+      puts("|   (3) Switch to base control mode      |*");
+      puts("|   (4) No function                      |*");
+      puts(" ----------------------------------------**");
+      puts("  *****************************************");
+      break;
   }
 }
 

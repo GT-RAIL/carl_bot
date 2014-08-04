@@ -87,7 +87,7 @@ public:
    * are created and maintained within this object.
    */
   carl_joy_teleop();
-  
+
   /*!
    * Periodically publish velocity message to the arm controller
    */
@@ -113,7 +113,7 @@ private:
   geometry_msgs::Twist twist; /*!< base movement command */
   wpi_jaco_msgs::AngularCommand angularCmd; /*!< angular movement command */
   wpi_jaco_msgs::CartesianCommand cartesianCmd; /*!< cartesian movement command */
-  
+
   int mode; /*!< the control mode */
   int controllerType; /*!< the type of joystick controller */
   double linear_throttle_factor_base; /*!< factor for reducing the base maximum linear speed */
@@ -124,10 +124,10 @@ private:
   bool stopMessageSentArm; /*!< flag to prevent the arm stop command from being sent repeatedly when the controller is in the neutral position */
   bool stopMessageSentFinger; /*!< flag to prevent the finger stop command from being sent repeatedly when the controller is in the neutral position */
   bool initLeftTrigger; /*!< flag for whether the left trigger is initialized */
-	bool initRightTrigger; /*!< flag for whether the right trigger is initialized */
-	bool calibrated; /*!< flag for whether the controller is calibrated, this only affects controllers with analog triggers */
-	bool EStopEnabled; /*!< software emergency stop for the arm*/
-	bool helpDisplayed; /*!< flag so help is not repeatedly displayed*/
+  bool initRightTrigger; /*!< flag for whether the right trigger is initialized */
+  bool calibrated; /*!< flag for whether the controller is calibrated, this only affects controllers with analog triggers */
+  bool EStopEnabled; /*!< software emergency stop for the arm*/
+  bool helpDisplayed; /*!< flag so help is not repeatedly displayed*/
   bool deadman; /*!< save state of deadman switch */
 };
 

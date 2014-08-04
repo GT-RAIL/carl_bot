@@ -4,9 +4,11 @@
   <version>0.0.0</version>
   <description>Control the Movement Devices on CARL</description>
 
-  <maintainer email="spkordell@wpi.edu">Steven Kordell</maintainer>
+  <maintainer email="rctoris@wpi.edu">Russell Toris</maintainer>
+  <maintainer email="davidkent@wpi.edu">David Kent</maintainer>
   <author email="spkordell@wpi.edu">Steven Kordell</author>
   <author email="rctoris@wpi.edu">Russell Toris</author>
+  <author email="davidkent@wpi.edu">David Kent</author>
 
   <license>BSD</license>
 

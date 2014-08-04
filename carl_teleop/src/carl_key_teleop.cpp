@@ -55,16 +55,16 @@ carl_key_teleop::carl_key_teleop()
   angular_cmd = nh_.advertise<wpi_jaco_msgs::AngularCommand>("jaco_arm/angular_cmd", 10);
   cartesian_cmd = nh_.advertise<wpi_jaco_msgs::CartesianCommand>("jaco_arm/cartesian_cmd", 10);
   vel_pub_ = nh_.advertise<geometry_msgs::Twist>("cmd_vel", 1);
-  
+
   // read in throttle values
   private_nh.param<double>("linear_throttle_factor_base", linear_throttle_factor_base, 1.0);
   private_nh.param<double>("angular_throttle_factor_base", angular_throttle_factor_base, 1.0);
   private_nh.param<double>("linear_throttle_factor_arm", linear_throttle_factor_arm, 1.0);
   private_nh.param<double>("angular_throttle_factor_arm", angular_throttle_factor_arm, 1.0);
   private_nh.param<double>("finger_throttle_factor", finger_throttle_factor, 1.0);
-  
+
   mode = BASE_CONTROL;
-  
+
   ROS_INFO("CARL Keyboard Teleop Started");
 }
 
@@ -118,24 +118,24 @@ void carl_key_teleop::loop()
         {
           case KEYCODE_LEFT:
             angular = MAX_ANG_VEL_BASE * angular_throttle_factor_base;
-          break;
+            break;
           case KEYCODE_RIGHT:
             angular = -MAX_ANG_VEL_BASE * angular_throttle_factor_base;
-          break;
+            break;
           case KEYCODE_UP:
             linear = MAX_TRANS_VEL_BASE * linear_throttle_factor_base;
-          break;
+            break;
           case KEYCODE_DOWN:
             linear = -MAX_TRANS_VEL_BASE * linear_throttle_factor_base;
-          break;
+            break;
           case KEYCODE_1:
             mode = ARM_CONTROL;
             ROS_INFO("Activated arm control mode");
-          break;
+            break;
           case KEYCODE_2:
             mode = FINGER_CONTROL;
             ROS_INFO("Activated finger control mode");
-          break;
+            break;
         }
 
         // attempt to publish the speed
@@ -147,7 +147,7 @@ void carl_key_teleop::loop()
         last_publish_ = ros::Time::now();
         publish(angular, linear);
       }
-      break;
+        break;
       case ARM_CONTROL:
       {
         //initialize twist command
@@ -173,48 +173,48 @@ void carl_key_teleop::loop()
         {
           case KEYCODE_W:
             cmd.arm.linear.x = MAX_TRANS_VEL_ARM * linear_throttle_factor_arm;
-          break;
+            break;
           case KEYCODE_S:
             cmd.arm.linear.x = -MAX_TRANS_VEL_ARM * linear_throttle_factor_arm;
-          break;
+            break;
           case KEYCODE_A:
             cmd.arm.linear.y = MAX_TRANS_VEL_ARM * linear_throttle_factor_arm;
-          break;
+            break;
           case KEYCODE_D:
             cmd.arm.linear.y = -MAX_TRANS_VEL_ARM * linear_throttle_factor_arm;
-          break;
+            break;
           case KEYCODE_R:
             cmd.arm.linear.z = MAX_TRANS_VEL_ARM * linear_throttle_factor_arm;
-          break;
+            break;
           case KEYCODE_F:
             cmd.arm.linear.z = -MAX_TRANS_VEL_ARM * linear_throttle_factor_arm;
-          break;
+            break;
           case KEYCODE_Q:
             cmd.arm.angular.z = -MAX_ANG_VEL_ARM * angular_throttle_factor_arm;
-          break;
+            break;
           case KEYCODE_E:
             cmd.arm.angular.z = MAX_ANG_VEL_ARM * angular_throttle_factor_arm;
-          break;
+            break;
           case KEYCODE_UP:
             cmd.arm.angular.x = -MAX_ANG_VEL_ARM * angular_throttle_factor_arm;
-          break;
+            break;
           case KEYCODE_DOWN:
             cmd.arm.angular.x = MAX_ANG_VEL_ARM * angular_throttle_factor_arm;
-          break;
+            break;
           case KEYCODE_LEFT:
             cmd.arm.angular.y = MAX_ANG_VEL_ARM * angular_throttle_factor_arm;
-          break;
+            break;
           case KEYCODE_RIGHT:
             cmd.arm.angular.y = -MAX_ANG_VEL_ARM * angular_throttle_factor_arm;
-          break;
+            break;
           case KEYCODE_2:
             mode = FINGER_CONTROL;
             ROS_INFO("Activated finger control mode");
-          break;
+            break;
           case KEYCODE_3:
             mode = BASE_CONTROL;
             ROS_INFO("Activate base control mode");
-          break;
+            break;
         }
 
         //publish twist to arm controller
@@ -226,7 +226,7 @@ void carl_key_teleop::loop()
         last_publish_ = ros::Time::now();
         cartesian_cmd.publish(cmd);
       }
-      break;
+        break;
       case FINGER_CONTROL:
       {
         //initialize finger command
@@ -248,40 +248,40 @@ void carl_key_teleop::loop()
         {
           case KEYCODE_Q:
             cmd.fingers[0] = -MAX_FINGER_VEL * finger_throttle_factor;
-          break;
+            break;
           case KEYCODE_A:
             cmd.fingers[0] = MAX_FINGER_VEL * finger_throttle_factor;
-          break;
+            break;
           case KEYCODE_W:
             cmd.fingers[1] = -MAX_FINGER_VEL * finger_throttle_factor;
-          break;
+            break;
           case KEYCODE_S:
             cmd.fingers[1] = MAX_FINGER_VEL * finger_throttle_factor;
-          break;
+            break;
           case KEYCODE_E:
             cmd.fingers[2] = -MAX_FINGER_VEL * finger_throttle_factor;
-          break;
+            break;
           case KEYCODE_D:
             cmd.fingers[2] = MAX_FINGER_VEL * finger_throttle_factor;
-          break;
+            break;
           case KEYCODE_R:
             cmd.fingers[0] = -MAX_FINGER_VEL * finger_throttle_factor;
             cmd.fingers[1] = cmd.fingers[0];
             cmd.fingers[2] = cmd.fingers[0];
-          break;
+            break;
           case KEYCODE_F:
             cmd.fingers[0] = MAX_FINGER_VEL * finger_throttle_factor;
             cmd.fingers[1] = cmd.fingers[0];
             cmd.fingers[2] = cmd.fingers[0];
-          break;
+            break;
           case KEYCODE_1:
             mode = ARM_CONTROL;
             ROS_INFO("Activated arm control mode");
-          break;
+            break;
           case KEYCODE_3:
             mode = BASE_CONTROL;
             ROS_INFO("Activate base control mode");
-          break;
+            break;
         }
 
         //publish twist to finger controller
@@ -293,7 +293,7 @@ void carl_key_teleop::loop()
         last_publish_ = ros::Time::now();
         angular_cmd.publish(cmd);
       }
-      break;
+        break;
     }
   }
 }
@@ -345,7 +345,7 @@ void carl_key_teleop::displayHelp()
       puts(" ------------------------------------**");
       puts("  *************************************");
       break;
-     case BASE_CONTROL:
+    case BASE_CONTROL:
       puts(" ------------------------------------");
       puts("| CARL Keyboard Teleop Help          |");
       puts("|------------------------------------|*");
