@@ -1,5 +1,5 @@
 <launch>
-  <node name="dynamixel_manager" pkg="dynamixel_controllers" type="controller_manager.py" required="true">
+  <node name="dynamixel_manager" pkg="dynamixel_controllers" type="controller_manager.py">
     <rosparam>
       namespace: dxl_manager
       serial_ports:
