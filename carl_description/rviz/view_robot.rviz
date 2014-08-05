@@ -9,7 +9,7 @@ Panels:
         - /RobotModel1/Links1
         - /TF1/Frames1
         - /TF1/Tree1
-      Splitter Ratio: 0.85906
+      Splitter Ratio: 0.515924
     Tree Height: 719
   - Class: rviz/Selection
     Name: Selection
@@ -303,7 +303,7 @@ Visualization Manager:
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: base_link
+    Fixed Frame: base_footprint
     Frame Rate: 30
   Name: root
   Tools:
