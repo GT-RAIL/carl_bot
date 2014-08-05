@@ -402,9 +402,9 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
     case SENSOR_CONTROL:
       std_msgs::Float64 cameraTiltCommand;
       if (controllerType == DIGITAL)
-        cameraTiltCommand.data = joy->axes.at(3);
+        cameraTiltCommand.data = joy->axes.at(3) * 10; //scaled up for smoother movement
       else
-        cameraTiltCommand.data = joy->axes.at(4);
+        cameraTiltCommand.data = joy->axes.at(4) * 10; //scaled up for smoother movement
 
       if (cameraTiltCommand.data != 0)
       {
