@@ -6,9 +6,10 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-        - /RobotModel1
-        - /TF1
-      Splitter Ratio: 0.5
+        - /RobotModel1/Links1
+        - /TF1/Frames1
+        - /TF1/Tree1
+      Splitter Ratio: 0.85906
     Tree Height: 719
   - Class: rviz/Selection
     Name: Selection
@@ -55,7 +56,7 @@ Visualization Manager:
       Collision Enabled: false
       Enabled: true
       Links:
-        All Links Enabled: true
+        All Links Enabled: false
         BackCover_link:
           Alpha: 1
           Show Axes: false
@@ -109,6 +110,21 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        jaco_large_ring_cover_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        jaco_large_ring_cover_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        jaco_large_ring_cover_3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         jaco_link_1:
           Alpha: 1
           Show Axes: false
@@ -138,7 +154,7 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-          Value: true
+          Value: false
         jaco_link_finger_1:
           Alpha: 1
           Show Axes: false
@@ -154,12 +170,42 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        jaco_link_finger_tip_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        jaco_link_finger_tip_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        jaco_link_finger_tip_3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         jaco_link_hand:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
         jaco_mount_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        jaco_small_ring_cover_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        jaco_small_ring_cover_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        jaco_small_ring_cover_3:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -244,7 +290,7 @@ Visualization Manager:
       Enabled: false
       Frame Timeout: 15
       Frames:
-        All Enabled: true
+        All Enabled: false
       Marker Scale: 1
       Name: TF
       Show Arrows: true
@@ -257,7 +303,7 @@ Visualization Manager:
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: base_footprint
+    Fixed Frame: base_link
     Frame Rate: 30
   Name: root
   Tools:
@@ -278,22 +324,22 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 2.63527
+      Distance: 3.27848
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.199945
-        Y: 0.089067
-        Z: 0.723475
+        X: 0.0839142
+        Y: 0.0590417
+        Z: 0.714816
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.4398
+      Pitch: 0.515203
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.83038
+      Yaw: 0.60038
     Saved: ~
 Window Geometry:
   Displays:
