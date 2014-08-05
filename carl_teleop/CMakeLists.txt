@@ -4,7 +4,7 @@ project(carl_teleop)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp joy geometry_msgs sensor_msgs)
+find_package(catkin REQUIRED COMPONENTS joy roscpp sensor_msgs std_msgs wpi_jaco_msgs)
 
 ###################################################
 ## Declare things to be passed to other projects ##
@@ -27,10 +27,11 @@ include_directories(
 
 ## Declare a cpp executable
 add_executable(carl_joy_teleop src/carl_joy_teleop.cpp)
-add_executable(carl_key_teleop src/carl_key_teleop.cpp)
-
-## Specify libraries to link a library or executable target against
+add_dependencies(carl_joy_teleop wpi_jaco_msgs_gencpp)
 target_link_libraries(carl_joy_teleop ${catkin_LIBRARIES})
+
+add_executable(carl_key_teleop src/carl_key_teleop.cpp)
+add_dependencies(carl_key_teleop wpi_jaco_msgs_gencpp)
 target_link_libraries(carl_key_teleop ${catkin_LIBRARIES})
 
 #############
@@ -38,10 +39,7 @@ target_link_libraries(carl_key_teleop ${catkin_LIBRARIES})
 #############
 
 ## Mark executables and/or libraries for installation
-install(TARGETS carl_joy_teleop
-  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
-install(TARGETS carl_key_teleop
+install(TARGETS carl_joy_teleop carl_key_teleop
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

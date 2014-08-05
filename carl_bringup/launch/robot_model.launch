@@ -1,16 +1,9 @@
-<launch>  
- 
-  <!--Joint state publisher gui-->
-  <arg name="gui" default="False" />
+<!--
+   Author: David Kent, Worcester Polytechnic Institute
+   Author: Russell Toris, Worcester Polytechnic Institute
+  Version: August 4, 2014
+-->
 
-  <arg name="urdf_file" default="$(find xacro)/xacro.py '$(find carl_description)/robots/carl.urdf.xacro'" />
-  <param name="robot_description" command="$(arg urdf_file)" />
-  
-  <param name="robot/name" value="$(optenv ROBOT carl)"/>
-  <param name="robot/type" value="carl"/>
-  
-  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
-    <param name="publish_frequency" type="double" value="5.0" />
-  </node>
-  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+<launch>  
+  <include file="$(find carl_description)/launch/carl_description.launch" />
 </launch>

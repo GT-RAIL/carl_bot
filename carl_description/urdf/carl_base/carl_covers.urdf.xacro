@@ -1,14 +1,12 @@
 <?xml version="1.0"?>
-
 <robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
-        xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
-        xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
-        xmlns:xacro="http://ros.org/wiki/xacro">
-        
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+
   <xacro:include filename="$(find carl_description)/urdf/components/carl_side_cover.urdf.xacro" />
 
   <xacro:macro name="carl_covers" params="name">
-
     <!-- right side cover -->
     <xacro:carl_side_cover suffix="right" parent="right_rear_strut_link">
       <origin xyz="0.229 -0.026 0.447" rpy="0 0 0" />
@@ -20,14 +18,14 @@
     </xacro:carl_side_cover>
 
     <joint name="${name}_front_cover_joint" type="fixed">
-      <parent link="${name}_link"/>
-      <child link="FrontCover_link"/>
+      <parent link="${name}_link" />
+      <child link="FrontCover_link" />
       <origin xyz=".247 0 0.242" rpy="0 0 0" />
     </joint>
   
     <joint name="${name}_back_cover" type="fixed">
-      <parent link="${name}_link"/>
-      <child link="BackCover_link"/>
+      <parent link="${name}_link" />
+      <child link="BackCover_link" />
       <origin xyz="-.237 0 -0.102" rpy="0 0 0" />
     </joint>
 
@@ -35,7 +33,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 1.5708" />
         <geometry>
-          <mesh filename="package://carl_description/meshes/front_cover.dae" />
+          <mesh filename="package://carl_description/meshes/front_cover.min.dae" />
         </geometry>
       </visual>
       <collision>
@@ -51,10 +49,9 @@
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
       	  <!--<box size="0.005 0.45 0.6" />-->
-      	  <mesh filename="package://carl_description/meshes/back_cover.dae" />
+      	  <mesh filename="package://carl_description/meshes/back_cover.min.dae" />
         </geometry>
       </visual>
     </link>
-
   </xacro:macro>
 </robot>

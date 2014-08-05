@@ -1,8 +1,6 @@
 <?xml version="1.0"?>
 <root xmlns:xacro="http://ros.org/wiki/xacro">
-
   <xacro:macro name="carl_rear_strut" params="suffix parent *origin">
-
     <joint name="${parent}_${suffix}_rear_strut_joint" type="fixed">
       <xacro:insert_block name="origin" />
       <parent link="${parent}" />
@@ -10,10 +8,16 @@
     </joint>
  
     <joint name="${suffix}_rear_strut_link_${suffix}_rear_strut_link_inside_joint" type="fixed">
-      <parent link="${suffix}_rear_strut_link"/>
-   	  <child link="${suffix}_rear_strut_inside_link"/>
+      <parent link="${suffix}_rear_strut_link" />
+   	  <child link="${suffix}_rear_strut_inside_link" />
       <origin xyz="0 0 0" rpy="0 0 0" />
-    </joint>   
+    </joint>
+    
+    <joint name="${suffix}_rear_strut_link_${suffix}_rear_strut_top_link_joint" type="fixed">
+      <parent link="${suffix}_rear_strut_link" />
+   	  <child link="${suffix}_rear_strut_top_link" />
+      <origin xyz="0 0.001 1.055" rpy="0 0 0" />
+    </joint>      
     
     <link name="${suffix}_rear_strut_inside_link">
       <visual>
@@ -28,7 +32,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 -1.5708" />
         <geometry>
-          <mesh filename="package://carl_description/meshes/rear_strut.dae" />
+          <mesh filename="package://carl_description/meshes/rear_strut.min.dae" />
         </geometry>
       </visual>
       <collision>
@@ -38,6 +42,20 @@
          </geometry>
       </collision>
     </link>
-        
+
+    <link name="${suffix}_rear_strut_top_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 -1.5708" />
+        <geometry>
+          <mesh filename="package://carl_description/meshes/rear_strut_top.min.dae" />
+        </geometry>
+      </visual>      
+      <collision>
+        <origin xyz="0 -0.001 0.2285" rpy="0 0 0" />
+        <geometry>
+          <box size="0.027 0.054 0.4575" />
+         </geometry>
+      </collision>      
+    </link>
   </xacro:macro>
 </root>

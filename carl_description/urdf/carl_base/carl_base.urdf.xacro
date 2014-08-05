@@ -1,10 +1,9 @@
 <?xml version="1.0"?>
-
 <robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
-        xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
-        xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
-        xmlns:xacro="http://ros.org/wiki/xacro">
-        
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+
   <xacro:include filename="$(find carl_description)/urdf/components/carl_wheel.urdf.xacro" />
   <xacro:include filename="$(find carl_description)/urdf/components/carl_caster_assembly.urdf.xacro" />
   <xacro:include filename="$(find carl_description)/urdf/sensors/hokuyo.urdf.xacro" />
@@ -13,19 +12,27 @@
   <xacro:include filename="$(find carl_description)/urdf/carl_base/carl_camera_mount.urdf.xacro" />
 
   <xacro:macro name="carl_base" params="name">
+    <xacro:carl_superstructure />
+    <xacro:carl_camera_mount />
+    <xacro:carl_covers name="${name}" />
+
+    <!-- base footprint -->
+    <link name="${name}_footprint" />
   
-    <xacro:carl_superstructure/>
-    <xacro:carl_camera_mount/>
-    <xacro:carl_covers name="${name}"/>
-  
+  	<!-- base link -->
     <link name="${name}_link">
      <visual>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://carl_description/meshes/base.dae" />
+          <mesh filename="package://carl_description/meshes/base.min.dae" />
         </geometry>
       </visual>
     </link>
+    <joint name="${name}_footprint_${name}_link_joint" type="fixed">
+      <parent link="${name}_footprint" />
+      <child link="${name}_link" />
+      <origin xyz="0 0 0.23114" rpy="0 0 0" />
+    </joint>
       
     <!-- left wheel -->
     <xacro:carl_wheel suffix="left" parent="${name}_link">
@@ -46,7 +53,5 @@
     <xacro:hokuyo parent="caster_plate_link">  
       <origin xyz="0.07 0 0.035" rpy="0 0 0" />
     </xacro:hokuyo>
-
   </xacro:macro>
-
 </robot>

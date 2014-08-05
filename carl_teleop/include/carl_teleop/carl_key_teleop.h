@@ -28,12 +28,14 @@
  */
 
 /*!
- * \carl_key_teleop.h
+ * \carl_key_teleop.cpp
  * \brief Allows for control of CARL with a keyboard.
  *
- * carl_joy_teleop creates a ROS node that allows the control of CARL with a keyboard. This node listens to a /joy topic
- * and sends messages to the /cmd_vel topic.
+ * carl_key_teleop creates a ROS node that allows the control of CARL with a keyboard. 
+ * This node takes input from the keyboard via the terminal and sends messages to the 
+ * /cmd_vel topic for the base and angular_cmd and cartesian_cmd for the arm.
  *
+ * \author David Kent, WPI - davidkent@wpi.edu
  * \author Steven Kordell, WPI - spkordell@wpi.edu
  * \date May 23, 2014
  */
@@ -41,51 +43,72 @@
 #ifndef CARL_KEY_TELEOP_H_
 #define CARL_KEY_TELEOP_H_
 
-#include <geometry_msgs/Twist.h>
 #include <ros/ros.h>
+#include <boost/thread/mutex.hpp>
+#include <boost/thread/thread.hpp>
 #include <sensor_msgs/Joy.h>
+#include <signal.h>
+#include <termios.h>
+#include <wpi_jaco_msgs/AngularCommand.h>
+#include <wpi_jaco_msgs/CartesianCommand.h>
 
-/*!
- * \def KEYCODE_R
- *
- * Keycode value for right.
- */
-#define KEYCODE_R 0x43
+//Keycodes
+#define KEYCODE_W 0x77
+#define KEYCODE_A 0x61
+#define KEYCODE_S 0x73
+#define KEYCODE_D 0x64
+#define KEYCODE_Q 0x71
+#define KEYCODE_E 0x65
+#define KEYCODE_R 0x72
+#define KEYCODE_F 0x66
+#define KEYCODE_RIGHT 0x43
+#define KEYCODE_LEFT 0x44
+#define KEYCODE_UP 0x41
+#define KEYCODE_DOWN 0x42
+#define KEYCODE_1 0x31
+#define KEYCODE_2 0x32
+#define KEYCODE_3 0x33
+#define KEYCODE_H 0x68
 
-/*!
- * \def KEYCODE_L
- *
- * Keycode value for left.
- */
-#define KEYCODE_L 0x44
+//Control modes
+#define ARM_CONTROL 0 
+#define FINGER_CONTROL 1
+#define BASE_CONTROL 2
 
-/*!
- * \def KEYCODE_U
- *
- * Keycode value for up.
- */
-#define KEYCODE_U 0x41
-
-/*!
- * \def KEYCODE_D
- *
- * Keycode value for down.
- */
-#define KEYCODE_D 0x42
-
+//Arm limits
 /*!
  * \def MAX_TRANS_VEL
  *
  * The maximum translational velocity.
  */
-#define MAX_TRANS_VEL .8
+#define MAX_TRANS_VEL_ARM .175
 
 /*!
  * \def MAX_ANG_VEL
  *
  * The maximum angular velocity.
  */
-#define MAX_ANG_VEL 1.2
+#define MAX_ANG_VEL_ARM 1.047
+
+/*!
+ * \def MAX_FINGER_VEL
+ * The maximum velocity for a finger.
+ */
+#define MAX_FINGER_VEL 30
+
+/*!
+ * \def MAX_TRANS_VEL
+ *
+ * The maximum translational velocity.
+ */
+#define MAX_TRANS_VEL_BASE .8
+
+/*!
+ * \def MAX_ANG_VEL
+ *
+ * The maximum angular velocity.
+ */
+#define MAX_ANG_VEL_BASE 1.2
 
 class carl_key_teleop
 {
@@ -107,6 +130,12 @@ public:
   void watchdog();
 
 private:
+  /*!
+   * \brief Displays a help menu appropriate to the current mode
+   *
+   * Displays a help menu with keyboard controls for the current control mode
+   */
+  void displayHelp();
 
   /*!
    * \brief Publishes a cmd_vels
@@ -115,11 +144,21 @@ private:
    */
   void publish(double, double);
 
-  ros::NodeHandle nh_;  /*! Public node handle. */
+  ros::NodeHandle nh_; /*! Public node handle. */
   ros::Time first_publish_, last_publish_; /*! Publish times used by the watchdog. */
-  ros::Publisher vel_pub_; /*! The publisher for the twist topic. */
 
   boost::mutex publish_mutex_; /*! The mutex for the twist topic. */
+
+  ros::Publisher angular_cmd; /*!< angular commands for arm control */
+  ros::Publisher cartesian_cmd; /*!< cartesian commands for arm control */
+  ros::Publisher vel_pub_; /*! The publisher for the base twist topic. */
+
+  int mode; /*!< the controller mode */
+  double linear_throttle_factor_base; /*!< factor for reducing the base linear speed */
+  double angular_throttle_factor_base; /*!< factor for reducing the base angular speed */
+  double linear_throttle_factor_arm; /*!< factor for reducing the arm linear speed */
+  double angular_throttle_factor_arm; /*!< factor for reducing the arm angular speed */
+  double finger_throttle_factor; /*!< factor for reducing the finger speed */
 };
 
 /*!

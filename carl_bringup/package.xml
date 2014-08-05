@@ -2,10 +2,14 @@
 <package>
   <name>carl_bringup</name>
   <version>0.0.0</version>
-  <description>Package containing bringup launch files for carl.</description>
+  <description>CARL Bringup Launch Scripts</description>
 
-  <maintainer email="spkordell@wpi.edu">Steven Kordell</maintainer>
+  <maintainer email="rctoris@wpi.edu">Russell Toris</maintainer>
+  <maintainer email="davidkent@wpi.edu">David Kent</maintainer>
   <author email="spkordell@wpi.edu">Steven Kordell</author>
+  <author email="rctoris@wpi.edu">Russell Toris</author>
+  <author email="davidkent@wpi.edu">David Kent</author>
+
   <license>BSD</license>
 
   <url type="website">http://ros.org/wiki/carl_bringup</url>
@@ -14,17 +18,21 @@
  
   <buildtool_depend>catkin</buildtool_depend>
   
-  <!--ROBOT MODEL -->
-  <run_depend>robot_state_publisher</run_depend>
-  <run_depend>joint_state_publisher</run_depend>
+  <!-- ROBOT MODEL -->
   <run_depend>carl_description</run_depend>
   
-  <!--SENSORS-->
+  <!-- SENSORS -->
+  <run_depend>carl_dynamixel</run_depend>
+  <run_depend>m4atx_battery_monitor</run_depend>
+  <run_depend>openni2_launch</run_depend>
   <run_depend>urg_node</run_depend>
-  <run_depend>openni_launch</run_depend>
-  <run_depend>depthimage_to_laserscan</run_depend>
   
-   <!--SEGWAY-->
-   <run_depend>ros_ethernet_rmp</run_depend>
+  <!-- SEGWAY -->
+  <run_depend>ros_ethernet_rmp</run_depend>
+
+  <!-- JACO -->
+  <run_depend>wpi_jaco_wrapper</run_depend>
   
+  <!-- CARL -->
+  <run_depend>carl_teleop</run_depend>
 </package>
