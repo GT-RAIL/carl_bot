@@ -6,7 +6,7 @@ For full documentation, see [the ROS wiki](http://ros.org/wiki/carl_bot).
 
 ### Contributing
 
-[carl_description](carl_description) includes both minified versions of the 3D Collada models as well as pre-compiled URDF files. To properly contribute, follow the following:
+[carl_description](carl_description) includes both minified versions of the 3D Collada models as well as pre-compiled URDF files. To properly contribute, do the following:
 
  1. Re-minify any modified Collada files
    * `cd /path/to/carl_bot/carl_description/meshes/original`

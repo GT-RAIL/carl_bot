@@ -25,7 +25,7 @@ install(DIRECTORY launch/
 )
 
 ## Install meshes
-install(DIRECTORY meshes
+install(DIRECTORY meshes/
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/meshes
 )
 
@@ -35,7 +35,7 @@ install(DIRECTORY robots/
 )
 
 ## Install RVIZ configurations
-install(DIRECTORY rviz
+install(DIRECTORY rviz/
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/rviz
 )
 
