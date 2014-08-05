@@ -415,7 +415,7 @@
   <link name="jaco_link_base">
     <visual>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/jaco_link_base.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_link_base.min.dae"/>
       </geometry>
       <material name="carbon_fiber">
         <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
@@ -423,7 +423,7 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/jaco_link_base.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_link_base.min.dae"/>
       </geometry>
     </collision>
   </link>
@@ -437,7 +437,7 @@
   <link name="jaco_link_1">
     <visual>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/jaco_link_1.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_link_1.min.dae"/>
       </geometry>
       <material name="carbon_fiber">
         <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
@@ -445,7 +445,7 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/jaco_link_1.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_link_1.min.dae"/>
       </geometry>
     </collision>
   </link>
@@ -459,7 +459,7 @@
   <link name="jaco_link_2">
     <visual>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/jaco_link_2.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_link_2.min.dae"/>
       </geometry>
       <material name="carbon_fiber">
         <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
@@ -467,7 +467,7 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/jaco_link_2.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_link_2.min.dae"/>
       </geometry>
     </collision>
   </link>
@@ -481,7 +481,7 @@
   <link name="jaco_link_3">
     <visual>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/jaco_link_3.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_link_3.min.dae"/>
       </geometry>
       <material name="carbon_fiber">
         <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
@@ -489,7 +489,7 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/jaco_link_3.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_link_3.min.dae"/>
       </geometry>
     </collision>
   </link>
@@ -503,7 +503,7 @@
   <link name="jaco_link_4">
     <visual>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/jaco_link_4.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_link_4_5.min.dae"/>
       </geometry>
       <material name="carbon_fiber">
         <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
@@ -511,7 +511,7 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/jaco_link_4.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_link_4_5.min.dae"/>
       </geometry>
     </collision>
   </link>
@@ -525,7 +525,7 @@
   <link name="jaco_link_5">
     <visual>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/jaco_link_5.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_link_4_5.min.dae"/>
       </geometry>
       <material name="carbon_fiber">
         <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
@@ -533,7 +533,7 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/jaco_link_5.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_link_4_5.min.dae"/>
       </geometry>
     </collision>
   </link>
@@ -547,7 +547,7 @@
   <link name="jaco_link_hand">
     <visual>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/jaco_link_hand.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_link_hand.min.dae"/>
       </geometry>
       <material name="carbon_fiber">
         <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
@@ -555,7 +555,7 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/jaco_link_hand.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_link_hand.min.dae"/>
       </geometry>
     </collision>
   </link>
@@ -566,10 +566,10 @@
     <origin rpy="0 0.959931088597 3.14159265359" xyz="0.0343 0 -0.06588"/>
     <limit effort="30" lower="-6.28318530718" upper="6.28318530718" velocity="5"/>
   </joint>
-  <link name="large_ring_cover_1">
+  <link name="jaco_large_ring_cover_1">
     <visual>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/large_ring_cover.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_large_ring_cover.min.dae"/>
       </geometry>
       <material name="carbon_fiber">
         <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
@@ -577,21 +577,21 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/large_ring_cover.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_large_ring_cover.min.dae"/>
       </geometry>
     </collision>
   </link>
-  <joint name="large_ring_cover_1_joint" type="fixed">
+  <joint name="jaco_large_ring_cover_1_joint" type="fixed">
     <parent link="jaco_link_base"/>
-    <child link="large_ring_cover_1"/>
+    <child link="jaco_large_ring_cover_1"/>
     <axis xyz="0 0 1"/>
     <origin rpy="3.14159265359 0 0" xyz="0 0 0.1535"/>
     <limit effort="30" lower="-6.28318530718" upper="6.28318530718" velocity="5"/>
   </joint>
-  <link name="large_ring_cover_2">
+  <link name="jaco_large_ring_cover_2">
     <visual>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/large_ring_cover.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_large_ring_cover.min.dae"/>
       </geometry>
       <material name="carbon_fiber">
         <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
@@ -599,21 +599,21 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/large_ring_cover.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_large_ring_cover.min.dae"/>
       </geometry>
     </collision>
   </link>
-  <joint name="large_ring_cover_2_joint" type="fixed">
+  <joint name="jaco_large_ring_cover_2_joint" type="fixed">
     <parent link="jaco_link_1"/>
-    <child link="large_ring_cover_2"/>
+    <child link="jaco_large_ring_cover_2"/>
     <axis xyz="0 0 1"/>
     <origin rpy="-1.57079632679 -1.57079632679 0" xyz="0 0 -0.1185"/>
     <limit effort="30" lower="0" upper="6.28318530718" velocity="5"/>
   </joint>
-  <link name="large_ring_cover_3">
+  <link name="jaco_large_ring_cover_3">
     <visual>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/large_ring_cover.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_large_ring_cover.min.dae"/>
       </geometry>
       <material name="carbon_fiber">
         <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
@@ -621,21 +621,21 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/large_ring_cover.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_large_ring_cover.min.dae"/>
       </geometry>
     </collision>
   </link>
-  <joint name="large_ring_cover_3_joint" type="fixed">
+  <joint name="jaco_large_ring_cover_3_joint" type="fixed">
     <parent link="jaco_link_2"/>
-    <child link="large_ring_cover_3"/>
+    <child link="jaco_large_ring_cover_3"/>
     <axis xyz="0 0 1"/>
     <origin rpy="3.14159265359 0 3.14159265359" xyz="0.41 0 0"/>
     <limit effort="30" lower="0" upper="6.28318530718" velocity="5"/>
   </joint>
-  <link name="small_ring_cover_1">
+  <link name="jaco_small_ring_cover_1">
     <visual>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/small_ring_cover.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_small_ring_cover.min.dae"/>
       </geometry>
       <material name="carbon_fiber">
         <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
@@ -643,21 +643,21 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/small_ring_cover.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_small_ring_cover.min.dae"/>
       </geometry>
     </collision>
   </link>
-  <joint name="large_ring_cover_4_joint" type="fixed">
+  <joint name="jaco_large_ring_cover_4_joint" type="fixed">
     <parent link="jaco_link_3"/>
-    <child link="small_ring_cover_1"/>
+    <child link="jaco_small_ring_cover_1"/>
     <axis xyz="0 0 1"/>
     <origin rpy="0 -1.57079632679 0" xyz="0.207 0 -0.01125"/>
     <limit effort="30" lower="-6.28318530718" upper="6.28318530718" velocity="5"/>
   </joint>
-  <link name="small_ring_cover_2">
+  <link name="jaco_small_ring_cover_2">
     <visual>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/small_ring_cover.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_small_ring_cover.min.dae"/>
       </geometry>
       <material name="carbon_fiber">
         <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
@@ -665,21 +665,21 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/small_ring_cover.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_small_ring_cover.min.dae"/>
       </geometry>
     </collision>
   </link>
-  <joint name="large_ring_cover_5_joint" type="fixed">
+  <joint name="jaco_large_ring_cover_5_joint" type="fixed">
     <parent link="jaco_link_4"/>
-    <child link="small_ring_cover_2"/>
+    <child link="jaco_small_ring_cover_2"/>
     <axis xyz="0 0 1"/>
     <origin rpy="0 0.959931088597 3.14159265359" xyz="0.0343 0 -0.06588"/>
     <limit effort="30" lower="-6.28318530718" upper="6.28318530718" velocity="5"/>
   </joint>
-  <link name="small_ring_cover_3">
+  <link name="jaco_small_ring_cover_3">
     <visual>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/small_ring_cover.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_small_ring_cover.min.dae"/>
       </geometry>
       <material name="carbon_fiber">
         <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
@@ -687,13 +687,13 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/small_ring_cover.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_small_ring_cover.min.dae"/>
       </geometry>
     </collision>
   </link>
-  <joint name="large_ring_cover_6_joint" type="fixed">
-    <parent link="jaco_link_5"/>
-    <child link="small_ring_cover_3"/>
+  <joint name="jaco_large_ring_cover_6_joint" type="fixed">
+    <parent link="jaco_link_4"/>
+    <child link="jaco_small_ring_cover_3"/>
     <axis xyz="0 0 1"/>
     <origin rpy="0 0.959931088597 3.14159265359" xyz="0.0343 0 -0.06588"/>
     <limit effort="30" lower="-6.28318530718" upper="6.28318530718" velocity="5"/>
@@ -701,7 +701,7 @@
   <link name="jaco_link_finger_1">
     <visual>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/jaco_link_finger_1.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_link_finger.min.dae"/>
       </geometry>
       <material name="carbon_fiber">
         <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
@@ -709,7 +709,7 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/jaco_link_finger_1.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_link_finger.min.dae"/>
       </geometry>
     </collision>
   </link>
@@ -723,7 +723,7 @@
   <link name="jaco_link_finger_2">
     <visual>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/jaco_link_finger_2.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_link_finger.min.dae"/>
       </geometry>
       <material name="carbon_fiber">
         <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
@@ -731,7 +731,7 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/jaco_link_finger_2.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_link_finger.min.dae"/>
       </geometry>
     </collision>
   </link>
@@ -745,7 +745,7 @@
   <link name="jaco_link_finger_3">
     <visual>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/jaco_link_finger_3.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_link_finger.min.dae"/>
       </geometry>
       <material name="carbon_fiber">
         <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
@@ -753,7 +753,7 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/jaco_link_finger_3.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_link_finger.min.dae"/>
       </geometry>
     </collision>
   </link>
@@ -767,7 +767,7 @@
   <link name="jaco_link_finger_tip_1">
     <visual>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/jaco_link_finger_tip_1.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_link_finger_tip.min.dae"/>
       </geometry>
       <material name="carbon_fiber">
         <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
@@ -775,7 +775,7 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/jaco_link_finger_tip_1.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_link_finger_tip.min.dae"/>
       </geometry>
     </collision>
   </link>
@@ -789,7 +789,7 @@
   <link name="jaco_link_finger_tip_2">
     <visual>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/jaco_link_finger_tip_2.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_link_finger_tip.min.dae"/>
       </geometry>
       <material name="carbon_fiber">
         <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
@@ -797,7 +797,7 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/jaco_link_finger_tip_2.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_link_finger_tip.min.dae"/>
       </geometry>
     </collision>
   </link>
@@ -811,7 +811,7 @@
   <link name="jaco_link_finger_tip_3">
     <visual>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/jaco_link_finger_tip_3.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_link_finger_tip.min.dae"/>
       </geometry>
       <material name="carbon_fiber">
         <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1"/>
@@ -819,7 +819,7 @@
     </visual>
     <collision>
       <geometry>
-        <mesh filename="package://jaco_description/meshes/jaco_link_finger_tip_3.dae"/>
+        <mesh filename="package://jaco_description/meshes/jaco_link_finger_tip.min.dae"/>
       </geometry>
     </collision>
   </link>
