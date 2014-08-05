@@ -156,23 +156,34 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
       displayHelp(3);
     }
   }
+  else if ((controllerType == DIGITAL && joy->axes.at(5) == 1.0)
+      || (controllerType == ANALOG && joy->axes.at(7) == 1.0))
+  {
+    if (!helpDisplayed)
+    {
+      helpDisplayed = true;
+      displayHelp(4);
+    }
+  }
   else
     helpDisplayed = false;
 
   //setup button indices for mode switching
-  int button1Index, button2Index, button3Index;
+  int button1Index, button2Index, button3Index, button4Index;
   bool modeChange;
   if (controllerType == DIGITAL)
   {
     button1Index = 0;
     button2Index = 1;
     button3Index = 2;
+    button4Index = 3;
   }
   else
   {
     button1Index = 2;
     button2Index = 0;
     button3Index = 1;
+    button4Index = 3;
   }
 
   bool was_pressed;
@@ -216,6 +227,12 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
         modeChange = true;
         mode = ARM_CONTROL;
         ROS_INFO("Activated arm control mode");
+      }
+      else if (joy->buttons.at(button4Index) == 1)
+      {
+        modeChange = true;
+        mode = SENSOR_CONTROL;
+        ROS_INFO("Activated sensor control mode");
       }
 
       if (modeChange)
@@ -274,7 +291,7 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
       }
 
       //mode switching
-      if (joy->buttons.at(button1Index) == 1 || joy->buttons.at(button3Index) == 1)
+      if (joy->buttons.at(button1Index) == 1 || joy->buttons.at(button3Index) == 1 || joy->buttons.at(button4Index) == 1)
       {
         //cancel arm trajectory
         cartesianCmd.arm.linear.x = 0.0;
@@ -294,6 +311,11 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
         {
           mode = BASE_CONTROL;
           ROS_INFO("Activated base control mode");
+        }
+        else if (joy->buttons.at(button4Index) == 1)
+        {
+          mode = SENSOR_CONTROL;
+          ROS_INFO("Activate sensor control mode");
         }
       }
       break;
@@ -352,7 +374,7 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
       }
 
       //mode switching
-      if (joy->buttons.at(button2Index) == 1 || joy->buttons.at(button3Index) == 1)
+      if (joy->buttons.at(button2Index) == 1 || joy->buttons.at(button3Index) == 1 || joy->buttons.at(button4Index) == 1)
       {
         //cancel finger trajectory
         angularCmd.fingers[0] = 0.0;
@@ -370,8 +392,43 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
           mode=BASE_CONTROL;
           ROS_INFO("Activated base control mode");
         }
+        else if (joy->buttons.at(button4Index) == 1)
+        {
+          mode = SENSOR_CONTROL;
+          ROS_INFO("Activate sensor control mode");
+        }
       }
-      break;
+    break;
+    case SENSOR_CONTROL:
+      std_msgs::Float64 cameraTiltCommand;
+      if (controllerType == DIGITAL)
+        cameraTiltCommand.data = joy->axes.at(3);
+      else
+        cameraTiltCommand.data = joy->axes.at(4);
+
+      if (cameraTiltCommand.data != 0)
+      {
+        asus_servo_tilt_cmd.publish(cameraTiltCommand);
+      }
+      
+      //mode switch
+      if (joy->buttons.at(button2Index) == 1)
+      {
+        mode = ARM_CONTROL;
+        ROS_INFO("Activated arm control mode");
+      }
+      else if (joy->buttons.at(button2Index) == 1)
+      {
+        mode = FINGER_CONTROL;
+        ROS_INFO("Activate finger control mode");
+      }
+      else if (joy->buttons.at(button3Index) == 1)
+      {
+        mode=BASE_CONTROL;
+        ROS_INFO("Activated base control mode");
+      }
+      
+    break;
   }
 }
 
@@ -443,19 +500,19 @@ void carl_joy_teleop::publish_velocity()
 
 void carl_joy_teleop::displayHelp(int menuNumber)
 {
+  puts(" ----------------------------------------");
+  puts("| CARL Joystick Teleop Help              |");
+  puts("|----------------------------------------|*");
+  if (mode == ARM_CONTROL)
+    puts("| Current Mode: Arm Control              |*");
+  else if (mode == FINGER_CONTROL)
+    puts("| Current Mode: Finger Control           |*");
+  else if (mode == BASE_CONTROL)
+    puts(" Current Mode: Base Control              |*");
+  puts("|----------------------------------------|*");
   switch (menuNumber)
   {
     case 1:
-      puts(" ----------------------------------------");
-      puts("| CARL Joystick Teleop Help              |");
-      puts("|----------------------------------------|*");
-      if (mode == ARM_CONTROL)
-        puts("| Current Mode: Arm Control              |*");
-      else if (mode == FINGER_CONTROL)
-        puts("| Current Mode: Finger Control           |*");
-      else if (mode == BASE_CONTROL)
-        puts(" Current Mode: Base Control              |*");
-      puts("|----------------------------------------|*");
       puts("|              Arm Controls              |*");
       puts("|   roll/down                 roll/up    |*");
       puts("|    ________                ________    |*");
@@ -467,29 +524,8 @@ void carl_joy_teleop::displayHelp(int menuNumber)
       puts("|  |          \\___/    \\___/          |  |*");
       puts("|  |       x/y trans  pitch/yaw       |  |*");
       puts("|  |        _______/--\\_______        |  |*");
-      puts("|  |       |                  |       |  |*");
-      puts("|   \\     /                    \\     /   |*");
-      puts("|    \\___/                      \\___/    |*");
-      puts("|                                        |*");
-      puts("| Buttons:                               |*");
-      puts("|   (1) Switch to finger control mode    |*");
-      puts("|   (2) Switch to arm control mode       |*");
-      puts("|   (3) Switch to base control mode      |*");
-      puts("|   (4) No function                      |*");
-      puts(" ----------------------------------------**");
-      puts("  *****************************************");
-      break;
+    break;
     case 2:
-      puts(" ----------------------------------------");
-      puts("| CARL Joystick Teleop Help              |");
-      puts("|----------------------------------------|*");
-      if (mode == ARM_CONTROL)
-        puts("| Current Mode: Arm Control              |*");
-      else if (mode == FINGER_CONTROL)
-        puts("| Current Mode: Finger Control           |*");
-      else if (mode == BASE_CONTROL)
-        puts(" Current Mode: Base Control              |*");
-      puts("|----------------------------------------|*");
       puts("|            Finger Controls             |*");
       puts("| finger1 open/close  finger2 open/close |*");
       puts("|    ________                ________    |*");
@@ -501,29 +537,8 @@ void carl_joy_teleop::displayHelp(int menuNumber)
       puts("|  |          \\___/    \\___/          |  |*");
       puts("|  | hand open/close  thumb open/close|  |*");
       puts("|  |        _______/--\\_______        |  |*");
-      puts("|  |       |                  |       |  |*");
-      puts("|   \\     /                    \\     /   |*");
-      puts("|    \\___/                      \\___/    |*");
-      puts("|                                        |*");
-      puts("| Buttons:                               |*");
-      puts("|   (1) Switch to finger control mode    |*");
-      puts("|   (2) Switch to arm control mode       |*");
-      puts("|   (3) Switch to base control mode      |*");
-      puts("|   (4) No function                      |*");
-      puts(" ----------------------------------------**");
-      puts("  *****************************************");
-      break;
+    break;
     case 3:
-      puts(" ----------------------------------------");
-      puts("| CARL Joystick Teleop Help              |");
-      puts("|----------------------------------------|*");
-      if (mode == ARM_CONTROL)
-        puts("| Current Mode: Arm Control              |*");
-      else if (mode == FINGER_CONTROL)
-        puts("| Current Mode: Finger Control           |*");
-      else if (mode == BASE_CONTROL)
-        puts(" Current Mode: Base Control              |*");
-      puts("|----------------------------------------|*");
       puts("|             Base Controls              |*");
       puts("| deadman/no function  boost/no function |*");
       puts("|    ________                ________    |*");
@@ -535,19 +550,32 @@ void carl_joy_teleop::displayHelp(int menuNumber)
       puts("|  |          \\___/    \\___/          |  |*");
       puts("|  |        fwd/bkwd  left/right      |  |*");
       puts("|  |        _______/--\\_______        |  |*");
-      puts("|  |       |                  |       |  |*");
-      puts("|   \\     /                    \\     /   |*");
-      puts("|    \\___/                      \\___/    |*");
+    break;
+    case 4:
+      puts("|            Sensor Controls             |*");
       puts("|                                        |*");
-      puts("| Buttons:                               |*");
-      puts("|   (1) Switch to finger control mode    |*");
-      puts("|   (2) Switch to arm control mode       |*");
-      puts("|   (3) Switch to base control mode      |*");
-      puts("|   (4) No function                      |*");
-      puts(" ----------------------------------------**");
-      puts("  *****************************************");
-      break;
+      puts("|    ________                ________    |*");
+      puts("|   /    _   \\______________/        \\   |*");
+      puts("|  |   _| |_    < >    < >     (4)    |  |*");
+      puts("|  |  |_   _|  Estop  start (1)   (3) |  |*");
+      puts("|  |    |_|    ___      ___    (2)    |  |*");
+      puts("|  |          /   \\    /   \\          |  |*");
+      puts("|  |          \\___/    \\___/          |  |*");
+      puts("|  |                  asus tilt       |  |*");
+      puts("|  |        _______/--\\_______        |  |*");
+    break;
   }
+  puts("|  |       |                  |       |  |*");
+  puts("|   \\     /                    \\     /   |*");
+  puts("|    \\___/                      \\___/    |*");
+  puts("|                                        |*");
+  puts("| Buttons:                               |*");
+  puts("|   (1) Switch to finger control mode    |*");
+  puts("|   (2) Switch to arm control mode       |*");
+  puts("|   (3) Switch to base control mode      |*");
+  puts("|   (4) Switch to sensor control mode    |*");
+  puts(" ----------------------------------------**");
+  puts("  *****************************************");
 }
 
 int main(int argc, char **argv)

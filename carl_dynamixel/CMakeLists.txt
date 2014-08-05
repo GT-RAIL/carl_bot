@@ -26,9 +26,13 @@ include_directories(include
 
 ## Declare a cpp executable
 add_executable(back_joints_node src/back_joint_node.cpp)
+add_executable(servo_pan_tilt src/servo_pan_tilt.cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(back_joints_node
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(servo_pan_tilt
   ${catkin_LIBRARIES}
 )
 
