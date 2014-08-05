@@ -25,6 +25,7 @@ carl_joy_teleop::carl_joy_teleop()
   cmd_vel = node.advertise<geometry_msgs::Twist>("cmd_vel", 10);
   angular_cmd = node.advertise<wpi_jaco_msgs::AngularCommand>("jaco_arm/angular_cmd", 10);
   cartesian_cmd = node.advertise<wpi_jaco_msgs::CartesianCommand>("jaco_arm/cartesian_cmd", 10);
+  asus_servo_tilt_cmd = node.advertise<std_msgs::Float64>("asus_controller/tilt", 10);
   joy_sub = node.subscribe<sensor_msgs::Joy>("joy", 10, &carl_joy_teleop::joy_cback, this);
 
   // read in throttle values
@@ -273,21 +274,7 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
       }
 
       //mode switching
-      modeChange = false;
-      if (joy->buttons.at(button1Index) == 1)
-      {
-        modeChange = true;
-        mode = FINGER_CONTROL;
-        ROS_INFO("Activated finger control mode");
-      }
-      else if (joy->buttons.at(button3Index) == 1)
-      {
-        modeChange = true;
-        mode = BASE_CONTROL;
-        ROS_INFO("Activated base control mode");
-      }
-
-      if (modeChange)
+      if (joy->buttons.at(button1Index) == 1 || joy->buttons.at(button3Index) == 1)
       {
         //cancel arm trajectory
         cartesianCmd.arm.linear.x = 0.0;
@@ -297,6 +284,17 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
         cartesianCmd.arm.angular.y = 0.0;
         cartesianCmd.arm.angular.z = 0.0;
         cartesian_cmd.publish(cartesianCmd);
+        
+        if (joy->buttons.at(button1Index) == 1)
+        {
+          mode = FINGER_CONTROL;
+          ROS_INFO("Activated finger control mode");
+        }
+        else if (joy->buttons.at(button3Index) == 1)
+        {
+          mode = BASE_CONTROL;
+          ROS_INFO("Activated base control mode");
+        }
       }
       break;
     case FINGER_CONTROL:
@@ -354,27 +352,24 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
       }
 
       //mode switching
-      modeChange = false;
-      if (joy->buttons.at(button2Index) == 1)
-      {
-        modeChange = true;
-        mode = ARM_CONTROL;
-        ROS_INFO("Activated arm control mode");
-      }
-      else if (joy->buttons.at(button3Index) == 1)
-      {
-        modeChange = true;
-        mode = BASE_CONTROL;
-        ROS_INFO("Activated base control mode");
-      }
-
-      if (modeChange)
+      if (joy->buttons.at(button2Index) == 1 || joy->buttons.at(button3Index) == 1)
       {
         //cancel finger trajectory
         angularCmd.fingers[0] = 0.0;
         angularCmd.fingers[1] = 0.0;
         angularCmd.fingers[2] = 0.0;
         angular_cmd.publish(angularCmd);
+        
+        if (joy->buttons.at(button2Index) == 1)
+        {
+          mode = ARM_CONTROL;
+          ROS_INFO("Activated arm control mode");
+        }
+        else if (joy->buttons.at(button3Index) == 1)
+        {
+          mode=BASE_CONTROL;
+          ROS_INFO("Activated base control mode");
+        }
       }
       break;
   }

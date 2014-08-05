@@ -17,6 +17,7 @@
 
 #include <ros/ros.h>
 #include <sensor_msgs/Joy.h>
+#include <std_msgs/Float64.h>
 #include <wpi_jaco_msgs/AngularCommand.h>
 #include <wpi_jaco_msgs/CartesianCommand.h>
 
@@ -24,6 +25,7 @@
 #define ARM_CONTROL 0 
 #define FINGER_CONTROL 1
 #define BASE_CONTROL 2
+#define SENSOR_CONTROL 3
 
 //Joystick types
 #define ANALOG 0 //analog triggers
@@ -108,6 +110,7 @@ private:
   ros::Publisher cmd_vel; /*!< the base cmd_vel topic */
   ros::Publisher angular_cmd; /*!< angular arm command topic */
   ros::Publisher cartesian_cmd; /*!< cartesian arm command topic */
+  ros::Publisher asus_servo_tilt_cmd; /*< velocity command to tilt the asus servo */
   ros::Subscriber joy_sub; /*!< the joy topic */
 
   geometry_msgs::Twist twist; /*!< base movement command */
