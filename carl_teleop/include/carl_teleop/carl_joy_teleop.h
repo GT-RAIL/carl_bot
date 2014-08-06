@@ -111,6 +111,7 @@ private:
   ros::Publisher angular_cmd; /*!< angular arm command topic */
   ros::Publisher cartesian_cmd; /*!< cartesian arm command topic */
   ros::Publisher asus_servo_tilt_cmd; /*< velocity command to tilt the asus servo */
+  ros::Publisher creative_servo_pan_cmd; /*< velocity command to pan the creative servo */
   ros::Subscriber joy_sub; /*!< the joy topic */
 
   geometry_msgs::Twist twist; /*!< base movement command */

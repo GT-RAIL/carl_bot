@@ -33,25 +33,42 @@ public:
 
 private:
   /*!
-   * Servo joint state callback.
+   * Back servo joint state callback.
    *
    * \param msg servo joint states
    */
-  void jointStateCallback(const sensor_msgs::JointState::ConstPtr& msg);
+  void backJointStateCallback(const sensor_msgs::JointState::ConstPtr& msg);
+  
+  /*!
+   * Front servo joint state callback.
+   *
+   * \param msg servo joint states
+   */
+  void frontJointStateCallback(const sensor_msgs::JointState::ConstPtr& msg);
 
   /*!
    * Servo tilt command callback
    * @param msg message denoting the desired tilt velocity (rad/s)
    */
   void tiltCallback(const std_msgs::Float64::ConstPtr& msg);
+  
+  /*!
+   * Servo pan command callback
+   * @param msg message denoting the desired pan velocity (rad/s)
+   */
+  void panCallback(const std_msgs::Float64::ConstPtr& msg);
 
   ros::NodeHandle node; /*!< a handle for this ROS node */
 
   ros::Publisher asusServoControllerPublisher; /*!< position command for the asus servo */
+  ros::Publisher creativeServoControllerPublisher; /*!< position command for the creative camera servo */
   ros::Subscriber tiltCommandSubscriber; /*!< subscriber for camera tilt commands */
-  ros::Subscriber jointStateSubscriber; /*!< servo joint state subscrbier */
+  ros::Subscriber panCommandSubscriber; /*!< subscriber for camera pan commands */
+  ros::Subscriber backJointStateSubscriber; /*!< back (asus) servo joint state subscrbier */
+  ros::Subscriber frontJointStateSubscriber; /*!< front (creative) servo joint state subscrbier */
 
-  float servoPos; /*!< the current position of the servo */
+  float backServoPos; /*!< the current position of the back servo */
+  float frontServoPos; /*!< the current position of the front servo */
 };
 
 #endif
