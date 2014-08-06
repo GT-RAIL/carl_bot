@@ -20,10 +20,10 @@
 #include "dynamixel_msgs/MotorState.h"
 #include <math.h>
 
-class back_joints
+class front_joints
 {
   public:
-    back_joints();
+    front_joints();
     /*
      * estop function to check the time difference to see if any goal position in move_base should be cancelled
      *
@@ -40,7 +40,7 @@ class back_joints
     ros::Publisher joint_states_pub;
 
     //map to store the ids and the link names of each servo connected
-    std::map<int,std::string> back_servos;
+    std::map<int,std::string> front_servos;
 };
 
 #endif
