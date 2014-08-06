@@ -6,27 +6,12 @@
       <parent link="${parent}" />
       <child link="${suffix}_rear_strut_link" />
     </joint>
- 
-    <joint name="${suffix}_rear_strut_link_${suffix}_rear_strut_link_inside_joint" type="fixed">
-      <parent link="${suffix}_rear_strut_link" />
-   	  <child link="${suffix}_rear_strut_inside_link" />
-      <origin xyz="0 0 0" rpy="0 0 0" />
-    </joint>
     
     <joint name="${suffix}_rear_strut_link_${suffix}_rear_strut_top_link_joint" type="fixed">
       <parent link="${suffix}_rear_strut_link" />
-   	  <child link="${suffix}_rear_strut_top_link" />
+        <child link="${suffix}_rear_strut_top_link" />
       <origin xyz="0 0.001 1.055" rpy="0 0 0" />
     </joint>      
-    
-    <link name="${suffix}_rear_strut_inside_link">
-      <visual>
-        <origin xyz="0 0 0.5275" rpy="0 0 0" />
-        <geometry>
-          <box size="0.02 0.045 1" />
-        </geometry>
-      </visual>
-    </link>
 
     <link name="${suffix}_rear_strut_link">
       <visual>
