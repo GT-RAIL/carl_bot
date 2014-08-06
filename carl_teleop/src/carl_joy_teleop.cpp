@@ -26,6 +26,7 @@ carl_joy_teleop::carl_joy_teleop()
   angular_cmd = node.advertise<wpi_jaco_msgs::AngularCommand>("jaco_arm/angular_cmd", 10);
   cartesian_cmd = node.advertise<wpi_jaco_msgs::CartesianCommand>("jaco_arm/cartesian_cmd", 10);
   asus_servo_tilt_cmd = node.advertise<std_msgs::Float64>("asus_controller/tilt", 10);
+  creative_servo_pan_cmd = node.advertise<std_msgs::Float64>("creative_controller/tilt", 10);
   joy_sub = node.subscribe<sensor_msgs::Joy>("joy", 10, &carl_joy_teleop::joy_cback, this);
 
   // read in throttle values
@@ -401,14 +402,23 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
     break;
     case SENSOR_CONTROL:
       std_msgs::Float64 cameraTiltCommand;
+      std_msgs::Float64 cameraPanCommand;
+
+      //asus tilt      
       if (controllerType == DIGITAL)
         cameraTiltCommand.data = joy->axes.at(3) * 10; //scaled up for smoother movement
       else
         cameraTiltCommand.data = joy->axes.at(4) * 10; //scaled up for smoother movement
-
       if (cameraTiltCommand.data != 0)
       {
         asus_servo_tilt_cmd.publish(cameraTiltCommand);
+      }
+      
+      //creative pan
+      cameraPanCommand.data = joy->axes.at(0) * 10; //scaled up for smoother movement
+      if (cameraPanCommand.data != 0)
+      {
+        creative_servo_pan_cmd.publish(cameraPanCommand);
       }
       
       //mode switch
