@@ -27,12 +27,21 @@ include_directories(include
 ## Declare a cpp executable
 add_executable(back_joints_node src/back_joint_node.cpp)
 add_executable(servo_pan_tilt src/servo_pan_tilt.cpp)
+add_executable(front_joints_node src/front_joint_node.cpp)
+
+## Add cmake target dependencies of the executable/library
+## as an example, message headers may need to be generated before nodes
+# add_dependencies(carl_dynamixel_node carl_dynamixel_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(back_joints_node
   ${catkin_LIBRARIES}
 )
 target_link_libraries(servo_pan_tilt
+  ${catkin_LIBRARIES}
+)
+
+target_link_libraries(front_joints_node
   ${catkin_LIBRARIES}
 )
 
