@@ -144,10 +144,10 @@
     </library_effects>
     <library_images>
         <image id="ID9">
-            <init_from>back_cover/material_1.jpg</init_from>
+            <init_from>materials/blue.jpg</init_from>
         </image>
         <image id="ID18">
-            <init_from>back_cover/material_1_0.jpg</init_from>
+            <init_from>materials/blue.jpg</init_from>
         </image>
     </library_images>
     <scene>
