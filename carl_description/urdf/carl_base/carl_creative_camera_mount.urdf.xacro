@@ -6,6 +6,52 @@
 
   <xacro:include filename="$(find carl_description)/urdf/sensors/creative_camera.urdf.xacro" />
   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <!-- TODO FIX COLLISISION MODEL -->
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   <xacro:macro name="carl_creative_camera_mount">
     <link name="creative_mount_link">
       <visual>
@@ -48,10 +94,31 @@
 	  <collision>
         <origin xyz="0 -0.01 -0.02" rpy="0 0 0" />
         <geometry>
-          <box size="0.035 0.05 0.06" />
+          <box size="0.035 0.09 0.06" />
          </geometry>
       </collision>
     </link>
+    
+    <link name="creative_plate_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://carl_description/meshes/creative_plate.min.dae" />
+        </geometry>
+      </visual>
+      <!--
+	  <collision>	  
+        <origin xyz="0 -0.01 -0.02" rpy="0 0 0" />
+        <geometry>
+          <box size="0.035 0.05 0.06" />
+         </geometry>
+      </collision>
+      -->
+    </link>
+    
+    <xacro:sensor_creative_camera parent="creative_plate_link">
+      <origin xyz="0 0.0 0.012" rpy="0 0 0" />
+    </xacro:sensor_creative_camera>	
     
     <joint name="top_plate_creative_mount_joint" type="fixed">
       <parent link="top_plate_link" />
@@ -71,29 +138,12 @@
       <origin xyz="0 -0.042 0" rpy="1.5708 1.5708 0" />
       <axis xyz="0 0 1" />
     </joint>
-  
     
-<!--    
-  
-
-  
-
-
-    
--->    
-    <!--
-    <xacro:sensor_creative_xtion_pro parent="creative_mount_link">
-      <origin xyz="-0.016 -0.008 0.018" rpy="0 -1.5708 0" />
-    </xacro:sensor_creative_xtion_pro>		
-    
-    
-    <joint name="creative_servo_arm_creative_mount_joint" type="fixed">
+    <joint name="creative_servo_arm_creative_plate_joint" type="fixed">
       <parent link="creative_servo_arm_link" />
-      <child link="creative_mount_link" />
-      <origin xyz="0 -0.053 -0.016" rpy="1.5708 0 1.5708" />
+      <child link="creative_plate_link" />
+      <origin xyz="0 -0.057 -0.024" rpy="1.5708 1.5708 0" />
     </joint>
-    
-    -->
     
   </xacro:macro>
 </robot>
