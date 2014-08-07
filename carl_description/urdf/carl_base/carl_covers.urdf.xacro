@@ -9,7 +9,7 @@
   <xacro:macro name="carl_covers" params="name">
     <!-- right side cover -->
     <xacro:carl_side_cover suffix="right" parent="right_rear_strut_link">
-      <origin xyz="0.229 -0.026 0.447" rpy="0 0 0" />
+      <origin xyz="-0.229 -0.026 0.447" rpy="0 0 0" />
     </xacro:carl_side_cover>
 
     <!-- left side cover -->

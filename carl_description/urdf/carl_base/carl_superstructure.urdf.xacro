@@ -15,13 +15,13 @@
 
     <!-- right rear strut -->
     <xacro:carl_rear_strut suffix="right" parent="${name}_link">  
-      <origin xyz="-0.222 -0.200 -0.102" rpy="0 0 0" />
+      <origin xyz="-0.222 -0.200 -0.102" rpy="0 0 3.1415926536" />
     </xacro:carl_rear_strut>
 
     <joint name="left_rear_strut_top_plate_joint" type="fixed">
       <parent link="right_rear_strut_link" />
       <child link="top_plate_link" />
-      <origin xyz="0.516 0.20 0.598" rpy="0 0 0" />
+      <origin xyz="-0.516 -0.20 0.598" rpy="0 0 3.14159265" />
     </joint>
 
     <joint name="top_plate_jaco_mount" type="fixed">
@@ -38,7 +38,7 @@
         </geometry>
       </visual>
       <collision>
-        <origin xyz="-.29 0 -0.299" rpy="0 0 0" />
+        <origin xyz="-.29 0 -0.299" rpy="0 0 3.1415926536" />
         <geometry>
           <box size="0.495 0.59 0.65" />
         </geometry>
