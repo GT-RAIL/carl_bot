@@ -40,4 +40,7 @@
     <rosparam file="$(find carl_dynamixel)/config/front_servos.yaml" command="load"/>
     <node name="front_joints_node" pkg="carl_dynamixel" type="front_joints_node" output="screen"/>
 
+    <!-- Start pan/tilt controllers -->
+    <node name="servo_pan_tilt" pkg="carl_dynamixel" type="servo_pan_tilt" output="screen" />
+
 </launch>
