@@ -9,4 +9,4 @@ creative_controller:
         id: 1
         init: 512
         min: 273
-        max: 785
+        max: 753
