@@ -50,7 +50,7 @@ target_link_libraries(front_joints_node
 #############
 
 ## Mark executables and/or libraries for installation
-install(TARGETS back_joints_node servo_pan_tilt
+install(TARGETS back_joints_node front_joints_node servo_pan_tilt
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

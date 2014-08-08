@@ -9,24 +9,11 @@
     <parent link="base_link"/>
     <child link="left_rear_strut_link"/>
   </joint>
-  <joint name="left_rear_strut_link_left_rear_strut_link_inside_joint" type="fixed">
-    <parent link="left_rear_strut_link"/>
-    <child link="left_rear_strut_inside_link"/>
-    <origin rpy="0 0 0" xyz="0 0 0"/>
-  </joint>
   <joint name="left_rear_strut_link_left_rear_strut_top_link_joint" type="fixed">
     <parent link="left_rear_strut_link"/>
     <child link="left_rear_strut_top_link"/>
     <origin rpy="0 0 0" xyz="0 0.001 1.055"/>
   </joint>
-  <link name="left_rear_strut_inside_link">
-    <visual>
-      <origin rpy="0 0 0" xyz="0 0 0.5275"/>
-      <geometry>
-        <box size="0.02 0.045 1"/>
-      </geometry>
-    </visual>
-  </link>
   <link name="left_rear_strut_link">
     <visual>
       <origin rpy="0 0 -1.5708" xyz="0 0 0"/>
@@ -60,24 +47,11 @@
     <parent link="base_link"/>
     <child link="right_rear_strut_link"/>
   </joint>
-  <joint name="right_rear_strut_link_right_rear_strut_link_inside_joint" type="fixed">
-    <parent link="right_rear_strut_link"/>
-    <child link="right_rear_strut_inside_link"/>
-    <origin rpy="0 0 0" xyz="0 0 0"/>
-  </joint>
   <joint name="right_rear_strut_link_right_rear_strut_top_link_joint" type="fixed">
     <parent link="right_rear_strut_link"/>
     <child link="right_rear_strut_top_link"/>
     <origin rpy="0 0 0" xyz="0 0.001 1.055"/>
   </joint>
-  <link name="right_rear_strut_inside_link">
-    <visual>
-      <origin rpy="0 0 0" xyz="0 0 0.5275"/>
-      <geometry>
-        <box size="0.02 0.045 1"/>
-      </geometry>
-    </visual>
-  </link>
   <link name="right_rear_strut_link">
     <visual>
       <origin rpy="0 0 -1.5708" xyz="0 0 0"/>

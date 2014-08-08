@@ -26,7 +26,7 @@ carl_joy_teleop::carl_joy_teleop()
   angular_cmd = node.advertise<wpi_jaco_msgs::AngularCommand>("jaco_arm/angular_cmd", 10);
   cartesian_cmd = node.advertise<wpi_jaco_msgs::CartesianCommand>("jaco_arm/cartesian_cmd", 10);
   asus_servo_tilt_cmd = node.advertise<std_msgs::Float64>("asus_controller/tilt", 10);
-  creative_servo_pan_cmd = node.advertise<std_msgs::Float64>("creative_controller/tilt", 10);
+  creative_servo_pan_cmd = node.advertise<std_msgs::Float64>("creative_controller/pan", 10);
   joy_sub = node.subscribe<sensor_msgs::Joy>("joy", 10, &carl_joy_teleop::joy_cback, this);
 
   // read in throttle values
