@@ -6,8 +6,8 @@
 
   <xacro:include filename="$(find carl_description)/urdf/sensors/asus_xtion_pro.urdf.xacro" />
   
-  <xacro:macro name="carl_camera_mount">
-    <link name="camera_lift_link">
+  <xacro:macro name="carl_asus_camera_mount">
+    <link name="asus_lift_link">
       <visual>
         <origin xyz="0 0 0" rpy="0 1.5708 1.5708" />
         <geometry>
@@ -22,7 +22,7 @@
       </collision>         
     </link>
     
-    <link name="camera_mount_link">
+    <link name="asus_mount_link">
       <visual>
         <origin xyz="0 0 0" rpy="0 1.5708 0" />
         <geometry>
@@ -31,7 +31,7 @@
       </visual>
     </link>
   
-    <link name="servo_mount_link">
+    <link name="asus_servo_mount_link">
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
@@ -46,7 +46,7 @@
       </collision>
     </link>
   
-    <link name="servo_link">
+    <link name="asus_servo_link">
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
@@ -61,7 +61,7 @@
       </collision>
     </link>
         
-    <link name="servo_arm_link">
+    <link name="asus_servo_arm_link">
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
@@ -76,39 +76,39 @@
       </collision>
     </link>
     
-    <xacro:sensor_asus_xtion_pro parent="camera_mount_link">
+    <xacro:sensor_asus_xtion_pro parent="asus_mount_link">
       <origin xyz="-0.016 -0.008 0.018" rpy="0 -1.5708 0" />
     </xacro:sensor_asus_xtion_pro>		
   
-    <joint name="left_rear_strut_camera_lift_joint" type="fixed">
+    <joint name="right_rear_strut_asus_lift_joint" type="fixed">
       <parent link="right_rear_strut_link" />
-      <child link="camera_lift_link" />
-      <origin xyz="0.013 0.20 1.538" rpy="0 0 0" />
+      <child link="asus_lift_link" />
+      <origin xyz="-0.013 -0.20 1.538" rpy="0 0 3.1415926536" />
     </joint>
   
-    <joint name="camera_lift_servo_mount_joint" type="fixed">
-      <parent link="camera_lift_link" />
-      <child link="servo_mount_link" />
+    <joint name="asus_lift_asus_servo_mount_joint" type="fixed">
+      <parent link="asus_lift_link" />
+      <child link="asus_servo_mount_link" />
       <origin xyz="0 0 0" rpy="1.5708 0 0" />
       <axis xyz="0 0 1" />
     </joint>
    
-    <joint name="servo_mount_servo_joint" type="fixed">
-      <parent link="servo_mount_link" />
-      <child link="servo_link" />
+    <joint name="asus_servo_mount_asus_servo_joint" type="fixed">
+      <parent link="asus_servo_mount_link" />
+      <child link="asus_servo_link" />
       <origin xyz="0.073 0.013 0.0187" rpy="1.5708 0 3.92699" />
     </joint>
     
-    <joint name="servo_servo_arm_joint" type="continuous">
-      <parent link="servo_link" />
-      <child link="servo_arm_link" />
+    <joint name="asus_servo_asus_servo_arm_joint" type="continuous">
+      <parent link="asus_servo_link" />
+      <child link="asus_servo_arm_link" />
       <origin xyz="0 -0.042 0" rpy="1.5708 1.5708 0" />
       <axis xyz="0 0 1" />
     </joint>
     
-    <joint name="servo_arm_camera_mount_joint" type="fixed">
-      <parent link="servo_arm_link" />
-      <child link="camera_mount_link" />
+    <joint name="asus_servo_arm_asus_mount_joint" type="fixed">
+      <parent link="asus_servo_arm_link" />
+      <child link="asus_mount_link" />
       <origin xyz="0 -0.053 -0.016" rpy="1.5708 0 1.5708" />
     </joint>
   </xacro:macro>

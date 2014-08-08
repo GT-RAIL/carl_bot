@@ -9,11 +9,13 @@
   <xacro:include filename="$(find carl_description)/urdf/sensors/hokuyo.urdf.xacro" />
   <xacro:include filename="$(find carl_description)/urdf/carl_base/carl_superstructure.urdf.xacro" />
   <xacro:include filename="$(find carl_description)/urdf/carl_base/carl_covers.urdf.xacro" />
-  <xacro:include filename="$(find carl_description)/urdf/carl_base/carl_camera_mount.urdf.xacro" />
+  <xacro:include filename="$(find carl_description)/urdf/carl_base/carl_asus_camera_mount.urdf.xacro" />
+  <xacro:include filename="$(find carl_description)/urdf/carl_base/carl_creative_camera_mount.urdf.xacro" />
 
   <xacro:macro name="carl_base" params="name">
     <xacro:carl_superstructure />
-    <xacro:carl_camera_mount />
+    <xacro:carl_asus_camera_mount />
+    <xacro:carl_creative_camera_mount />
     <xacro:carl_covers name="${name}" />
 
     <!-- base footprint -->

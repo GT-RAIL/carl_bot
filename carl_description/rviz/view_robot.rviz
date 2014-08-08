@@ -4,12 +4,10 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /Global Options1
-        - /Status1
-        - /RobotModel1/Links1
+        - /RobotModel1
         - /TF1/Frames1
         - /TF1/Tree1
-      Splitter Ratio: 0.515924
+      Splitter Ratio: 0.761745
     Tree Height: 719
   - Class: rviz/Selection
     Name: Selection
@@ -71,6 +69,31 @@ Visualization Manager:
           Show Trail: false
           Value: true
         Link Tree Style: Links in Alphabetic Order
+        asus_lift_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        asus_mount_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        asus_servo_arm_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        asus_servo_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        asus_servo_mount_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         base_footprint:
           Alpha: 1
           Show Axes: false
@@ -80,17 +103,7 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        camera_lift_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
         camera_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        camera_mount_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -101,6 +114,31 @@ Visualization Manager:
           Show Trail: false
           Value: true
         caster_plate_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        creative_camera_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        creative_mount_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        creative_plate_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        creative_servo_arm_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        creative_servo_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -210,11 +248,6 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        left_rear_strut_inside_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
         left_rear_strut_link:
           Alpha: 1
           Show Axes: false
@@ -235,11 +268,6 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        right_rear_strut_inside_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
         right_rear_strut_link:
           Alpha: 1
           Show Axes: false
@@ -256,21 +284,6 @@ Visualization Manager:
           Show Trail: false
           Value: true
         right_wheel_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        servo_arm_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        servo_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        servo_mount_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -324,22 +337,22 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 3.27848
+      Distance: 4.1741
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.0839142
-        Y: 0.0590417
-        Z: 0.714816
+        X: -0.0837655
+        Y: -0.188298
+        Z: 0.642417
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.515203
+      Pitch: 0.420203
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.60038
+      Yaw: 0.9754
     Saved: ~
 Window Geometry:
   Displays:
