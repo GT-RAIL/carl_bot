@@ -209,7 +209,7 @@
     <inertial>
       <mass value="0.01"/>
       <origin xyz="0 0 0"/>
-      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+      <inertia ixx="0" ixy="0.0" ixz="0.0" iyy="0" iyz="0.0" izz="0"/>
     </inertial>
   </link>
   <joint name="camera_depth_optical_joint" type="fixed">
@@ -221,7 +221,7 @@
     <inertial>
       <mass value="0.001"/>
       <origin xyz="0 0 0"/>
-      <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001"/>
+      <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0" iyz="0.0" izz="0"/>
     </inertial>
   </link>
   <joint name="camera_rgb_joint" type="fixed">
@@ -233,7 +233,7 @@
     <inertial>
       <mass value="0.001"/>
       <origin xyz="0 0 0"/>
-      <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001"/>
+      <inertia ixx="0" ixy="0.0" ixz="0.0" iyy="0" iyz="0.0" izz="0"/>
     </inertial>
   </link>
   <joint name="camera_rgb_optical_joint" type="fixed">
@@ -245,7 +245,7 @@
     <inertial>
       <mass value="0.001"/>
       <origin xyz="0 0 0"/>
-      <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001"/>
+      <inertia ixx="0" ixy="0.0" ixz="0.0" iyy="0" iyz="0.0" izz="0"/>
     </inertial>
   </link>
   <joint name="right_rear_strut_asus_lift_joint" type="fixed">
