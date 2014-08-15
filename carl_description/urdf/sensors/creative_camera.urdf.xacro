@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<root xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="sensor_creative_camera" params="parent *origin">
+    <joint name="${parent}_creative_camera_joint" type="fixed">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent}" />
+      <child link="creative_camera_link" />
+    </joint>  
+    <link name="creative_camera_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://carl_description/meshes/creative_camera.min.dae" />
+        </geometry>
+      </visual>
+      <collision>
+      	<origin xyz="0.0 0.0 0.0" rpy="0 0 1.5708" />
+        <geometry>
+        	<box size="0.04 .14 0.04" />
+      	</geometry>      
+      </collision>
+    </link>
+  </xacro:macro>
+</root>
