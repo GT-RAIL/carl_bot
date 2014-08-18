@@ -177,7 +177,7 @@
     </collision>
   </link>
   <joint name="camera_joint" type="fixed">
-    <origin rpy="0 -1.5708 0" xyz="-0.016 -0.008 0.018"/>
+    <origin rpy="0 -1.53 0" xyz="-0.016 -0.008 0.018"/>
     <parent link="asus_mount_link"/>
     <child link="camera_link"/>
   </joint>
