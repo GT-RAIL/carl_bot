@@ -2,6 +2,16 @@
 Changelog for package carl_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.2 (2014-08-18)
+------------------
+* rebuild CARL URDF
+* urdf adjustments for point cloud accuracy
+* recompiled URDF
+* no longer publish openni TF tree
+* testing camera URDF
+* updated asus URDF
+* Contributors: David Kent, Russell Toris
+
 0.0.1 (2014-08-15)
 ------------------
 * recompiled URDF

@@ -2,6 +2,11 @@
 Changelog for package carl_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.2 (2014-08-18)
+------------------
+* no longer publish openni TF tree
+* Contributors: Russell Toris
+
 0.0.1 (2014-08-15)
 ------------------
 * revert changelogs

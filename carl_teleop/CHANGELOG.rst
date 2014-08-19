@@ -2,6 +2,11 @@
 Changelog for package carl_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.2 (2014-08-18)
+------------------
+* fixed missing build dep
+* Contributors: Russell Toris
+
 0.0.1 (2014-08-15)
 ------------------
 * revert changelogs
