@@ -33,7 +33,7 @@
  *
  * carl_key_teleop creates a ROS node that allows the control of CARL with a keyboard. 
  * This node takes input from the keyboard via the terminal and sends messages to the 
- * /cmd_vel topic for the base and angular_cmd and cartesian_cmd for the arm.
+ * /cmd_vel topic for the base and cartesian_cmd for the arm.
  *
  * \author David Kent, WPI - davidkent@wpi.edu
  * \author Steven Kordell, WPI - spkordell@wpi.edu
@@ -52,7 +52,6 @@ carl_key_teleop::carl_key_teleop()
   ros::NodeHandle private_nh("~");
 
   // create the ROS topics
-  angular_cmd = nh_.advertise<wpi_jaco_msgs::AngularCommand>("jaco_arm/angular_cmd", 10);
   cartesian_cmd = nh_.advertise<wpi_jaco_msgs::CartesianCommand>("jaco_arm/cartesian_cmd", 10);
   vel_pub_ = nh_.advertise<geometry_msgs::Twist>("cmd_vel", 1);
 
@@ -230,7 +229,7 @@ void carl_key_teleop::loop()
       case FINGER_CONTROL:
       {
         //initialize finger command
-        wpi_jaco_msgs::AngularCommand cmd;
+        wpi_jaco_msgs::CartesianCommand cmd;
         cmd.position = false;
         cmd.armCommand = false;
         cmd.fingerCommand = true;
@@ -291,7 +290,7 @@ void carl_key_teleop::loop()
           first_publish_ = ros::Time::now();
         }
         last_publish_ = ros::Time::now();
-        angular_cmd.publish(cmd);
+        cartesian_cmd.publish(cmd);
       }
         break;
     }

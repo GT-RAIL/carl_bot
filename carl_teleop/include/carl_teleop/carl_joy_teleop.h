@@ -4,7 +4,7 @@
  *
  * carl_joy_teleop creates a ROS node that allows the control of CARL with a joystick. 
  * This node listens to a /joy topic and sends messages to the /cmd_vel topic for 
- * the base and angular_cmd and cartesian_cmd for the arm.
+ * the base and cartesian_cmd for the arm.
  *
  * \author David Kent, WPI - davidkent@wpi.edu
  * \author Russell Toris, WPI - rctoris@wpi.edu
@@ -18,7 +18,6 @@
 #include <ros/ros.h>
 #include <sensor_msgs/Joy.h>
 #include <std_msgs/Float64.h>
-#include <wpi_jaco_msgs/AngularCommand.h>
 #include <wpi_jaco_msgs/CartesianCommand.h>
 
 //Control modes
@@ -108,14 +107,13 @@ private:
   ros::NodeHandle node; /*!< a handle for this ROS node */
 
   ros::Publisher cmd_vel; /*!< the base cmd_vel topic */
-  ros::Publisher angular_cmd; /*!< angular arm command topic */
   ros::Publisher cartesian_cmd; /*!< cartesian arm command topic */
   ros::Publisher asus_servo_tilt_cmd; /*< velocity command to tilt the asus servo */
   ros::Publisher creative_servo_pan_cmd; /*< velocity command to pan the creative servo */
   ros::Subscriber joy_sub; /*!< the joy topic */
 
   geometry_msgs::Twist twist; /*!< base movement command */
-  wpi_jaco_msgs::AngularCommand angularCmd; /*!< angular movement command */
+  wpi_jaco_msgs::CartesianCommand fingerCmd; /*!< angular movement command */
   wpi_jaco_msgs::CartesianCommand cartesianCmd; /*!< cartesian movement command */
 
   int mode; /*!< the control mode */

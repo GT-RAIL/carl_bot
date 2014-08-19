@@ -33,7 +33,7 @@
  *
  * carl_key_teleop creates a ROS node that allows the control of CARL with a keyboard. 
  * This node takes input from the keyboard via the terminal and sends messages to the 
- * /cmd_vel topic for the base and angular_cmd and cartesian_cmd for the arm.
+ * /cmd_vel topic for the base and cartesian_cmd for the arm.
  *
  * \author David Kent, WPI - davidkent@wpi.edu
  * \author Steven Kordell, WPI - spkordell@wpi.edu
@@ -49,7 +49,6 @@
 #include <sensor_msgs/Joy.h>
 #include <signal.h>
 #include <termios.h>
-#include <wpi_jaco_msgs/AngularCommand.h>
 #include <wpi_jaco_msgs/CartesianCommand.h>
 
 //Keycodes
@@ -149,7 +148,6 @@ private:
 
   boost::mutex publish_mutex_; /*! The mutex for the twist topic. */
 
-  ros::Publisher angular_cmd; /*!< angular commands for arm control */
   ros::Publisher cartesian_cmd; /*!< cartesian commands for arm control */
   ros::Publisher vel_pub_; /*! The publisher for the base twist topic. */
 
