@@ -1,0 +1,20 @@
+image_width: 640
+image_height: 480
+camera_name: depth_PS1080_PrimeSense
+camera_matrix:
+  rows: 3
+  cols: 3
+  data: [550.7202682443758, 0, 311.0747488514893, 0, 552.4909923697124, 248.4419086708685, 0, 0, 1]
+distortion_model: plumb_bob
+distortion_coefficients:
+  rows: 1
+  cols: 5
+  data: [-0.07557571618668407, -0.02397264730355477, 0.004666462193511633, -0.002917518745933888, 0]
+rectification_matrix:
+  rows: 3
+  cols: 3
+  data: [1, 0, 0, 0, 1, 0, 0, 0, 1]
+projection_matrix:
+  rows: 3
+  cols: 4
+  data: [532.9649658203125, 0, 308.0554705008763, 0, 0, 542.2947998046875, 249.773576628384, 0, 0, 0, 1, 0]

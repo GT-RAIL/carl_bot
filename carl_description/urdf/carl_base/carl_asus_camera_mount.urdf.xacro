@@ -78,7 +78,7 @@
     
     <xacro:sensor_asus_xtion_pro parent="asus_mount_link">
       <!-- <origin xyz="-0.016 -0.008 0.018" rpy="0 -1.5708 0" /> -->
-      <origin xyz="-0.016 -0.008 0.018" rpy="0 -1.53 0" />
+      <origin xyz="-0.016 -0.008 0.018" rpy="0 -1.54 0" />
     </xacro:sensor_asus_xtion_pro>		
   
     <joint name="right_rear_strut_asus_lift_joint" type="fixed">
