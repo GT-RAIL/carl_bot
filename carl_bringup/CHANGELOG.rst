@@ -2,6 +2,11 @@
 Changelog for package carl_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.3 (2014-08-25)
+------------------
+* added calibration files for the asus
+* Contributors: David Kent
+
 0.0.2 (2014-08-18)
 ------------------
 * no longer publish openni TF tree
