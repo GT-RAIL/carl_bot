@@ -2,6 +2,12 @@
 Changelog for package carl_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.3 (2014-08-25)
+------------------
+* updated URDF
+* added calibration files for the asus
+* Contributors: David Kent, Russell Toris
+
 0.0.2 (2014-08-18)
 ------------------
 * rebuild CARL URDF

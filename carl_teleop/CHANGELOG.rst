@@ -2,6 +2,11 @@
 Changelog for package carl_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.3 (2014-08-25)
+------------------
+* updates to teleop due to the bug in switching arm control modes
+* Contributors: dekent
+
 0.0.2 (2014-08-18)
 ------------------
 * fixed missing build dep
