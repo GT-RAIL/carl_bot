@@ -37,9 +37,9 @@
         </geometry>
       </visual>
       <collision>
-        <origin xyz="-.245 0 -.241" rpy="0 0 0" />
+        <origin xyz="0 0 0" rpy="0 0 1.5708" />
         <geometry>
-          <mesh filename="package://carl_description/meshes/front_cover_collision.stl" />
+          <mesh filename="package://carl_description/meshes/front_cover.min.dae" />
         </geometry>
       </collision>
     </link>
@@ -48,10 +48,17 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-      	  <!--<box size="0.005 0.45 0.6" />-->
-      	  <mesh filename="package://carl_description/meshes/back_cover.min.dae" />
+          <!--<box size="0.005 0.45 0.6" />-->
+          <mesh filename="package://carl_description/meshes/back_cover.min.dae" />
         </geometry>
       </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <!--<box size="0.005 0.45 0.6" />-->
+          <mesh filename="package://carl_description/meshes/back_cover.min.dae" />
+        </geometry>
+      </collision>
     </link>
   </xacro:macro>
 </robot>

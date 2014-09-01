@@ -38,9 +38,9 @@
         </geometry>
       </visual>
       <collision>
-        <origin xyz="-.29 0 -0.299" rpy="0 0 3.1415926536" />
+        <origin xyz="0 0 0" rpy="0 0 -1.5708" />
         <geometry>
-          <box size="0.495 0.59 0.65" />
+          <mesh filename="package://carl_description/meshes/table_plate.min.dae" />
         </geometry>
       </collision>
     </link>
@@ -52,6 +52,12 @@
           <mesh filename="package://carl_description/meshes/jaco_mount.min.dae" />
         </geometry>
       </visual>
+      <collision>      
+        <origin xyz="0 0 0" rpy="0 0 1.5708" />
+        <geometry>
+          <mesh filename="package://carl_description/meshes/jaco_mount.min.dae" />
+        </geometry>
+      </collision>
     </link>
   </xacro:macro>
 </robot>

@@ -29,6 +29,12 @@
           <mesh filename="package://carl_description/meshes/base.min.dae" />
         </geometry>
       </visual>
+     <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://carl_description/meshes/base.min.dae" />
+        </geometry>
+      </collision>
     </link>
     <joint name="${name}_footprint_${name}_link_joint" type="fixed">
       <parent link="${name}_footprint" />

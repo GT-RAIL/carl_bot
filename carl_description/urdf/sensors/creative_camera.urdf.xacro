@@ -14,10 +14,10 @@
         </geometry>
       </visual>
       <collision>
-      	<origin xyz="0.0 0.0 0.0" rpy="0 0 1.5708" />
+        <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-        	<box size="0.04 .14 0.04" />
-      	</geometry>      
+          <mesh filename="package://carl_description/meshes/creative_camera.min.dae" />
+        </geometry>
       </collision>
     </link>
   </xacro:macro>
