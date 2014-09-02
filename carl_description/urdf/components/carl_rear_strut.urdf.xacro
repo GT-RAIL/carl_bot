@@ -1,46 +1,55 @@
 <?xml version="1.0"?>
-<root xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:macro name="carl_rear_strut" params="suffix parent *origin">
-    <joint name="${parent}_${suffix}_rear_strut_joint" type="fixed">
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+       
+  <!-- Xacro properties -->
+  <xacro:property name="M_SCALE" value="0.0254" />
+  <xacro:property name="M_PI" value="3.1415926535897931" /> 
+       
+  <xacro:macro name="carl_rear_strut" params="prefix parent *origin">
+    <!-- Bottom -->
+    <joint name="${parent}_${prefix}_rear_strut_joint" type="fixed">
       <xacro:insert_block name="origin" />
       <parent link="${parent}" />
-      <child link="${suffix}_rear_strut_link" />
-    </joint>
-    
-    <joint name="${suffix}_rear_strut_link_${suffix}_rear_strut_top_link_joint" type="fixed">
-      <parent link="${suffix}_rear_strut_link" />
-        <child link="${suffix}_rear_strut_top_link" />
-      <origin xyz="0 0.001 1.055" rpy="0 0 0" />
-    </joint>      
-
-    <link name="${suffix}_rear_strut_link">
+      <child link="${prefix}_rear_strut_link" />
+    </joint>   
+    <link name="${prefix}_rear_strut_link">
       <visual>
-        <origin xyz="0 0 0" rpy="0 0 -1.5708" />
+        <origin xyz="0 0 0" rpy="0 0 -${M_PI/2}" />
         <geometry>
-          <mesh filename="package://carl_description/meshes/rear_strut.min.dae" />
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/rear_strut.dae" />
         </geometry>
       </visual>
       <collision>
-        <origin xyz="0 0 0" rpy="0 0 -1.5708" />
+        <origin xyz="0 0 0" rpy="0 0 -${M_PI/2}" />
         <geometry>
-          <mesh filename="package://carl_description/meshes/rear_strut.min.dae" />
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/rear_strut.stl" />
         </geometry>
       </collision>
     </link>
-
-    <link name="${suffix}_rear_strut_top_link">
+    
+    <!-- Top -->
+    <joint name="${prefix}_rear_strut_link_${prefix}_rear_strut_top_link_joint" type="fixed">
+      <parent link="${prefix}_rear_strut_link" />
+      <child link="${prefix}_rear_strut_top_link" />
+      <origin xyz="0 0.001 1.055" rpy="0 0 0" />
+    </joint>
+    <link name="${prefix}_rear_strut_top_link">
       <visual>
-        <origin xyz="0 0 0" rpy="0 0 -1.5708" />
+        <origin xyz="0 0 0" rpy="0 0 -${M_PI/2}" />
         <geometry>
-          <mesh filename="package://carl_description/meshes/rear_strut_top.min.dae" />
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/rear_strut_top.dae" />
         </geometry>
-      </visual>  
+      </visual>
       <collision>
-        <origin xyz="0 0 0" rpy="0 0 -1.5708" />
+        <origin xyz="0 0 0" rpy="0 0 -${M_PI/2}" />
         <geometry>
-          <mesh filename="package://carl_description/meshes/rear_strut_top.min.dae" />
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/rear_strut_top.stl" />
         </geometry>
-      </collision>  
+      </collision>    
     </link>
   </xacro:macro>
-</root>
+  
+</robot>

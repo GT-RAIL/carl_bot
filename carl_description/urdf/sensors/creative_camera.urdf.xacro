@@ -1,7 +1,15 @@
 <?xml version="1.0"?>
-<root xmlns:xacro="http://ros.org/wiki/xacro">
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- Xacro properties -->
+  <xacro:property name="M_SCALE" value="0.0254" />
+  <xacro:property name="M_PI" value="3.1415926535897931" /> 
+
   <xacro:macro name="sensor_creative_camera" params="parent *origin">
-    <joint name="${parent}_creative_camera_joint" type="fixed">
+    <joint name="${parent}_creative_camera_link_joint" type="fixed">
       <xacro:insert_block name="origin" />
       <parent link="${parent}" />
       <child link="creative_camera_link" />
@@ -10,15 +18,16 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://carl_description/meshes/creative_camera.min.dae" />
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/creative_camera.dae" />
         </geometry>
       </visual>
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://carl_description/meshes/creative_camera.min.dae" />
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/creative_camera.stl" />
         </geometry>
       </collision>
     </link>
   </xacro:macro>
-</root>
+
+</robot>

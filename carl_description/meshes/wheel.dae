@@ -6,7 +6,6 @@
         </contributor>
         <created>2014-06-05T19:06:26Z</created>
         <modified>2014-06-05T19:06:26Z</modified>
-        <unit meter="0.0254" name="inch" />
         <up_axis>Z_UP</up_axis>
     </asset>
     <library_visual_scenes>

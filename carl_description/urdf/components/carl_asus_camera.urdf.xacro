@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- Xacro properties -->
+  <xacro:property name="M_SCALE" value="0.0254" />
+  <xacro:property name="M_PI" value="3.1415926535897931" /> 
+  <xacro:property name="M_225_DEG" value="3.92699082" /> 
+
+  <xacro:include filename="$(find carl_description)/urdf/sensors/asus_xtion_pro.urdf.xacro" />
+  
+  <xacro:macro name="carl_asus_camera" params="parent *origin">
+    <joint name="${parent}_asus_servo_mount_link_joint" type="fixed">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent}" />
+      <child link="asus_servo_mount_link" />
+    </joint>
+    <link name="asus_servo_mount_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/servo_mount.dae" />
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/servo_mount.stl" />
+        </geometry>
+      </collision>
+    </link>
+    
+    <joint name="asus_servo_mount_link_asus_servo_link_joint" type="fixed">
+      <parent link="asus_servo_mount_link" />
+      <child link="asus_servo_link" />
+      <origin xyz="0.073 0.013 0.0187" rpy="${M_PI/2} 0 ${M_225_DEG}" />
+    </joint>
+    <link name="asus_servo_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/servo.dae" />
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/servo.stl" />
+        </geometry>
+      </collision>
+    </link>
+    
+    <joint name="asus_servo_link_asus_servo_arm_link_joint" type="continuous">
+      <parent link="asus_servo_link" />
+      <child link="asus_servo_arm_link" />
+      <origin xyz="0 -0.042 0" rpy="${M_PI/2} ${M_PI/2} 0" />
+      <axis xyz="0 0 1" />
+    </joint>
+    <link name="asus_servo_arm_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/servo_arm.dae" />
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/servo_arm.stl" />
+        </geometry>
+      </collision>
+    </link>
+    
+    <joint name="asus_servo_arm_link_asus_mount_link_joint" type="fixed">
+      <parent link="asus_servo_arm_link" />
+      <child link="asus_mount_link" />
+      <origin xyz="0 -0.053 -0.016" rpy="${M_PI/2} 0 ${M_PI/2}" />
+    </joint>
+    <link name="asus_mount_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 ${M_PI/2} 0" />
+        <geometry>
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/camera_mount.dae" />
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 ${M_PI/2} 0" />
+        <geometry>
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/camera_mount.stl" />
+        </geometry>
+      </collision>
+    </link>
+    
+    <xacro:sensor_asus_xtion_pro parent="asus_mount_link">
+      <origin xyz="-0.016 -0.008 0.018" rpy="0 -${M_PI/2} 0" />
+    </xacro:sensor_asus_xtion_pro>
+  </xacro:macro>
+</robot>
