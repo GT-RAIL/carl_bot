@@ -3,6 +3,8 @@
   <xacro:include filename="$(find carl_description)/urdf/carl_base/carl_base.urdf.xacro" />
   <xacro:include filename="$(find jaco_description)/urdf/jaco_arm.urdf.xacro" />
   
+  <xacro:property name="M_PI" value="3.1415926535897931" />
+  
   <xacro:carl_base name="base" />
-  <xacro:jaco_arm  parent="jaco_mount_link" />
+  <xacro:jaco_arm  parent="jaco_mount_link" xyz="0 0 0" rpy="0 0 -${M_PI/2}" />
 </robot>
