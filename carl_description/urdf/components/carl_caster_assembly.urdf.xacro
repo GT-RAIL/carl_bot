@@ -19,7 +19,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 ${M_PI/2}" />
         <geometry>
-          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/caster_plate.dae" />
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/caster_plate.min.dae" />
         </geometry>
       </visual>
       <collision>
@@ -41,7 +41,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/caster.dae" />
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/caster.min.dae" />
         </geometry>
       </visual>
       <collision>

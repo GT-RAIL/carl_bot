@@ -21,7 +21,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/servo_mount.dae" />
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/servo_mount.min.dae" />
         </geometry>
       </visual>
       <collision>
@@ -41,7 +41,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/servo.dae" />
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/servo.min.dae" />
         </geometry>
       </visual>
       <collision>
@@ -62,7 +62,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/servo_arm.dae" />
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/servo_arm.min.dae" />
         </geometry>
       </visual>
       <collision>
@@ -82,7 +82,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 ${M_PI/2} 0" />
         <geometry>
-          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/camera_mount.dae" />
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/camera_mount.min.dae" />
         </geometry>
       </visual>
       <collision>

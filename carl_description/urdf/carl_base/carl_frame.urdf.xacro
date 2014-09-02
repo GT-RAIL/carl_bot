@@ -30,7 +30,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 -${M_PI/2}" />
         <geometry>
-          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/top_plate.dae" />
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/top_plate.min.dae" />
         </geometry>
       </visual>
       <collision>
@@ -51,7 +51,7 @@
       <visual>      
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/jaco_mount.dae" />
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/jaco_mount.min.dae" />
         </geometry>
       </visual>
       <collision>      
@@ -72,7 +72,7 @@
       <visual>      
         <origin xyz="0 0 0" rpy="0 ${M_PI/2} ${M_PI/2}" />
         <geometry>
-          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/camera_lift.dae" />
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/camera_lift.min.dae" />
         </geometry>
       </visual>
       <collision>      
