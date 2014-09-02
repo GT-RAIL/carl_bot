@@ -1,4 +1,5 @@
 #include <carl_dynamixel/back_joints_node.h>
+#include <math.h>
 
 back_joints::back_joints()
 {
