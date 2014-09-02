@@ -2,6 +2,12 @@
 Changelog for package carl_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.4 (2014-09-02)
+------------------
+* view added to bringup
+* Updated rgb camera calibration for the ASUS
+* Contributors: David Kent, Russell Toris
+
 0.0.3 (2014-08-25)
 ------------------
 * added calibration files for the asus

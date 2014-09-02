@@ -2,6 +2,17 @@
 Changelog for package carl_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.4 (2014-09-02)
+------------------
+* start position of arm fixed
+* fixed rotation of arm
+* JACO arm added back
+* rebuild of URDF
+* moved to minified DAE
+* re-wrote URDF to fix collision problems
+* new collision test
+* Contributors: Russell Toris
+
 0.0.3 (2014-08-25)
 ------------------
 * updated URDF

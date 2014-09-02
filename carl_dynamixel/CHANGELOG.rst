@@ -2,6 +2,12 @@
 Changelog for package carl_dynamixel
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.4 (2014-09-02)
+------------------
+* fixed typo in front servos
+* updated links for servos
+* Contributors: Russell Toris
+
 0.0.3 (2014-08-25)
 ------------------
 

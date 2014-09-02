@@ -2,6 +2,9 @@
 Changelog for package carl_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.4 (2014-09-02)
+------------------
+
 0.0.3 (2014-08-25)
 ------------------
 * updates to teleop due to the bug in switching arm control modes
