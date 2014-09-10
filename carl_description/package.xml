@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>carl_description</name>
-  <version>0.0.4</version>
+  <version>0.0.5</version>
   <description>URDF Files for CARL</description>
 
   <maintainer email="rctoris@wpi.edu">Russell Toris</maintainer>
