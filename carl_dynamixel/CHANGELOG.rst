@@ -2,6 +2,9 @@
 Changelog for package carl_dynamixel
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.5 (2014-09-10)
+------------------
+
 0.0.4 (2014-09-02)
 ------------------
 * fixed typo in front servos
