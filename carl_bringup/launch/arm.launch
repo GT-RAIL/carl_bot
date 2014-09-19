@@ -6,5 +6,5 @@
 
 <launch>
   <include file="$(find wpi_jaco_wrapper)/launch/arm.launch" />
-  <include file="$(find jaco_interaction)/launch/im_backend.launch" />
+  <include file="$(find carl_interactive_manipulation)/launch/im_backend.launch" />
 </launch>
