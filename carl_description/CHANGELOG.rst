@@ -2,6 +2,11 @@
 Changelog for package carl_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.5 (2014-09-10)
+------------------
+* added missing dep for carl_description
+* Contributors: Russell Toris
+
 0.0.4 (2014-09-02)
 ------------------
 * start position of arm fixed
