@@ -268,10 +268,16 @@
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz=".025 0 .8"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/back_cover.stl" scale="0.0254 0.0254 0.0254"/>
+        <box size=".05 .45 1.56"/>
       </geometry>
+      <!--
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/back_cover.stl" />
+        </geometry>
+        -->
     </collision>
   </link>
   <joint name="base_link_right_side_cover_link_joint" type="fixed">
