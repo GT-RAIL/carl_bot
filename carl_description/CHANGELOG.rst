@@ -2,6 +2,12 @@
 Changelog for package carl_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.6 (2014-09-19)
+------------------
+* new URDF updated
+* updated back cover collision model to extend upwards, allowing motion planning to treat the back struts as a solid object for increased safety
+* Contributors: Russell Toris, dekent
+
 0.0.5 (2014-09-10)
 ------------------
 * added missing dep for carl_description

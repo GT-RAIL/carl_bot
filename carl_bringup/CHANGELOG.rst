@@ -2,6 +2,11 @@
 Changelog for package carl_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.6 (2014-09-19)
+------------------
+* interactive markers added to rviz display
+* Contributors: Russell Toris
+
 0.0.5 (2014-09-10)
 ------------------
 
