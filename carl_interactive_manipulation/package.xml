@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>carl_interactive_manipulation</name>
-  <version>0.0.6</version>
+  <version>0.0.7</version>
   <description>Interactive Manipulation for CARL</description>
 
   <author email="davidkent@wpi.edu">David Kent</author>
