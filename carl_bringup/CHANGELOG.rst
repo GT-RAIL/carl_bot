@@ -2,6 +2,12 @@
 Changelog for package carl_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.7 (2014-09-22)
+------------------
+* carl_interactive_manipulation added
+* launches carl_interactive_manipulation instead of the jaco-only interactive markers
+* Contributors: Russell Toris, dekent
+
 0.0.6 (2014-09-19)
 ------------------
 * interactive markers added to rviz display
