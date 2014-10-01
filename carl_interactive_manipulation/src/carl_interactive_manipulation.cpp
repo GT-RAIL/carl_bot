@@ -56,7 +56,7 @@ void CarlInteractiveManipulation::segmentedObjectsCallback(
   for (unsigned int i = 0; i < objectList->objects.size(); i++)
   {
     visualization_msgs::InteractiveMarker objectMarker;
-    objectMarker.header = objectList->header;
+    objectMarker.header = objectList->objects[i].objectCloud.header;
 
     objectMarker.pose.position.x = 0.0;
     objectMarker.pose.position.y = 0.0;
