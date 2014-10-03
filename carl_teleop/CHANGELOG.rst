@@ -2,6 +2,13 @@
 Changelog for package carl_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.8 (2014-10-03)
+------------------
+* Revert "Changes to base teleop to increase safety"
+  This reverts commit ff0796d01abd7b8640db59a5e7789940692b9b4c.
+* Changes to base teleop to increase safety
+* Contributors: Brian Hetherman, Russell Toris
+
 0.0.7 (2014-09-22)
 ------------------
 

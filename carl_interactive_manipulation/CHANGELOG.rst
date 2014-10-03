@@ -2,6 +2,15 @@
 Changelog for package carl_interactive_manipulation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.8 (2014-10-03)
+------------------
+* adjusted point cloud visualization for segmented objects to be in keeping with rail_segmentation update
+* adjusted retract position
+* Revert "adjusted retract position"
+  This reverts commit 01aa246c9bd241e9ad7b948c159059e407d7ceda.
+* adjusted retract position
+* Contributors: Russell Toris, dekent
+
 0.0.7 (2014-09-22)
 ------------------
 * carl_interactive_manipulation added
