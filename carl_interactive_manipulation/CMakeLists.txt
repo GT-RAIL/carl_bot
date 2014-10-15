@@ -33,7 +33,7 @@ target_link_libraries(carl_interactive_manipulation
   ${catkin_LIBRARIES}
 )
 ## Add cmake target dependencies of the executable/library
-add_dependencies(${PROJECT_NAME} wpi_jaco_msgs_gencpp)
+add_dependencies(${PROJECT_NAME} wpi_jaco_msgs_gencpp rail_pick_and_place_msgs_gencpp)
 
 #############
 ## Install ##
