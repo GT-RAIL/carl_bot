@@ -17,6 +17,8 @@ CarlInteractiveManipulation::CarlInteractiveManipulation() :
   //services
   jacoFkClient = n.serviceClient<wpi_jaco_msgs::JacoFK>("jaco_arm/kinematics/fk");
   qeClient = n.serviceClient<wpi_jaco_msgs::QuaternionToEuler>("jaco_conversions/quaternion_to_euler");
+  pickupSegmentedClient = n.serviceClient<rail_pick_and_place_msgs::PickupSegmentedObject>("rail_pick_and_place/pickup_segmented_object");
+  removeObjectClient = n.serviceClient<rail_segmentation::RemoveObject>("rail_segmentation/remove_object");
 
   //actionlib
   ROS_INFO("Waiting for grasp, pickup, and home arm action servers...");
@@ -53,6 +55,8 @@ void CarlInteractiveManipulation::segmentedObjectsCallback(
 {
   ROS_INFO("Received new segmented point clouds");
   clearSegmentedObjects();
+  recognizedMenuHandlers.clear();
+  recognizedMenuHandlers.resize(objectList->objects.size());
   for (unsigned int i = 0; i < objectList->objects.size(); i++)
   {
     visualization_msgs::InteractiveMarker objectMarker;
@@ -72,11 +76,20 @@ void CarlInteractiveManipulation::segmentedObjectsCallback(
     objectMarker.name = ss.str();
 
     visualization_msgs::Marker cloudMarker;
-    cloudMarker.header = objectList->header;
+    cloudMarker.header = objectList->objects[i].objectCloud.header;
     cloudMarker.type = visualization_msgs::Marker::POINTS;
-    cloudMarker.color.r = ((float)(rand()) / (float)(RAND_MAX)) / 2.0;
-    cloudMarker.color.g = ((float)(rand()) / (float)(RAND_MAX)) / 2.0 + 0.5;
-    cloudMarker.color.b = ((float)(rand()) / (float)(RAND_MAX)) / 2.0;
+    if (objectList->objects[i].recognized)
+    {
+      cloudMarker.color.r = ((float)(rand()) / (float)(RAND_MAX)) / 3.0 + .1;
+      cloudMarker.color.g = ((float)(rand()) / (float)(RAND_MAX)) / 3.0 + .4;
+      cloudMarker.color.b = ((float)(rand()) / (float)(RAND_MAX)) / 4.0 + .75;
+    }
+    else
+    {
+      cloudMarker.color.r = ((float)(rand()) / (float)(RAND_MAX)) / 3.0 + .66;
+      cloudMarker.color.g = ((float)(rand()) / (float)(RAND_MAX)) / 4.0;
+      cloudMarker.color.b = ((float)(rand()) / (float)(RAND_MAX)) / 5.0;
+    }
     cloudMarker.color.a = 1.0;
 
     //add point cloud to cloud marker
@@ -86,12 +99,21 @@ void CarlInteractiveManipulation::segmentedObjectsCallback(
     cloudMarker.scale.y = .01;
     cloudMarker.scale.z = .01;
     cloudMarker.points.resize(cloudCopy.points.size());
+    float xAvg = 0;
+    float yAvg = 0;
+    float zAvg = 0;
     for (unsigned int j = 0; j < cloudCopy.points.size(); j++)
     {
       cloudMarker.points[j].x = cloudCopy.points[j].x;
       cloudMarker.points[j].y = cloudCopy.points[j].y;
       cloudMarker.points[j].z = cloudCopy.points[j].z;
+      xAvg += cloudCopy.points[j].x;
+      yAvg += cloudCopy.points[j].y;
+      zAvg += cloudCopy.points[j].z;
     }
+    xAvg /= cloudCopy.points.size();
+    yAvg /= cloudCopy.points.size();
+    zAvg /= cloudCopy.points.size();
 
     visualization_msgs::InteractiveMarkerControl objectControl;
     ss << "control";
@@ -101,10 +123,39 @@ void CarlInteractiveManipulation::segmentedObjectsCallback(
     objectControl.always_visible = true;
     objectControl.markers.resize(1);
     objectControl.markers[0] = cloudMarker;
-
     objectMarker.controls.push_back(objectControl);
 
-    //pickup menu    
+    //object label
+    visualization_msgs::InteractiveMarkerControl objectLabelControl;
+    stringstream namestream;
+    namestream.str("");
+    namestream << "object" << i << "_label";
+    objectLabelControl.name = namestream.str();
+    objectLabelControl.interaction_mode = visualization_msgs::InteractiveMarkerControl::NONE;
+    objectLabelControl.always_visible = true;
+    visualization_msgs::Marker objectLabel;
+    objectLabel.header = objectList->objects[i].objectCloud.header;
+    objectLabel.type = visualization_msgs::Marker::TEXT_VIEW_FACING;
+    objectLabel.pose.position.x = xAvg;
+    objectLabel.pose.position.y = yAvg;
+    objectLabel.pose.position.z = zAvg + .1;
+    objectLabel.pose.orientation.x = 0;
+    objectLabel.pose.orientation.y = 0;
+    objectLabel.pose.orientation.z = 0;
+    objectLabel.pose.orientation.w = 1;
+    objectLabel.scale.x = .1;
+    objectLabel.scale.y = .1;
+    objectLabel.scale.z = .1;
+    objectLabel.color.r = 1.0;
+    objectLabel.color.g = 1.0;
+    objectLabel.color.b = 1.0;
+    objectLabel.color.a = 1.0;
+    objectLabel.text = objectList->objects[i].name;
+    objectLabelControl.markers.resize(1);
+    objectLabelControl.markers[0] = objectLabel;
+    objectMarker.controls.push_back(objectLabelControl);
+
+    //pickup menu
     visualization_msgs::InteractiveMarkerControl objectMenuControl;
     objectMenuControl.interaction_mode = visualization_msgs::InteractiveMarkerControl::MENU;
     ss << "_menu";
@@ -115,7 +166,18 @@ void CarlInteractiveManipulation::segmentedObjectsCallback(
     imServer->setCallback(objectMarker.name,
                           boost::bind(&CarlInteractiveManipulation::processPickupMarkerFeedback, this, _1));
 
-    objectMenuHandler.apply(*imServer, objectMarker.name);
+    if (objectList->objects[i].recognized)
+    {
+      stringstream ss2;
+      ss2.str("");
+      ss2 << "Pickup " << objectList->objects[i].name;
+      recognizedMenuHandlers[i].insert(ss2.str(), boost::bind(&CarlInteractiveManipulation::processPickupMarkerFeedback, this, _1));
+      recognizedMenuHandlers[i].apply(*imServer, objectMarker.name);
+    }
+    else
+    {  
+      objectMenuHandler.apply(*imServer, objectMarker.name);
+    }
 
     segmentedObjects.push_back(objectMarker);
   }
@@ -246,6 +308,25 @@ void CarlInteractiveManipulation::processPickupMarkerFeedback(
     const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback)
 {
   //not yet implemented
+  rail_pick_and_place_msgs::PickupSegmentedObject::Request req;
+  rail_pick_and_place_msgs::PickupSegmentedObject::Response res;
+  req.objectIndex = atoi(feedback->marker_name.substr(6).c_str());
+  if (!pickupSegmentedClient.call(req, res))
+  {
+    ROS_INFO("Could not call pickup service.");
+    return;
+  }
+  if (res.success)
+  {
+    rail_segmentation::RemoveObject::Request removeReq;
+    rail_segmentation::RemoveObject::Response removeRes;
+    removeReq.index = req.objectIndex;
+    if (!removeObjectClient.call(removeReq, removeRes))
+    {
+      ROS_INFO("Could not call remove object service.");
+      return;
+    }
+  }
 
   imServer->applyChanges();
 }

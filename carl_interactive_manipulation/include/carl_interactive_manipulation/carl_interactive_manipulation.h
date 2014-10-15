@@ -18,6 +18,8 @@
 #include <actionlib/client/simple_action_client.h>
 #include <interactive_markers/interactive_marker_server.h>
 #include <interactive_markers/menu_handler.h>
+#include <rail_pick_and_place_msgs/PickupSegmentedObject.h>
+#include <rail_segmentation/RemoveObject.h>
 #include <rail_segmentation/SegmentedObjectList.h>
 #include <wpi_jaco_msgs/CartesianCommand.h>
 #include <wpi_jaco_msgs/ExecuteGraspAction.h>
@@ -103,6 +105,8 @@ private:
   //services
   ros::ServiceClient jacoFkClient;	//!< forward kinematics
   ros::ServiceClient qeClient;	//!< rotation representation conversion client
+  ros::ServiceClient pickupSegmentedClient;
+  ros::ServiceClient removeObjectClient;
 
   //actionlib
   actionlib::SimpleActionClient<wpi_jaco_msgs::ExecuteGraspAction> acGrasp;
@@ -112,6 +116,7 @@ private:
   boost::shared_ptr<interactive_markers::InteractiveMarkerServer> imServer;	//!< interactive marker server
   interactive_markers::MenuHandler menuHandler;	//!< interactive marker menu handler
   interactive_markers::MenuHandler objectMenuHandler; //!< object interactive markers menu handler
+  std::vector<interactive_markers::MenuHandler> recognizedMenuHandlers; //!< list of customized menu handlers for recognized objects
   std::vector<visualization_msgs::InteractiveMarker> segmentedObjects;
   std::vector<float> joints;	//!< current joint state
   bool lockPose;//!< flag to stop the arm from updating on pose changes, this is used to prevent the slight movement when left clicking on the center of the marker
