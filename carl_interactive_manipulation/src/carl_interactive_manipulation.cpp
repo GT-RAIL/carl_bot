@@ -77,7 +77,7 @@ void CarlInteractiveManipulation::segmentedObjectsCallback(
 
     visualization_msgs::Marker cloudMarker;
     cloudMarker.header = objectList->objects[i].objectCloud.header;
-    cloudMarker.type = visualization_msgs::Marker::POINTS;
+    cloudMarker.type = visualization_msgs::Marker::CUBE_LIST;
     if (objectList->objects[i].recognized)
     {
       cloudMarker.color.r = ((float)(rand()) / (float)(RAND_MAX)) / 3.0 + .1;
@@ -307,7 +307,6 @@ void CarlInteractiveManipulation::makeHandMarker()
 void CarlInteractiveManipulation::processPickupMarkerFeedback(
     const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback)
 {
-  //not yet implemented
   rail_pick_and_place_msgs::PickupSegmentedObject::Request req;
   rail_pick_and_place_msgs::PickupSegmentedObject::Response res;
   req.objectIndex = atoi(feedback->marker_name.substr(6).c_str());
