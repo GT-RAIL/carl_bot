@@ -2,6 +2,13 @@
 Changelog for package carl_interactive_manipulation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.9 (2014-10-22)
+------------------
+* Updated visualized segmented/recognized objects to work with the web visualizer
+* Added dependency on message generation for rail_pick_and_place_msgs
+* Interactive markers for objects now denote whether they have been recognized, and allow calls to pickup services
+* Contributors: David Kent
+
 0.0.8 (2014-10-03)
 ------------------
 * adjusted point cloud visualization for segmented objects to be in keeping with rail_segmentation update

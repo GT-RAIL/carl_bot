@@ -2,6 +2,9 @@
 Changelog for package carl_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.9 (2014-10-22)
+------------------
+
 0.0.8 (2014-10-03)
 ------------------
 * Revert "Changes to base teleop to increase safety"
