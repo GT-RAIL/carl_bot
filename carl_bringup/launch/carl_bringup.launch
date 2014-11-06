@@ -1,6 +1,7 @@
 <!--
    Author: David Kent, Worcester Polytechnic Institute
    Author: Russell Toris, Worcester Polytechnic Institute
+   Author: Brian Hetherman, Worcester Polytechnic Institute
   Version: August 4, 2014
 -->
 
@@ -10,4 +11,5 @@
   <include file="$(find carl_bringup)/launch/sensors.launch" />
   <include file="$(find carl_bringup)/launch/robot_model.launch" />
   <include file="$(find carl_teleop)/launch/carl_joy_teleop.launch" />
+  <include file="$(find carl_safety)/launch/carl_safety.launch" />
 </launch>
