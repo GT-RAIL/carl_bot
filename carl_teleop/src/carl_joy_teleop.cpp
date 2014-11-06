@@ -9,6 +9,7 @@
  * \author David Kent, WPI - davidkent@wpi.edu
  * \author Russell Toris, WPI - rctoris@wpi.edu
  * \author Steven Kordell, WPI - spkordell@wpi.edu
+ * \author Brian Hetherman, WPI - bhetherman@wpi.edu
  * \date July 24, 2014
  */
 
@@ -20,6 +21,13 @@ carl_joy_teleop::carl_joy_teleop()
 {
   // a private handle for this ROS node (allows retrieval of relative parameters)
   ros::NodeHandle private_nh("~");
+
+  private_nh.param<int>("use_teleop_safety", use_teleop_safety, 0);
+
+  if(use_teleop_safety)
+    cmd_vel = node.advertise<geometry_msgs::Twist>("not_checked_cmd_vel", 10);
+  else
+    cmd_vel = node.advertise<geometry_msgs::Twist>("cmd_vel", 10);
 
   // create the ROS topics
   cmd_vel = node.advertise<geometry_msgs::Twist>("cmd_vel", 10);
