@@ -22,15 +22,13 @@ carl_joy_teleop::carl_joy_teleop()
   // a private handle for this ROS node (allows retrieval of relative parameters)
   ros::NodeHandle private_nh("~");
 
-  private_nh.param<int>("use_teleop_safety", use_teleop_safety, 0);
-
-  if(use_teleop_safety)
-    cmd_vel = node.advertise<geometry_msgs::Twist>("not_checked_cmd_vel", 10);
-  else
-    cmd_vel = node.advertise<geometry_msgs::Twist>("cmd_vel", 10);
+  private_nh.param<bool>("use_teleop_safety", use_teleop_safety, false);
 
   // create the ROS topics
-  cmd_vel = node.advertise<geometry_msgs::Twist>("cmd_vel", 10);
+  if(use_teleop_safety)
+    cmd_vel = node.advertise<geometry_msgs::Twist>("cmd_vel_safety_check", 10);
+  else
+    cmd_vel = node.advertise<geometry_msgs::Twist>("cmd_vel", 10);
   cartesian_cmd = node.advertise<wpi_jaco_msgs::CartesianCommand>("jaco_arm/cartesian_cmd", 10);
   asus_servo_tilt_cmd = node.advertise<std_msgs::Float64>("asus_controller/tilt", 10);
   creative_servo_pan_cmd = node.advertise<std_msgs::Float64>("creative_controller/pan", 10);

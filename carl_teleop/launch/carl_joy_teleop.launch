@@ -7,13 +7,13 @@
 -->
 
 <launch>
-  <arg name="linear_throttle_factor_base" value="0.9" />
-  <arg name="angular_throttle_factor_base" value="0.75" />
-  <arg name="linear_throttle_factor_arm" value="1.0" />
-  <arg name="angular_throttle_factor_arm" value="1.0" />
-  <arg name="finger_throttle_factor" value="1.0" />
-  <arg name="controller_type" value="digital" />
-  <arg name="use_teleop_safety" value="0" />
+  <arg name="linear_throttle_factor_base" default="0.9" />
+  <arg name="angular_throttle_factor_base" default="0.75" />
+  <arg name="linear_throttle_factor_arm" default="1.0" />
+  <arg name="angular_throttle_factor_arm" default="1.0" />
+  <arg name="finger_throttle_factor" default="1.0" />
+  <arg name="controller_type" default="digital" />
+  <arg name="use_teleop_safety" default="false" />
 
   <node pkg="joy" type="joy_node" name="joy_node">
     <param name="deadzone" type="double" value="0.033" />
@@ -27,6 +27,6 @@
     <param name="angular_throttle_factor_arm" type="double" value="$(arg angular_throttle_factor_arm)" />
     <param name="finger_throttle_factor" type="double" value="$(arg finger_throttle_factor)" />
     <param name="controller_type" type="string" value="$(arg controller_type)" />
-    <param name="use_teleop_safety" type="int" value="$(arg use_teleop_safety)" />
+    <param name="use_teleop_safety" type="bool" value="$(arg use_teleop_safety)" />
   </node>
 </launch>
