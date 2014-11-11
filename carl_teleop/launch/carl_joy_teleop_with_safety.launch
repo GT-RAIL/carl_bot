@@ -13,7 +13,7 @@
   <arg name="angular_throttle_factor_arm" default="1.0" />
   <arg name="finger_throttle_factor" default="1.0" />
   <arg name="controller_type" default="digital" />
-  <arg name="use_teleop_safety" default="false" />
+  <arg name="use_teleop_safety" default="true" />
 
   <node pkg="joy" type="joy_node" name="joy_node">
     <param name="deadzone" type="double" value="0.033" />
