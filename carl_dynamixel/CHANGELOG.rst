@@ -1,0 +1,61 @@
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Changelog for package carl_dynamixel
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+0.0.9 (2014-10-22)
+------------------
+
+0.0.8 (2014-10-03)
+------------------
+
+0.0.7 (2014-09-22)
+------------------
+
+0.0.6 (2014-09-19)
+------------------
+
+0.0.5 (2014-09-10)
+------------------
+
+0.0.4 (2014-09-02)
+------------------
+* fixed typo in front servos
+* updated links for servos
+* Contributors: Russell Toris
+
+0.0.3 (2014-08-25)
+------------------
+
+0.0.2 (2014-08-18)
+------------------
+
+0.0.1 (2014-08-15)
+------------------
+* revert changelogs
+* changelog updated
+* updated the joint names
+* added servo_pan_tilt to carl_dynamixel launch file
+* added front_joints_node to install
+* fixed creative range
+* fixed the launch file
+* velocity commands and teleop controls for the second camera
+* Switched to front
+* Merged my changes
+* adjustments to asus joint servo speed
+* Servo velocity control and teleop initial commit
+* output mapped to screen
+* removed dumb output
+* removed dumb output
+* changed launch file to look for config scripts
+* carl_dynamixel package cleanup
+* updated run dependencies needed for launch files
+* updated launch files
+* added dependency in carl_dynamixel for dynamixel_msgs to be generated first
+* corrected the link name
+* fixed error
+* fixed minor changes
+* updated the joint publisher to publish radians for the servo angle
+* removed a launch file in carl_dynamixel
+* updated carl_dynamixel to publish joint states and added a yaml to define the joints
+* added carl_dynamixel
+* Contributors: Chris Dunkers, Russell Toris, dekent

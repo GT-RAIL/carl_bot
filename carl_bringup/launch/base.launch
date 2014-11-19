@@ -1,0 +1,9 @@
+<!--
+   Author: David Kent, Worcester Polytechnic Institute
+   Author: Russell Toris, Worcester Polytechnic Institute
+  Version: August 4, 2014
+-->
+
+<launch>
+  <include file="$(find ros_ethernet_rmp)/launch/ros_ethernet_rmp.launch" />
+</launch>

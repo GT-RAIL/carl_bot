@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+       
+  <!-- Xacro properties -->
+  <xacro:property name="M_SCALE" value="0.0254" />
+  <xacro:property name="M_PI" value="3.1415926535897931" /> 
+
+  <xacro:include filename="$(find carl_description)/urdf/components/carl_wheel.urdf.xacro" />
+  <xacro:include filename="$(find carl_description)/urdf/components/carl_caster_assembly.urdf.xacro" />
+  <xacro:include filename="$(find carl_description)/urdf/components/carl_asus_camera.urdf.xacro" />
+  <xacro:include filename="$(find carl_description)/urdf/components/carl_creative_camera.urdf.xacro" />
+  <xacro:include filename="$(find carl_description)/urdf/sensors/hokuyo.urdf.xacro" />
+  <xacro:include filename="$(find carl_description)/urdf/carl_base/carl_frame.urdf.xacro" />
+  <xacro:include filename="$(find carl_description)/urdf/carl_base/carl_covers.urdf.xacro" />
+
+  <xacro:macro name="carl_base" params="name">
+
+    <!-- base_footprint -->
+    <link name="${name}_footprint" />
+  
+  	<!-- base_link -->
+    <link name="${name}_link">
+     <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/base.min.dae" />
+        </geometry>
+      </visual>
+     <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/base.stl" />
+        </geometry>
+      </collision>
+    </link>
+    
+    <!-- base_link to base_footprint -->
+    <joint name="${name}_footprint_${name}_link_joint" type="fixed">
+      <parent link="${name}_footprint" />
+      <child link="${name}_link" />
+      <origin xyz="0 0 0.23114" rpy="0 0 0" />
+    </joint>
+      
+    <!-- Wheels -->
+    <xacro:carl_wheel suffix="left" parent="${name}_link">
+      <origin xyz="0 0.25 0" rpy="${M_PI/2} 0 0" />
+    </xacro:carl_wheel>
+    <xacro:carl_wheel suffix="right" parent="${name}_link">
+      <origin xyz="0 -0.25 0" rpy="-${M_PI/2} 0 0" />
+    </xacro:carl_wheel>
+    
+    <!-- Caster Assembly -->
+    <xacro:carl_caster_assembly parent="${name}_link">
+      <origin xyz="0.2883 0 0" rpy="0 0 0" />
+    </xacro:carl_caster_assembly>
+    
+    <!-- Frame and Covers -->
+    <xacro:carl_frame parent="${name}_link" />
+    <xacro:carl_covers parent="${name}_link" />
+    
+    <!-- Sensors -->
+    <xacro:hokuyo parent="caster_plate_link">  
+      <origin xyz="0.07 0 0.035" rpy="0 0 0" />
+    </xacro:hokuyo>
+    <xacro:carl_asus_camera parent="asus_lift_link">
+      <origin xyz="0 0 0" rpy="${M_PI/2} 0 0" />
+    </xacro:carl_asus_camera>
+    <xacro:carl_creative_camera parent="top_plate_link">
+      <origin xyz="0.07 0 -0.03" rpy="0 0 ${M_PI}" />
+    </xacro:carl_creative_camera>
+  </xacro:macro>
+</robot>

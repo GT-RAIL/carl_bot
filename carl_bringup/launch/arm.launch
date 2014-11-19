@@ -1,0 +1,10 @@
+<!--
+   Author: David Kent, Worcester Polytechnic Institute
+   Author: Russell Toris, Worcester Polytechnic Institute
+  Version: August 4, 2014
+-->
+
+<launch>
+  <include file="$(find wpi_jaco_wrapper)/launch/arm.launch" />
+  <node pkg="carl_interactive_manipulation" type="carl_interactive_manipulation" name="carl_interactive_manipulation" output="screen" />
+</launch>

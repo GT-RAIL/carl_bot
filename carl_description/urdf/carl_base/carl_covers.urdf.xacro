@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+       
+  <!-- Xacro properties -->
+  <xacro:property name="M_SCALE" value="0.0254" />
+  <xacro:property name="M_PI" value="3.1415926535897931" /> 
+
+  <xacro:include filename="$(find carl_description)/urdf/components/carl_side_cover.urdf.xacro" />
+
+  <xacro:macro name="carl_covers" params="parent">
+    <!-- Front Cover -->
+    <joint name="${name}_front_cover_link_joint" type="fixed">
+      <parent link="${parent}" />
+      <child link="front_cover_link" />
+      <origin xyz="0.247 0 0.242" rpy="0 0 ${M_PI/2}" />
+    </joint>
+    <link name="front_cover_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/front_cover.min.dae" />
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/front_cover.stl" />
+        </geometry>
+      </collision>
+    </link>
+    
+    <!-- Back Cover -->
+    <joint name="${name}_back_cover_link_joint" type="fixed">
+      <parent link="${parent}" />
+      <child link="back_cover_link" />
+      <origin xyz="-0.237 0 -0.102" rpy="0 0 0" />
+    </joint>
+    <link name="back_cover_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/back_cover.min.dae" />
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz=".025 0 .8" rpy="0 0 0" />
+        <geometry>
+          <box size=".05 .45 1.56" />
+        </geometry>
+        <!--
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/back_cover.stl" />
+        </geometry>
+        -->
+      </collision>
+    </link>
+    
+    <!-- Side Covers -->
+    <xacro:carl_side_cover prefix="right" parent="${parent}">
+      <origin xyz="0.007 -0.226 0.345" rpy="0 0 ${M_PI/2}" />
+    </xacro:carl_side_cover>
+    <xacro:carl_side_cover prefix="left" parent="${parent}">
+      <origin xyz="0.007 0.226 0.345" rpy="0 0 ${M_PI/2}" />
+    </xacro:carl_side_cover>
+  </xacro:macro>
+</robot>

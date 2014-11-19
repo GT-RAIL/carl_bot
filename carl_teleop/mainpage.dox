@@ -1,0 +1,6 @@
+/**
+\mainpage
+
+\b Control the Movement Devices on CARL
+CARL (Crowdsourcing for Autonomous Robot Learning) consists of a mobile base with an arm. Teleop nodes are included in this package for controlling these devices.
+*/

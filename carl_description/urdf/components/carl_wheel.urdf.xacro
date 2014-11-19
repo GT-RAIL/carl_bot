@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+       
+  <!-- Xacro properties -->
+  <xacro:property name="M_SCALE" value="0.0254" />
+       
+  <xacro:macro name="carl_wheel" params="suffix parent *origin">
+    <link name="${suffix}_wheel_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/wheel.min.dae" />
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/wheel.stl" />
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${parent}_${suffix}_wheel_joint" type="continuous">
+      <xacro:insert_block name="origin" />
+      <axis xyz="0 0 1" />
+      <parent link="${parent}" />
+      <child link="${suffix}_wheel_link" />
+    </joint>
+  </xacro:macro>
+  
+</robot>

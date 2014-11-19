@@ -1,0 +1,5 @@
+front_servos: 
+   num_servos: 1
+   "1": 
+    id: 1
+    link_name: creative_servo_link_creative_servo_arm_link_joint

@@ -1,0 +1,5 @@
+back_servos: 
+   num_servos: 1
+   "1": 
+    id: 1
+    link_name: asus_servo_link_asus_servo_arm_link_joint      
