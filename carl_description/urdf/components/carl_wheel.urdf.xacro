@@ -16,12 +16,9 @@
         </geometry>
       </visual>
       <collision>
-        <origin xyz="0 0 0" rpy="0 0 0" />
+        <origin xyz="0 0 0.03" rpy="0 0 0" />
         <geometry>
-          <!--
-          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/wheel.stl" />
-          -->
-          <cylinder radius="0.25" length="0.11"/>
+          <cylinder radius="0.25" length="0.12"/>
         </geometry>
       </collision>
     </link>
