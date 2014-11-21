@@ -23,7 +23,7 @@
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/side_cover.stl" />
+          <box size="0.0008 0.483 0.289"/>
         </geometry>
       </collision>
     </link>
