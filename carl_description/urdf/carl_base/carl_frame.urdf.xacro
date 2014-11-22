@@ -34,11 +34,26 @@
         </geometry>
       </visual>
       <collision>
-        <origin xyz="0 0 0" rpy="0 0 -${M_PI/2}" />
+        <origin xyz="-0.28 0.0 -.0031" rpy="0 0 -${M_PI/2}" />
         <geometry>
-          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/top_plate.stl" />
+          <box size="0.5842 0.5 0.0066"/>
         </geometry>
       </collision>
+      
+      <collision>
+        <origin xyz="-.005 0.127 -.0031" rpy="0 0 -1.25" />
+        <geometry>
+          <box size="0.325 0.14 0.0066"/>
+        </geometry>
+      </collision>
+
+      <collision>
+        <origin xyz="-.005 -0.127 -.0031" rpy="0 0 1.25" />
+        <geometry>
+          <box size="0.325 0.14 0.0066"/>
+        </geometry>
+      </collision>
+
     </link>
 
     <!-- JACO Mount -->
@@ -55,9 +70,10 @@
         </geometry>
       </visual>
       <collision>      
-        <origin xyz="0 0 0" rpy="0 0 0" />
+        <origin xyz="0 0 -0.0127" rpy="0 0 0" />
         <geometry>
-          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/jaco_mount.stl" />
+         <!-- <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/jaco_mount.stl" /> -->
+         <box size="0.2286 0.0508 0.0254"/>
         </geometry>
       </collision>
     </link>
@@ -76,9 +92,9 @@
         </geometry>
       </visual>
       <collision>      
-        <origin xyz="0 0 0" rpy="0 ${M_PI/2} ${M_PI/2}" />
+        <origin xyz="-0.0127 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/camera_lift.stl" />
+          <box size="0.027 0.454 0.054" />
         </geometry>
       </collision>
     </link>
