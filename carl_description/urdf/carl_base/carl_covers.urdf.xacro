@@ -26,16 +26,16 @@
         </geometry>
       </visual>
       <collision>
-        <origin xyz="-0.2205 -0.034 0" rpy="0 0 -0.52" />
+        <origin xyz="-0.20 -0.05 0" rpy="0 0 -0.52" />
         <geometry>
-          <box size="0.25 0.068 0.508"/>
+          <box size="0.21 0.068 0.508"/>
         </geometry>
       </collision>
       
       <collision>
-        <origin xyz="0.2205 -0.034 0" rpy="0 0 0.52" />
+        <origin xyz="0.20 -0.05 0" rpy="0 0 0.52" />
         <geometry>
-          <box size="0.25 0.068 0.508"/>
+          <box size="0.21 0.068 0.508"/>
         </geometry>
       </collision>
 
