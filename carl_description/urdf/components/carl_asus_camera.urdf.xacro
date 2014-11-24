@@ -25,9 +25,9 @@
         </geometry>
       </visual>
       <collision>
-        <origin xyz="0 0 0" rpy="0 0 0" />
+        <origin xyz="0.0279 0.0 0.0" rpy="0 0 0" />
         <geometry>
-          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/servo_mount.stl" />
+          <box size="0.057 0.0508 0.089"/>
         </geometry>
       </collision>
     </link>
@@ -45,9 +45,9 @@
         </geometry>
       </visual>
       <collision>
-        <origin xyz="0 0 0" rpy="0 0 0" />
+        <origin xyz="0.01344 -0.0184 0" rpy="0 0 0" />
         <geometry>
-          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/servo.stl" />
+          <box size="0.05 0.0382 0.032"/>
         </geometry>
       </collision>
     </link>
@@ -66,9 +66,9 @@
         </geometry>
       </visual>
       <collision>
-        <origin xyz="0 0 0" rpy="0 0 0" />
+        <origin xyz="0 -0.021 -0.02405" rpy="0 0 0" />
         <geometry>
-          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/servo_arm.stl" />
+          <box size="0.029 0.067 0.049"/>
         </geometry>
       </collision>
     </link>
@@ -86,9 +86,9 @@
         </geometry>
       </visual>
       <collision>
-        <origin xyz="0 0 0" rpy="0 ${M_PI/2} 0" />
+        <origin xyz="-0.0015875 0 0" rpy="0 ${M_PI/2} 0" />
         <geometry>
-          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/camera_mount.stl" />
+          <box size="0.041 0.2365 0.0032"/>
         </geometry>
       </collision>
     </link>
