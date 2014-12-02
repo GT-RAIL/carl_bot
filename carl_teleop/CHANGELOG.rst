@@ -2,6 +2,13 @@
 Changelog for package carl_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.10 (2014-12-02)
+-------------------
+* deleted everything
+* Parameter, topic, and launch file cleanup for consistency
+* changes to make teleop safety able to toggle on and off with launch paramater
+* Contributors: Brian Hetherman, David Kent, Peter
+
 0.0.9 (2014-10-22)
 ------------------
 
