@@ -2,6 +2,11 @@
 Changelog for package carl_dynamixel
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.10 (2014-12-02)
+-------------------
+* deleted everything
+* Contributors: Peter
+
 0.0.9 (2014-10-22)
 ------------------
 

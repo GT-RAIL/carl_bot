@@ -2,6 +2,9 @@
 Changelog for package carl_interactive_manipulation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.10 (2014-12-02)
+-------------------
+
 0.0.9 (2014-10-22)
 ------------------
 * Updated visualized segmented/recognized objects to work with the web visualizer

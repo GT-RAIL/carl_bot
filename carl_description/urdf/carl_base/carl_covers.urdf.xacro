@@ -11,6 +11,7 @@
   <xacro:include filename="$(find carl_description)/urdf/components/carl_side_cover.urdf.xacro" />
 
   <xacro:macro name="carl_covers" params="parent">
+
     <!-- Front Cover -->
     <joint name="${name}_front_cover_link_joint" type="fixed">
       <parent link="${parent}" />
@@ -25,11 +26,26 @@
         </geometry>
       </visual>
       <collision>
-        <origin xyz="0 0 0" rpy="0 0 0" />
+        <origin xyz="-0.20 -0.05 0" rpy="0 0 -0.52" />
         <geometry>
-          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/front_cover.stl" />
+          <box size="0.21 0.068 0.508"/>
         </geometry>
       </collision>
+      
+      <collision>
+        <origin xyz="0.20 -0.05 0" rpy="0 0 0.52" />
+        <geometry>
+          <box size="0.21 0.068 0.508"/>
+        </geometry>
+      </collision>
+
+      <collision>
+        <origin xyz="0 -0.11 0" rpy="0 0 0" />
+        <geometry>
+          <box size="0.25 0.068 0.508"/>
+        </geometry>
+      </collision>
+
     </link>
     
     <!-- Back Cover -->
@@ -46,16 +62,10 @@
         </geometry>
       </visual>
       <collision>
-        <origin xyz=".025 0 .8" rpy="0 0 0" />
+        <origin xyz="-.0025 0 .78" rpy="0 0 0" />
         <geometry>
           <box size=".05 .45 1.56" />
         </geometry>
-        <!--
-        <origin xyz="0 0 0" rpy="0 0 0" />
-        <geometry>
-          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/back_cover.stl" />
-        </geometry>
-        -->
       </collision>
     </link>
     

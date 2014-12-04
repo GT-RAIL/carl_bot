@@ -23,9 +23,9 @@
         </geometry>
       </visual>
       <collision>
-        <origin xyz="0 0 0" rpy="0 0 -${M_PI/2}" />
+        <origin xyz="0 0.001 0.525" rpy="0 0 0"/>
         <geometry>
-          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/rear_strut.stl" />
+          <box size="0.04 0.052 1.07 "/>
         </geometry>
       </collision>
     </link>
@@ -44,9 +44,9 @@
         </geometry>
       </visual>
       <collision>
-        <origin xyz="0 0 0" rpy="0 0 -${M_PI/2}" />
+        <origin xyz="-0 0 0.229" rpy="0 0 0" />
         <geometry>
-          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/rear_strut_top.stl" />
+          <box size="0.04 0.051 0.4572"/>
         </geometry>
       </collision>    
     </link>

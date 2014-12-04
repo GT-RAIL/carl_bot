@@ -2,6 +2,28 @@
 Changelog for package carl_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.10 (2014-12-02)
+-------------------
+* reverted rviz
+* fixed rear struts. also rebuild urdf
+* rebuild urdf
+* fixed front cover and back strut
+* removed stls
+* reverted to original rviz
+* removed stls
+* ran xacro
+* removed screenshot
+* fixed castor plate. added screenshot
+* finished collision models. creative camera,mount,topplate,jacomount,camera lift
+* caster
+* servo arm, caster plate
+* servo
+* base, rear struts<
+  >
+* wheels, front cover, camera, hokuyo
+* used cylinder for wheel collision model
+* Contributors: Peter
+
 0.0.9 (2014-10-22)
 ------------------
 

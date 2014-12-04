@@ -25,9 +25,9 @@
         </geometry>
       </visual>
       <collision>
-        <origin xyz=" 0 0 0 " rpy="${-M_PI/2} -${M_PI} ${-M_PI/2}" />
+        <origin xyz="-0.0071 0.0031 0" rpy="${-M_PI/2} -${M_PI} ${-M_PI/2}" />
         <geometry>
-          <mesh filename="package://carl_description/meshes/asus_xtion_pro_live.stl" scale="${M_SCALE*0.001} ${M_SCALE*0.001} ${M_SCALE*0.001}" />
+          <box size="0.1799 0.0246 0.0362"/>
         </geometry>
       </collision>
     </link>

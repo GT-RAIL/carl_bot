@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>carl_dynamixel</name>
-  <version>0.0.9</version>
+  <version>0.0.10</version>
   <description>Configuration for CARLS's Head Dynamixel Servo</description>
 
   <maintainer email="rctoris@wpi.edu">Russell Toris</maintainer>

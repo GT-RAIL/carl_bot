@@ -13,9 +13,9 @@
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0 0 -.0425"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/base.stl" scale="0.0254 0.0254 0.0254"/>
+        <box size="0.4 0.363 0.12"/>
       </geometry>
     </collision>
   </link>
@@ -32,9 +32,9 @@
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0 0 0.03"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/wheel.stl" scale="0.0254 0.0254 0.0254"/>
+        <cylinder length="0.12" radius="0.25"/>
       </geometry>
     </collision>
   </link>
@@ -52,9 +52,9 @@
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0 0 0.03"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/wheel.stl" scale="0.0254 0.0254 0.0254"/>
+        <cylinder length="0.12" radius="0.25"/>
       </geometry>
     </collision>
   </link>
@@ -77,9 +77,21 @@
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 1.57079632679" xyz="0 0 0"/>
+      <origin rpy="0 0 -2" xyz="-.01 -0.12 -0.04145"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/caster_plate.stl" scale="0.0254 0.0254 0.0254"/>
+        <box size="0.3 0.16 0.0949"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 2" xyz="-.01 0.12 -0.04145"/>
+      <geometry>
+        <box size="0.3 0.16 0.0949"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.003 0 -0.04145"/>
+      <geometry>
+        <box size="0.16 0.16 0.0949"/>
       </geometry>
     </collision>
   </link>
@@ -97,9 +109,9 @@
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="-0.0381 0 -0.0929"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/caster.stl" scale="0.0254 0.0254 0.0254"/>
+        <box size="0.17 0.0636 0.1858"/>
       </geometry>
     </collision>
   </link>
@@ -116,9 +128,9 @@
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 -1.57079632679" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0 0.001 0.525"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/rear_strut.stl" scale="0.0254 0.0254 0.0254"/>
+        <box size="0.04 0.052 1.07 "/>
       </geometry>
     </collision>
   </link>
@@ -135,9 +147,9 @@
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 -1.57079632679" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="-0 0 0.229"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/rear_strut_top.stl" scale="0.0254 0.0254 0.0254"/>
+        <box size="0.04 0.051 0.4572"/>
       </geometry>
     </collision>
   </link>
@@ -154,9 +166,9 @@
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 -1.57079632679" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0 0.001 0.525"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/rear_strut.stl" scale="0.0254 0.0254 0.0254"/>
+        <box size="0.04 0.052 1.07 "/>
       </geometry>
     </collision>
   </link>
@@ -173,9 +185,9 @@
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 -1.57079632679" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="-0 0 0.229"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/rear_strut_top.stl" scale="0.0254 0.0254 0.0254"/>
+        <box size="0.04 0.051 0.4572"/>
       </geometry>
     </collision>
   </link>
@@ -192,9 +204,21 @@
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 -1.57079632679" xyz="0 0 0"/>
+      <origin rpy="0 0 -1.57079632679" xyz="-0.28 0.0 -.0031"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/top_plate.stl" scale="0.0254 0.0254 0.0254"/>
+        <box size="0.5842 0.5 0.0066"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 -1.25" xyz="-.005 0.127 -.0031"/>
+      <geometry>
+        <box size="0.325 0.14 0.0066"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 1.25" xyz="-.005 -0.127 -.0031"/>
+      <geometry>
+        <box size="0.325 0.14 0.0066"/>
       </geometry>
     </collision>
   </link>
@@ -211,9 +235,10 @@
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0 0 -0.0127"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/jaco_mount.stl" scale="0.0254 0.0254 0.0254"/>
+        <!-- <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/jaco_mount.stl" /> -->
+        <box size="0.2286 0.0508 0.0254"/>
       </geometry>
     </collision>
   </link>
@@ -230,9 +255,9 @@
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 1.57079632679 1.57079632679" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="-0.0127 0 0"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/camera_lift.stl" scale="0.0254 0.0254 0.0254"/>
+        <box size="0.027 0.454 0.054"/>
       </geometry>
     </collision>
   </link>
@@ -249,9 +274,21 @@
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 -0.52" xyz="-0.20 -0.05 0"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/front_cover.stl" scale="0.0254 0.0254 0.0254"/>
+        <box size="0.21 0.068 0.508"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0.52" xyz="0.20 -0.05 0"/>
+      <geometry>
+        <box size="0.21 0.068 0.508"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 -0.11 0"/>
+      <geometry>
+        <box size="0.25 0.068 0.508"/>
       </geometry>
     </collision>
   </link>
@@ -268,16 +305,10 @@
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz=".025 0 .8"/>
+      <origin rpy="0 0 0" xyz="-.0025 0 .78"/>
       <geometry>
         <box size=".05 .45 1.56"/>
       </geometry>
-      <!--
-        <origin xyz="0 0 0" rpy="0 0 0" />
-        <geometry>
-          <mesh scale="${M_SCALE} ${M_SCALE} ${M_SCALE}" filename="package://carl_description/meshes/back_cover.stl" />
-        </geometry>
-        -->
     </collision>
   </link>
   <joint name="base_link_right_side_cover_link_joint" type="fixed">
@@ -293,9 +324,9 @@
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz=".0005 0 0"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/side_cover.stl" scale="0.0254 0.0254 0.0254"/>
+        <box size="0.0015 0.483 0.289"/>
       </geometry>
     </collision>
   </link>
@@ -312,9 +343,9 @@
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz=".0005 0 0"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/side_cover.stl" scale="0.0254 0.0254 0.0254"/>
+        <box size="0.0015 0.483 0.289"/>
       </geometry>
     </collision>
   </link>
@@ -333,7 +364,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/hokuyo.stl"/>
+        <box size="0.05 0.05 0.08"/>
       </geometry>
     </collision>
   </link>
@@ -350,9 +381,9 @@
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0.0279 0.0 0.0"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/servo_mount.stl" scale="0.0254 0.0254 0.0254"/>
+        <box size="0.057 0.0508 0.089"/>
       </geometry>
     </collision>
   </link>
@@ -369,9 +400,9 @@
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0.01344 -0.0184 0"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/servo.stl" scale="0.0254 0.0254 0.0254"/>
+        <box size="0.05 0.0382 0.032"/>
       </geometry>
     </collision>
   </link>
@@ -389,9 +420,9 @@
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0 -0.021 -0.02405"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/servo_arm.stl" scale="0.0254 0.0254 0.0254"/>
+        <box size="0.029 0.067 0.049"/>
       </geometry>
     </collision>
   </link>
@@ -408,9 +439,9 @@
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 1.57079632679 0" xyz="0 0 0"/>
+      <origin rpy="0 1.57079632679 0" xyz="-0.0015875 0 0"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/camera_mount.stl" scale="0.0254 0.0254 0.0254"/>
+        <box size="0.041 0.2365 0.0032"/>
       </geometry>
     </collision>
   </link>
@@ -432,9 +463,9 @@
       </geometry>
     </visual>
     <collision>
-      <origin rpy="-1.57079632679 -3.14159265359 -1.57079632679" xyz=" 0 0 0 "/>
+      <origin rpy="-1.57079632679 -3.14159265359 -1.57079632679" xyz="-0.0071 0.0031 0"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/asus_xtion_pro_live.stl" scale="2.54e-05 2.54e-05 2.54e-05"/>
+        <box size="0.1799 0.0246 0.0362"/>
       </geometry>
     </collision>
   </link>
@@ -499,9 +530,9 @@
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0.01488 0 0"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/creative_mount.stl" scale="0.0254 0.0254 0.0254"/>
+        <box size="0.0298 0.051 0.051"/>
       </geometry>
     </collision>
   </link>
@@ -518,9 +549,9 @@
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0.01344 -0.0184 0"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/servo.stl" scale="0.0254 0.0254 0.0254"/>
+        <box size="0.05 0.0382 0.032"/>
       </geometry>
     </collision>
   </link>
@@ -538,9 +569,9 @@
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0 -0.021 -0.02405"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/servo_arm.stl" scale="0.0254 0.0254 0.0254"/>
+        <box size="0.029 0.067 0.049"/>
       </geometry>
     </collision>
   </link>
@@ -557,9 +588,9 @@
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0 0 -0.0015875"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/creative_plate.stl" scale="0.0254 0.0254 0.0254"/>
+        <box size="0.13975 0.03815 0.00318"/>
       </geometry>
     </collision>
   </link>
@@ -578,7 +609,7 @@
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://carl_description/meshes/creative_camera.stl" scale="0.0254 0.0254 0.0254"/>
+        <box size="0.1070 0.02575 0.026"/>
       </geometry>
     </collision>
   </link>
