@@ -94,7 +94,10 @@
     </link>
     
     <xacro:sensor_asus_xtion_pro parent="asus_mount_link">
-      <origin xyz="-0.016 -0.008 0.018" rpy="0 -${M_PI/2} 0" />
+      <!-- hand measured -->
+      <!--<origin xyz="-0.016 -0.008 0.018" rpy="0 -${M_PI/2} 0" />-->
+      <!-- calibrated -->
+      <origin xyz="-0.021523 -0.003366 0.021402" rpy="0.0 -1.508124 0.0" />
     </xacro:sensor_asus_xtion_pro>
   </xacro:macro>
 </robot>

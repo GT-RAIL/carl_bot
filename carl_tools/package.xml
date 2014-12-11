@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<package>
+  <name>carl_tools</name>
+  <version>0.0.1</version>
+  <description>Miscellaneous tools for CARL</description>
+
+  <maintainer email="rctoris@wpi.edu">Russell Toris</maintainer>
+  <maintainer email="davidkent@wpi.edu">David Kent</maintainer>
+  <author email="rctoris@wpi.edu">Russell Toris</author>
+  <author email="davidkent@wpi.edu">David Kent</author>
+
+  <license>BSD</license>
+
+  <url type="website">http://ros.org/wiki/carl_tools</url>
+  <url type="bugtracker">https://github.com/WPI-RAIL/carl_bot/issues</url>
+  <url type="repository">https://github.com/WPI-RAIL/carl_bot</url>
+  
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>ar_track_alvar_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>tf</build_depend>
+
+  <run_depend>ar_track_alvar_msgs</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>tf</run_depend>
+</package>

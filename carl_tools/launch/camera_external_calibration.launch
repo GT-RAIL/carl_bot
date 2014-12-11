@@ -1,0 +1,35 @@
+<!--
+   Author: David Kent, Worcester Polytechnic Institute
+  Version: December 11, 2014
+-->
+
+<launch>
+  <!-- AR Parameters -->
+  <arg name="marker_size" default="12.0" />
+  <arg name="max_new_marker_error" default="0.08" />
+  <arg name="max_track_error" default="0.2" />
+  <arg name="node_name_prefix" default="asus_marker_tracker" />
+  <arg name="cam_image_topic_prefix" default="/camera" />
+  <arg name="image_topic" default="/depth_registered/points" />
+  <arg name="cam_info_topic_prefix" default="$(arg cam_image_topic_prefix)" />
+  <arg name="info_topic" default="/depth_registered/camera_info" />
+  <arg name="output_frame_prefix" default="$(arg cam_image_topic_prefix)_rgb_frame" />
+
+  <!-- marker tracker -->
+  <node pkg="ar_track_alvar" name="asus_marker_tracker" type="individualMarkers"
+        args="$(arg marker_size)
+           $(arg max_new_marker_error)
+           $(arg max_track_error)
+           $(arg cam_image_topic_prefix)$(arg image_topic)
+           $(arg cam_info_topic_prefix)$(arg info_topic)
+           $(arg output_frame_prefix)">
+    <remap from="visualization_marker" to="$(arg node_name_prefix)/visualization_marker" />
+    <remap from="ar_pose_marker" to="$(arg node_name_prefix)/ar_pose_marker" />
+  </node>
+
+  <!-- transform for the calibration marker -->
+  <node pkg="tf" type="static_transform_publisher" name="calibration_link_broadcaster" args="-0.225 0 0 0 0 0 top_plate_link calibration_link 100" />
+
+  <!-- calibration node -->
+  <node pkg="carl_tools" type="camera_external_calibration" name="camera_external_calibration"  output="screen"/>
+</launch>
