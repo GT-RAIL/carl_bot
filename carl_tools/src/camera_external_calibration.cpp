@@ -91,22 +91,31 @@ void CameraExternalCalibration::publishTransforms()
       avgTransform.stamp_ = ros::Time::now();
       float x = 0.0, y = 0.0, z = 0.0;
       tf::Quaternion avgQuat;
+      int failedSamples = 0;
       for (unsigned int i = 0; i < transformSamples.size(); i++)
       {
-        x += transformSamples[i].getOrigin().x();
-        y += transformSamples[i].getOrigin().y();
-        z += transformSamples[i].getOrigin().z();
-        if (i == 0)
+        //check if a transform is empty, this can happen rarely from lookuptransform errors; these should be ignored
+        if (transformSamples[i].getOrigin().x() == 0 && transformSamples[i].getOrigin().y() == 0 && transformSamples[i].getOrigin().z() == 0)
         {
-          avgQuat = transformSamples[i].getRotation().normalize();
+          failedSamples ++;
         }
         else
         {
-          avgQuat.slerp(transformSamples[i].getRotation().normalize(), 1.0/((float)(i + 1))).normalize();
+          x += transformSamples[i].getOrigin().x();
+          y += transformSamples[i].getOrigin().y();
+          z += transformSamples[i].getOrigin().z();
+          if (i == 0)
+          {
+            avgQuat = transformSamples[i].getRotation().normalize();
+          }
+          else
+          {
+            avgQuat.slerp(transformSamples[i].getRotation().normalize(), 1.0 / ((float) (i + 1 - failedSamples))).normalize();
+          }
         }
       }
 
-      int numSamples = transformSamples.size();
+      int numSamples = transformSamples.size() - failedSamples;
       avgTransform.setOrigin(tf::Vector3(x/numSamples, y/numSamples, z/numSamples));
       avgTransform.setRotation(avgQuat);
 
