@@ -18,6 +18,7 @@
 #include <ros/ros.h>
 #include <sensor_msgs/Joy.h>
 #include <std_msgs/Float64.h>
+#include <wpi_jaco_msgs/AngularCommand.h>
 #include <wpi_jaco_msgs/CartesianCommand.h>
 
 //Control modes
@@ -107,14 +108,17 @@ private:
   ros::NodeHandle node; /*!< a handle for this ROS node */
 
   ros::Publisher cmd_vel; /*!< the base cmd_vel topic */
+  ros::Publisher angular_cmd; /*!< angular arm command topic */
   ros::Publisher cartesian_cmd; /*!< cartesian arm command topic */
+  ros::Publisher cartesian_cmd2; /*!< topic for testing alternate Cartesian controllers */
   ros::Publisher asus_servo_tilt_cmd; /*< velocity command to tilt the asus servo */
   ros::Publisher creative_servo_pan_cmd; /*< velocity command to pan the creative servo */
   ros::Subscriber joy_sub; /*!< the joy topic */
 
   geometry_msgs::Twist twist; /*!< base movement command */
-  wpi_jaco_msgs::CartesianCommand fingerCmd; /*!< angular movement command */
+  wpi_jaco_msgs::AngularCommand fingerCmd; /*!< finger movement command */
   wpi_jaco_msgs::CartesianCommand cartesianCmd; /*!< cartesian movement command */
+  geometry_msgs::Twist cartesianCmd2;
 
   int mode; /*!< the control mode */
   int controllerType; /*!< the type of joystick controller */

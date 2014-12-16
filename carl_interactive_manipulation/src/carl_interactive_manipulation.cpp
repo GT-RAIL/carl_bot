@@ -38,6 +38,7 @@ CarlInteractiveManipulation::CarlInteractiveManipulation() :
 
   //setup object menu
   objectMenuHandler.insert("Pickup", boost::bind(&CarlInteractiveManipulation::processPickupMarkerFeedback, this, _1));
+  objectMenuHandler.insert("Remove", boost::bind(&CarlInteractiveManipulation::processRemoveMarkerFeedback, this, _1));
 
   imServer->applyChanges();
 }
@@ -163,8 +164,6 @@ void CarlInteractiveManipulation::segmentedObjectsCallback(
     objectMarker.controls.push_back(objectMenuControl);
 
     imServer->insert(objectMarker);
-    imServer->setCallback(objectMarker.name,
-                          boost::bind(&CarlInteractiveManipulation::processPickupMarkerFeedback, this, _1));
 
     if (objectList->objects[i].recognized)
     {
@@ -172,6 +171,7 @@ void CarlInteractiveManipulation::segmentedObjectsCallback(
       ss2.str("");
       ss2 << "Pickup " << objectList->objects[i].name;
       recognizedMenuHandlers[i].insert(ss2.str(), boost::bind(&CarlInteractiveManipulation::processPickupMarkerFeedback, this, _1));
+      recognizedMenuHandlers[i].insert("Remove", boost::bind(&CarlInteractiveManipulation::processRemoveMarkerFeedback, this, _1));
       recognizedMenuHandlers[i].apply(*imServer, objectMarker.name);
     }
     else
@@ -307,27 +307,48 @@ void CarlInteractiveManipulation::makeHandMarker()
 void CarlInteractiveManipulation::processPickupMarkerFeedback(
     const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback)
 {
-  rail_pick_and_place_msgs::PickupSegmentedObject::Request req;
-  rail_pick_and_place_msgs::PickupSegmentedObject::Response res;
-  req.objectIndex = atoi(feedback->marker_name.substr(6).c_str());
-  if (!pickupSegmentedClient.call(req, res))
+  if (feedback->event_type == visualization_msgs::InteractiveMarkerFeedback::MENU_SELECT)
   {
-    ROS_INFO("Could not call pickup service.");
-    return;
-  }
-  if (res.success)
-  {
-    rail_segmentation::RemoveObject::Request removeReq;
-    rail_segmentation::RemoveObject::Response removeRes;
-    removeReq.index = req.objectIndex;
-    if (!removeObjectClient.call(removeReq, removeRes))
+    rail_pick_and_place_msgs::PickupSegmentedObject::Request req;
+    rail_pick_and_place_msgs::PickupSegmentedObject::Response res;
+    req.objectIndex = atoi(feedback->marker_name.substr(6).c_str());
+    if (!pickupSegmentedClient.call(req, res))
     {
-      ROS_INFO("Could not call remove object service.");
+      ROS_INFO("Could not call pickup service.");
       return;
     }
-  }
+    if (res.success)
+    {
+      if (!removeObjectMarker(req.objectIndex))
+        return;
+    }
 
-  imServer->applyChanges();
+    imServer->applyChanges();
+  }
+}
+
+void CarlInteractiveManipulation::processRemoveMarkerFeedback(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback)
+{
+  if (feedback->event_type == visualization_msgs::InteractiveMarkerFeedback::MENU_SELECT)
+  {
+    if (!removeObjectMarker(atoi(feedback->marker_name.substr(6).c_str())))
+      return;
+
+    imServer->applyChanges();
+  }
+}
+
+bool CarlInteractiveManipulation::removeObjectMarker(int index)
+{
+  rail_segmentation::RemoveObject::Request req;
+  rail_segmentation::RemoveObject::Response res;
+  req.index = index;
+  if (!removeObjectClient.call(req, res))
+  {
+    ROS_INFO("Could not call remove object service.");
+    return false;
+  }
+  return true;
 }
 
 void CarlInteractiveManipulation::processHandMarkerFeedback(

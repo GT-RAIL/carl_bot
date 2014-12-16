@@ -29,7 +29,9 @@ carl_joy_teleop::carl_joy_teleop()
     cmd_vel = node.advertise<geometry_msgs::Twist>("cmd_vel_safety_check", 10);
   else
     cmd_vel = node.advertise<geometry_msgs::Twist>("cmd_vel", 10);
+  angular_cmd = node.advertise<wpi_jaco_msgs::AngularCommand>("jaco_arm/angular_cmd", 10);
   cartesian_cmd = node.advertise<wpi_jaco_msgs::CartesianCommand>("jaco_arm/cartesian_cmd", 10);
+  cartesian_cmd2 = node.advertise<geometry_msgs::Twist>("carl_moveit_wrapper/cartesian_control", 10);
   asus_servo_tilt_cmd = node.advertise<std_msgs::Float64>("asus_controller/tilt", 10);
   creative_servo_pan_cmd = node.advertise<std_msgs::Float64>("creative_controller/pan", 10);
   joy_sub = node.subscribe<sensor_msgs::Joy>("joy", 10, &carl_joy_teleop::joy_cback, this);
@@ -296,6 +298,28 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
         cartesianCmd.arm.angular.y = joy->axes.at(3) * MAX_ANG_VEL_ARM * angular_throttle_factor_arm;
       }
 
+      //for testing alternate Cartesian controllers...
+      if (cartesianCmd.arm.linear.x != 0.0 || cartesianCmd.arm.linear.y != 0.0 || cartesianCmd.arm.linear.z != 0.0
+      || cartesianCmd.arm.angular.x != 0.0 || cartesianCmd.arm.angular.y != 0.0
+      || cartesianCmd.arm.angular.z != 0.0)
+      {
+        cartesianCmd2.linear.x = cartesianCmd.arm.linear.x;
+        cartesianCmd2.linear.y = cartesianCmd.arm.linear.y;
+        cartesianCmd2.linear.z = cartesianCmd.arm.linear.z;
+        cartesianCmd2.angular.x = cartesianCmd.arm.angular.x;
+        cartesianCmd2.angular.y = cartesianCmd.arm.angular.y;
+        cartesianCmd2.angular.z = cartesianCmd.arm.angular.z;
+      }
+      else
+      {
+        cartesianCmd2.linear.x = 0.0;
+        cartesianCmd2.linear.y = 0.0;
+        cartesianCmd2.linear.z = 0.0;
+        cartesianCmd2.angular.x = 0.0;
+        cartesianCmd2.angular.y = 0.0;
+        cartesianCmd2.angular.z = 0.0;
+      }
+
       //mode switching
       if (joy->buttons.at(button1Index) == 1 || joy->buttons.at(button3Index) == 1 || joy->buttons.at(button4Index) == 1)
       {
@@ -386,7 +410,7 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
         fingerCmd.fingers[0] = 0.0;
         fingerCmd.fingers[1] = 0.0;
         fingerCmd.fingers[2] = 0.0;
-        cartesian_cmd.publish(fingerCmd);
+        angular_cmd.publish(fingerCmd);
         
         if (joy->buttons.at(button2Index) == 1)
         {
@@ -465,7 +489,7 @@ void carl_joy_teleop::publish_velocity()
     fingerCmd.fingers[2] = 0.0;
 
     cartesian_cmd.publish(cartesianCmd);
-    cartesian_cmd.publish(fingerCmd);
+    angular_cmd.publish(fingerCmd);
 
     return;
   }
@@ -489,6 +513,7 @@ void carl_joy_teleop::publish_velocity()
       {
         // send the arm command
         cartesian_cmd.publish(cartesianCmd);
+        //cartesian_cmd2.publish(cartesianCmd2);
         stopMessageSentArm = false;
       }
       break;
@@ -499,14 +524,14 @@ void carl_joy_teleop::publish_velocity()
       {
         if (!stopMessageSentFinger)
         {
-          cartesian_cmd.publish(fingerCmd);
+          angular_cmd.publish(fingerCmd);
           stopMessageSentFinger = true;
         }
       }
       else
       {
         //send the finger velocity command
-        cartesian_cmd.publish(fingerCmd);
+        angular_cmd.publish(fingerCmd);
         stopMessageSentFinger = false;
       }
       break;
