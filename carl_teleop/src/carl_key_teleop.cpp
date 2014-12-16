@@ -52,6 +52,7 @@ carl_key_teleop::carl_key_teleop()
   ros::NodeHandle private_nh("~");
 
   // create the ROS topics
+  angular_cmd = nh_.advertise<wpi_jaco_msgs::AngularCommand>("jaco_arm/angular_cmd", 10);
   cartesian_cmd = nh_.advertise<wpi_jaco_msgs::CartesianCommand>("jaco_arm/cartesian_cmd", 10);
   vel_pub_ = nh_.advertise<geometry_msgs::Twist>("cmd_vel", 1);
 
@@ -229,7 +230,7 @@ void carl_key_teleop::loop()
       case FINGER_CONTROL:
       {
         //initialize finger command
-        wpi_jaco_msgs::CartesianCommand cmd;
+        wpi_jaco_msgs::AngularCommand cmd;
         cmd.position = false;
         cmd.armCommand = false;
         cmd.fingerCommand = true;
@@ -290,7 +291,7 @@ void carl_key_teleop::loop()
           first_publish_ = ros::Time::now();
         }
         last_publish_ = ros::Time::now();
-        cartesian_cmd.publish(cmd);
+        angular_cmd.publish(cmd);
       }
         break;
     }

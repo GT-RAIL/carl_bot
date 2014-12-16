@@ -62,6 +62,12 @@ public:
   void processPickupMarkerFeedback(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback);
 
   /**
+  * \brief Process feedback for objects that are selected for removal.
+  * @param feedback interactive marker feedback
+  */
+  void processRemoveMarkerFeedback(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback);
+
+  /**
    * \brief Callback for the joint state listener
    * @param msg new joint state message
    */
@@ -84,6 +90,13 @@ public:
   void updateMarkerPosition();
 
 private:
+
+  /**
+  * \brief Remove a manipulation object marker
+  * @param index object index
+  * @return true if object was successfully removed
+  */
+  bool removeObjectMarker(int index);
 
   /**
    * \brief Create the interactive marker on the JACO's end effector, including pose controls and menus
