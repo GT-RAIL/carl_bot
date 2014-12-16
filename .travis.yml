@@ -40,4 +40,6 @@ script:
   - catkin_make install
   - source install/setup.bash
   - cd src/package
+  - ./carl_description/scripts/minify.bash
+  - git diff --exit-code
   - /opt/ros/hydro/share/xacro/xacro.py carl_description/robots/carl.urdf.xacro
