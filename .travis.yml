@@ -40,5 +40,4 @@ script:
   - catkin_make install
   - source install/setup.bash
   - cd src/package
-  - /opt/ros/hydro/share/xacro/xacro.py carl_description/robots/carl.urdf.xacro >> sanity.urdf
-  - diff sanity.urdf carl_description/robots/carl.urdf
+  - /opt/ros/hydro/share/xacro/xacro.py carl_description/robots/carl.urdf.xacro
