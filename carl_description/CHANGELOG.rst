@@ -2,6 +2,15 @@
 Changelog for package carl_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.11 (2014-12-18)
+-------------------
+* travis fix
+* fixed minifiy
+* minify script
+* no more pre-built file
+* Updated transform between asus mount and asus; added carl_tools for miscellaneous packages, currently including calibration for the asus camera transform.
+* Contributors: David Kent, Russell Toris
+
 0.0.10 (2014-12-02)
 -------------------
 * reverted rviz

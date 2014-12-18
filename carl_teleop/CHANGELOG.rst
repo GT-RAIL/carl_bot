@@ -2,6 +2,11 @@
 Changelog for package carl_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.11 (2014-12-18)
+-------------------
+* Fixed bug in IM where menu hover could cause pickup commands, added IM frontend and launch, updated joystick and keyboard teleop to use angular commands for finger commands so that fingers can be controlled even when the arm is in/near singularities, and updated metapackage manifest
+* Contributors: David Kent
+
 0.0.10 (2014-12-02)
 -------------------
 * deleted everything

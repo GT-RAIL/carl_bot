@@ -2,6 +2,13 @@
 Changelog for package carl_tools
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.11 (2014-12-18)
+-------------------
+* cleanup
+* added robustness to failed transform samples
+* Updated transform between asus mount and asus; added carl_tools for miscellaneous packages, currently including calibration for the asus camera transform.
+* Contributors: David Kent, Russell Toris
+
 0.0.10 (2014-12-02)
 -------------------
 
