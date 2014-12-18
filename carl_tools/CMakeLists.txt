@@ -6,10 +6,6 @@ project(carl_tools)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS ar_track_alvar_msgs geometry_msgs roscpp std_msgs tf)
 
-#######################################
-## Declare ROS messages and services ##
-#######################################
-
 ###################################################
 ## Declare things to be passed to other projects ##
 ###################################################
@@ -35,8 +31,6 @@ add_executable(camera_external_calibration src/camera_external_calibration.cpp)
 ## Specify libraries to link a library or executable target against
 target_link_libraries(camera_external_calibration ${catkin_LIBRARIES})
 
-#add_dependencies(camera_external_calibration carl_moveit_gencpp)
-
 #############
 ## Install ##
 #############
@@ -57,7 +51,7 @@ install(DIRECTORY launch/
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
 )
 
-## Copy config files
-install(DIRECTORY config/
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/config
+## Copy rviz files
+install(DIRECTORY rviz/
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/rviz
 )
