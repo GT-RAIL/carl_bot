@@ -1,31 +1,31 @@
-<!-- Phidgets IMU launch file -->
+<!--
+   Author: David Kent, Worcester Polytechnic Institute
+  Version: January 12, 2015
+-->
 
 <launch>
+  <arg name="serial_number_base" default="375113" />
+  <arg name="serial_number_top" default="354334" />
+  <arg name="frame_id_base" default="imu_base" />
+  <arg name="frame_id_top" default="imu_top" />
+  <arg name="period" default="8" />
 
-  #### Nodelet manager ######################################################
-
-  <node pkg="nodelet" type="nodelet" name="imu_manager" 
-    args="manager" output="screen" />
-
-  #### IMU Driver ###########################################################
-
-  <node pkg="nodelet" type="nodelet" name="PhidgetsImuNodelet" 
-    args="load phidgets_imu/PhidgetsImuNodelet imu_manager" 
-    output="screen">
-
-    # supported data rates: 4 8 16 24 32 40 ... 1000 (in ms)
-    <param name="period" value="4"/>
-
+  <node pkg="carl_phidgets" type="phidgets_imu_node" name="phidgets_imu_node_base" output="screen">
+    <remap from="/imu/calibrate" to="/imu_base/calibrate"/>
+    <remap from="/imu/data_raw" to="/imu_base/data_raw"/>
+    <remap from="/imu/is_calibrated" to="/imu_base/is_calibrated"/>
+    <remap from="/imu/mag" to="/imu_base/mag"/>
+    <param name="serial_number" type="int" value="$(arg serial_number_base)" />
+    <param name="frame_id" type="string" value="$(arg frame_id_base)" />
+    <param name="period" type="int" value="$(arg period)" />
   </node>
-
-  #### IMU Orientation Filter ###############################################
-
-  <node pkg="nodelet" type="nodelet" name="ImuFilterNodelet" 
-    args="load imu_filter_madgwick/ImuFilterNodelet imu_manager" 
-    output="screen">
-
-    <param name="use_mag" value="true"/>
-
+  <node pkg="carl_phidgets" type="phidgets_imu_node" name="phidgets_imu_node_top" output="screen">
+    <remap from="/imu/calibrate" to="/imu_top/calibrate"/>
+    <remap from="/imu/data_raw" to="/imu_top/data_raw"/>
+    <remap from="/imu/is_calibrated" to="/imu_top/is_calibrated"/>
+    <remap from="/imu/mag" to="/imu_top/mag"/>
+    <param name="serial_number" type="int" value="$(arg serial_number_top)" />
+    <param name="frame_id" type="string" value="$(arg frame_id_top)" />
+    <param name="period" type="int" value="$(arg period)" />
   </node>
-
 </launch>
