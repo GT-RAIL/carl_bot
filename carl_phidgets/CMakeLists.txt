@@ -12,12 +12,9 @@ catkin_package(
 
 include_directories(include ${catkin_INCLUDE_DIRS})
 
-#add_library(phidget21 SHARED IMPORTED)
-#set_target_properties(phidget21 PROPERTIES IMPORTED_LOCATION "${CATKIN_DEVEL_PREFIX}/lib/libphidget21.so")
 add_library(phidgets_imu src/imu_ros_i.cpp)
 add_library(phidgets_imu_nodelet src/phidgets_imu_nodelet.cpp)
-add_library(phidgets_api src/phidget.cpp
-                         src/imu.cpp)
+add_library(phidgets_api src/phidget.cpp src/imu.cpp)
 
 add_executable(phidgets_imu_node src/phidgets_imu_node.cpp)
 
@@ -51,8 +48,8 @@ install(DIRECTORY launch/
 install(FILES phidgets_imu_nodelet.xml
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
 
-install(FILES
-   ${CMAKE_CURRENT_SOURCE_DIR}/share/setup-udev.sh
-   ${install_dir}/src/libphidget21/udev/99-phidgets.rules
-   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-)
+# install(FILES
+#    ${CMAKE_CURRENT_SOURCE_DIR}/share/setup-udev.sh
+#    ${install_dir}/src/libphidget21/udev/99-phidgets.rules
+#    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+# )
