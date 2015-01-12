@@ -12,14 +12,11 @@ ImuRosI::ImuRosI(ros::NodeHandle nh, ros::NodeHandle nh_private):
 
   // **** get parameters
 
-  if (!nh_private_.getParam ("period", period_))
-    period_ = 8; // 8 ms
-  if (!nh_private_.getParam ("frame_id", frame_id_))
-    frame_id_ = "imu";
-  if (!nh_private_.getParam ("angular_velocity_stdev", angular_velocity_stdev_))
-    angular_velocity_stdev_ = 0.02 * (M_PI / 180.0); // 0.02 deg/s resolution, as per manual
-  if (!nh_private_.getParam ("linear_acceleration_stdev", linear_acceleration_stdev_))
-    linear_acceleration_stdev_ = 300.0 * 1e-6 * G; // 300 ug as per manual
+  nh_private_.param<int>("period", period_, 8); // 8 ms
+  nh_private_.param<std::string>("frame_id", frame_id_, "imu");
+  nh_private_.param<double>("angular_velocity_stdev", angular_velocity_stdev_, 0.02 * (M_PI / 180.0)); // 0.02 deg/s resolution, as per manual
+  nh_private_.param<double>("linear_acceleration_stdev", linear_acceleration_stdev_, 300.0 * 1e-6 * G); // 300 ug as per manual
+  nh_private_.param<int>("serial_number", serial_number_, -1);
 
   // **** advertise topics
 
@@ -66,19 +63,19 @@ ImuRosI::ImuRosI(ros::NodeHandle nh, ros::NodeHandle nh_private):
 
 void ImuRosI::initDevice()
 {
-	ROS_INFO("Opening device");
-	open(-1);
+  ROS_INFO("Opening device");
+  open(serial_number_);
 
-	ROS_INFO("Waiting for IMU to be attached...");
-	int result = waitForAttachment(10000);
-	if(result)
-	{
-	  const char *err;
-		CPhidget_getErrorDescription(result, &err);
-		ROS_FATAL("Problem waiting for IMU attachment: %s Make sure the USB cable is connected and you have executed the phidgets_c_api/setup-udev.sh script.", err);
-	}
+  ROS_INFO("Waiting for IMU to be attached...");
+  int result = waitForAttachment(10000);
+  if(result)
+  {
+    const char *err;
+    CPhidget_getErrorDescription(result, &err);
+    ROS_FATAL("Problem waiting for IMU attachment: %s Make sure the USB cable is connected and you have executed the phidgets_c_api/setup-udev.sh script.", err);
+  }
 
-	// set the data rate for the spatial events
+  // set the data rate for the spatial events
   setDataRate(period_);
 
   // calibrate on startup

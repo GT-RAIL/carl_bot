@@ -48,6 +48,7 @@ class ImuRosI : public Imu
 
     std::string frame_id_;
     int period_;  // rate in ms
+    int serial_number_; // phidget serial number to open
 
     double angular_velocity_stdev_;
     double linear_acceleration_stdev_;
