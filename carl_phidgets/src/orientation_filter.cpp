@@ -30,7 +30,7 @@ OrientationFilter::OrientationFilter()
   topImuSubscriber = n.subscribe<sensor_msgs::Imu>("imu_top/data_raw", 1, &OrientationFilter::topImuCallback, this);
 }
 
-void OrientationFilter::baseImuCallback(const sensor_msgs::Imu::ConstPtr& data)
+void OrientationFilter::topImuCallback(const sensor_msgs::Imu::ConstPtr& data)
 {
   if (!baseOrientationInitialized)
   {
@@ -38,7 +38,7 @@ void OrientationFilter::baseImuCallback(const sensor_msgs::Imu::ConstPtr& data)
     return;
   }
 
-  float x = -data->linear_acceleration.x; //value is inverted to account for IMU mounting angle
+  float x = data->linear_acceleration.x; //value is inverted to account for IMU mounting angle
   float z = data->linear_acceleration.z;
   float pitch = atan2(x, z) - jointStates.position[0];
 
@@ -47,14 +47,14 @@ void OrientationFilter::baseImuCallback(const sensor_msgs::Imu::ConstPtr& data)
   frameJointStatePublisher.publish(jointStates);
 }
 
-void OrientationFilter::topImuCallback(const sensor_msgs::Imu::ConstPtr& data)
+void OrientationFilter::baseImuCallback(const sensor_msgs::Imu::ConstPtr& data)
 {
   float x = -data->linear_acceleration.x;
-  float y = -data->linear_acceleration.y;
+  float y = data->linear_acceleration.y;
   float z = -data->linear_acceleration.z; //value is inverted to account for IMU mounting angle
 
-  jointStates.position[0] = atan2(x, z);  //base pitch
-  jointStates.position[1] = atan2(y, z);  //base roll
+  jointStates.position[0] = atan2(y, z);  //base pitch
+  jointStates.position[1] = atan2(x, z);  //base roll
   frameJointStatePublisher.publish(jointStates);
 
   if (!baseOrientationInitialized)
