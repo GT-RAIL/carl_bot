@@ -79,10 +79,10 @@
     </link>
   
     <!-- ASUS Camera Lift -->
-    <joint name="${parent}_asus_lift_link_joint" type="fixed">
-      <parent link="${parent}" />
+    <joint name="left_rear_strut_top_link_asus_lift_link_joint" type="fixed">
+      <parent link="left_rear_strut_top_link" />
       <child link="asus_lift_link" />
-      <origin xyz="-0.209 0 1.436" rpy="0 0 0" />
+      <origin xyz="0.013 -0.201 0.483" rpy="0 0 0" />
     </joint>
     <link name="asus_lift_link">
       <visual>      

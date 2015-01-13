@@ -16,14 +16,16 @@ add_library(phidgets_imu src/imu_ros_i.cpp)
 add_library(phidgets_api src/phidget.cpp src/imu.cpp)
 
 add_executable(phidgets_imu_node src/phidgets_imu_node.cpp)
+add_executable(orientation_filter src/orientation_filter.cpp)
 
 add_dependencies(phidgets_imu phidgets_api)
 
 target_link_libraries(phidgets_imu ${catkin_LIBRARIES} phidgets_api)
 target_link_libraries(phidgets_imu_node ${catkin_LIBRARIES} phidgets_imu)
 target_link_libraries(phidgets_api ${catkin_LIBRARIES})
+target_link_libraries(orientation_filter ${catkin_LIBRARIES})
 
-install(TARGETS phidgets_api phidgets_imu phidgets_imu_node
+install(TARGETS phidgets_api phidgets_imu phidgets_imu_node orientation_filter
    ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
    LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
    RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}

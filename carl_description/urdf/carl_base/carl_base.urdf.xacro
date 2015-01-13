@@ -21,7 +21,7 @@
     <!-- base_footprint -->
     <link name="${name}_footprint" />
   
-  	<!-- base_link -->
+    <!-- base_link -->
     <link name="${name}_link">
      <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
@@ -38,10 +38,20 @@
     </link>
     
     <!-- base_link to base_footprint -->
-    <joint name="${name}_footprint_${name}_link_joint" type="fixed">
+    <joint name="${name}_footprint_${name}_link_pitch_joint" type="revolute">
+      <axis xyz="0 1 0" />
+      <limit effort="100" velocity="20" lower="-3.14" upper="3.14" />
       <parent link="${name}_footprint" />
-      <child link="${name}_link" />
+      <child link="${name}_virtual_link" />
       <origin xyz="0 0 0.23114" rpy="0 0 0" />
+    </joint>
+    <link name="${name}_virtual_link" />
+    <joint name="${name}_footprint_${name}_link_roll_joint" type="revolute">
+      <axis xyz="1 0 0" />
+      <limit effort="100" velocity="20" lower="-3.14" upper="3.14" />
+      <parent link="${name}_virtual_link" />
+      <child link="${name}_link" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
     </joint>
       
     <!-- Wheels -->

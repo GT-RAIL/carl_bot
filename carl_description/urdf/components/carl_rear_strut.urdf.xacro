@@ -31,7 +31,9 @@
     </link>
     
     <!-- Top -->
-    <joint name="${prefix}_rear_strut_link_${prefix}_rear_strut_top_link_joint" type="fixed">
+    <joint name="${prefix}_rear_strut_link_${prefix}_rear_strut_top_link_joint" type="revolute">
+      <axis xyz="0 1 0" />
+      <limit effort="100" velocity="20" lower="-.5236" upper=".5236" />
       <parent link="${prefix}_rear_strut_link" />
       <child link="${prefix}_rear_strut_top_link" />
       <origin xyz="0 0.001 1.055" rpy="0 0 0" />
