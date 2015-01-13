@@ -53,8 +53,8 @@ void OrientationFilter::topImuCallback(const sensor_msgs::Imu::ConstPtr& data)
   float y = data->linear_acceleration.y;
   float z = -data->linear_acceleration.z; //value is inverted to account for IMU mounting angle
 
-  jointStates.position[0] = atan2(y, z);  //base pitch
-  jointStates.position[1] = atan2(x, z);  //base roll
+  jointStates.position[0] = atan2(x, z);  //base pitch
+  jointStates.position[1] = atan2(y, z);  //base roll
   frameJointStatePublisher.publish(jointStates);
 
   if (!baseOrientationInitialized)
