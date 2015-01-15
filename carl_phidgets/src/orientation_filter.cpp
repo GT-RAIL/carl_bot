@@ -54,7 +54,7 @@ void OrientationFilter::topImuCallback(const sensor_msgs::Imu::ConstPtr& data)
 
 void OrientationFilter::baseImuCallback(const sensor_msgs::Imu::ConstPtr& data)
 {
-  //**************************** Read IMU data *****************************
+  /**************************** Read IMU data *****************************/
 
   //gyro measurement
   float w[2];
@@ -64,7 +64,7 @@ void OrientationFilter::baseImuCallback(const sensor_msgs::Imu::ConstPtr& data)
   //gyro covariance
   float Q[2];
   Q[0] = data->angular_velocity_covariance[0];
-  Q[1] = data->angular_velocity_covariance[1];
+  Q[1] = data->angular_velocity_covariance[4];
 
   //accelerometer measurement
   float x = -data->linear_acceleration.x; //value is inverted to account for IMU mounting angle
@@ -76,8 +76,9 @@ void OrientationFilter::baseImuCallback(const sensor_msgs::Imu::ConstPtr& data)
 
   //accelerometer covariance
   float R[2];
-  R[0] = data->linear_acceleration_covariance[0];
-  R[1] = data->linear_acceleration_covariance[4];
+  R[0] = 100*data->linear_acceleration_covariance[0];
+  R[1] = 100*data->linear_acceleration_covariance[4];
+  //NOTE: these values are adjusted to bias the filter towards prefering the gyro measurements
 
   //Previous orientation
   float thetaPrev[2];
@@ -89,7 +90,7 @@ void OrientationFilter::baseImuCallback(const sensor_msgs::Imu::ConstPtr& data)
   //update time for next time step
   prevUpdateTime = ros::Time::now();
 
-  //******************** Calculate Filtered Orientation ********************
+  /******************** Calculate Filtered Orientation ********************/
   float thetaPredicted[2];
   float P[2];
   float J[2];
@@ -104,6 +105,8 @@ void OrientationFilter::baseImuCallback(const sensor_msgs::Imu::ConstPtr& data)
   //update P for next time step
   PPrev[0] = (1 - J[0])*P[0];
   PPrev[1] = (1 - J[1])*P[1];
+
+  //ROS_INFO("a:%f, w:%f Q:%f, R:%f, P:%f, J:%f, thetaPrev:%f, thetaPredicted:%f, theta:%f", a[1], w[1], Q[1], R[1], P[1], J[1], thetaPrev[1], thetaPredicted[1], jointStates.position[1]);
 
   /*
   jointStates.position[0] = atan2(y, z);  //base pitch
