@@ -40,7 +40,7 @@ void OrientationFilter::topImuCallback(const sensor_msgs::Imu::ConstPtr& data)
 
   float x = data->linear_acceleration.x; //value is inverted to account for IMU mounting angle
   float z = data->linear_acceleration.z;
-  float pitch = atan2(x, z) - jointStates.position[0];
+  float pitch = atan2(x, z) + jointStates.position[0];
 
   jointStates.position[2] = -pitch;  //left strut
   jointStates.position[3] = pitch; //right strut
