@@ -1,10 +1,6 @@
-carl_phidgets [![Build Status](https://api.travis-ci.org/WPI-RAIL/carl_bot.png)](https://travis-ci.org/WPI-RAIL/carl_bot)
-========
+carl_phidgets 
+=============
 
-#### CARL (Crowdsourcing for Autonomous Robot Learning)
-For full documentation, see [the ROS wiki](http://ros.org/wiki/carl_bot).
-
-### carl_phidgets
 This package is based on CCNY's [phidgets_drivers](http://wiki.ros.org/phidgets_drivers) package.
 
 ### First Time Setup
