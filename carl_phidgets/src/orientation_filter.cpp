@@ -30,7 +30,9 @@ OrientationFilter::OrientationFilter()
   topImuSubscriber = n.subscribe<sensor_msgs::Imu>("imu_top/data_raw", 1, &OrientationFilter::topImuCallback, this);
 
   //initialize filter stuff
+  prevUpdateTimeTop = ros::Time::now();
   prevUpdateTime = ros::Time::now();
+  PPrevTop = 0;
   PPrev[0] = 0;
   PPrev[1] = 0;
 }
@@ -43,9 +45,43 @@ void OrientationFilter::topImuCallback(const sensor_msgs::Imu::ConstPtr& data)
     return;
   }
 
+  /**************************** Read IMU data *****************************/
+  //gyro measurement
+  float w = data->angular_velocity.y;
+
+  //gyro covariance
+  float Q = data->angular_velocity_covariance[4];
+
+  //accelerometer measurement
+  float x = data->linear_acceleration.x;
+  float z = data->linear_acceleration.z;
+  float a = atan2(x, z) + jointStates.position[0]; //frame pitch
+
+  //accelerometer covariance
+  float R = 100*data->linear_acceleration_covariance[4];
+  //NOTE: this value is adjusted to bias the filter towards preferring the gyro measurements
+
+  //Previous orientation
+  float thetaPrev = jointStates.position[3];
+
+  //Time step
+  float deltaT = (ros::Time::now() - prevUpdateTimeTop).toSec();
+  //update time for next time step
+  prevUpdateTimeTop = ros::Time::now();
+
+  /******************** Calculate Filtered Orientation ********************/
+  float thetaPredicted = thetaPrev + w*deltaT;
+  float P = PPrevTop + Q;
+  float J = P/(P + R);
+  float pitch = thetaPredicted + J*(a - thetaPredicted);
+  //update P for next time step
+  PPrevTop = (1 - J)*P;
+
+  /*
   float x = data->linear_acceleration.x; //value is inverted to account for IMU mounting angle
   float z = data->linear_acceleration.z;
   float pitch = atan2(x, z) + jointStates.position[0];
+  */
 
   jointStates.position[2] = -pitch;  //left strut
   jointStates.position[3] = pitch; //right strut
@@ -55,7 +91,6 @@ void OrientationFilter::topImuCallback(const sensor_msgs::Imu::ConstPtr& data)
 void OrientationFilter::baseImuCallback(const sensor_msgs::Imu::ConstPtr& data)
 {
   /**************************** Read IMU data *****************************/
-
   //gyro measurement
   float w[2];
   w[0] = -data->angular_velocity.x; //value is inverted to account for IMU mounting angle
@@ -78,7 +113,7 @@ void OrientationFilter::baseImuCallback(const sensor_msgs::Imu::ConstPtr& data)
   float R[2];
   R[0] = 100*data->linear_acceleration_covariance[0];
   R[1] = 100*data->linear_acceleration_covariance[4];
-  //NOTE: these values are adjusted to bias the filter towards prefering the gyro measurements
+  //NOTE: these values are adjusted to bias the filter towards preferring the gyro measurements
 
   //Previous orientation
   float thetaPrev[2];
