@@ -55,6 +55,8 @@ private:
 
   sensor_msgs::JointState jointStates;
   bool baseOrientationInitialized;
+  ros::Time prevUpdateTime;
+  float PPrev[2];
 };
 
 #endif

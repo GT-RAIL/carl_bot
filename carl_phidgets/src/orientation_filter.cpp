@@ -28,6 +28,11 @@ OrientationFilter::OrientationFilter()
   frameJointStatePublisher = n.advertise<sensor_msgs::JointState>("frame_joint_states", 1);
   baseImuSubscriber = n.subscribe<sensor_msgs::Imu>("imu_base/data_raw", 1, &OrientationFilter::baseImuCallback, this);
   topImuSubscriber = n.subscribe<sensor_msgs::Imu>("imu_top/data_raw", 1, &OrientationFilter::topImuCallback, this);
+
+  //initialize filter stuff
+  prevUpdateTime = ros::Time::now();
+  PPrev[0] = 0;
+  PPrev[1] = 0;
 }
 
 void OrientationFilter::topImuCallback(const sensor_msgs::Imu::ConstPtr& data)
@@ -40,7 +45,7 @@ void OrientationFilter::topImuCallback(const sensor_msgs::Imu::ConstPtr& data)
 
   float x = data->linear_acceleration.x; //value is inverted to account for IMU mounting angle
   float z = data->linear_acceleration.z;
-  float pitch = atan2(x, z) - jointStates.position[0];
+  float pitch = atan2(x, z) + jointStates.position[0];
 
   jointStates.position[2] = -pitch;  //left strut
   jointStates.position[3] = pitch; //right strut
@@ -49,12 +54,61 @@ void OrientationFilter::topImuCallback(const sensor_msgs::Imu::ConstPtr& data)
 
 void OrientationFilter::baseImuCallback(const sensor_msgs::Imu::ConstPtr& data)
 {
-  float x = -data->linear_acceleration.x;
+  //**************************** Read IMU data *****************************
+
+  //gyro measurement
+  float w[2];
+  w[0] = -data->angular_velocity.x; //value is inverted to account for IMU mounting angle
+  w[1] = data->angular_velocity.y;
+
+  //gyro covariance
+  float Q[2];
+  Q[0] = data->angular_velocity_covariance[0];
+  Q[1] = data->angular_velocity_covariance[1];
+
+  //accelerometer measurement
+  float x = -data->linear_acceleration.x; //value is inverted to account for IMU mounting angle
   float y = data->linear_acceleration.y;
   float z = -data->linear_acceleration.z; //value is inverted to account for IMU mounting angle
+  float a[2];
+  a[0] = atan2(y, z); //base pitch
+  a[1] = atan2(x, z); //base roll
 
+  //accelerometer covariance
+  float R[2];
+  R[0] = data->linear_acceleration_covariance[0];
+  R[1] = data->linear_acceleration_covariance[4];
+
+  //Previous orientation
+  float thetaPrev[2];
+  thetaPrev[0] = jointStates.position[0];
+  thetaPrev[1] = jointStates.position[1];
+
+  //Time step
+  float deltaT = (ros::Time::now() - prevUpdateTime).toSec();
+  //update time for next time step
+  prevUpdateTime = ros::Time::now();
+
+  //******************** Calculate Filtered Orientation ********************
+  float thetaPredicted[2];
+  float P[2];
+  float J[2];
+  thetaPredicted[0] = thetaPrev[0] + w[0]*deltaT;
+  thetaPredicted[1] = thetaPrev[1] + w[1]*deltaT;
+  P[0] = PPrev[0] + Q[0];
+  P[1] = PPrev[1] + Q[1];
+  J[0] = P[0]/(P[0] + R[0]);
+  J[1] = P[1]/(P[1] + R[1]);
+  jointStates.position[0] = thetaPredicted[0] + J[0]*(a[0] - thetaPredicted[0]);
+  jointStates.position[1] = thetaPredicted[1] + J[1]*(a[1] - thetaPredicted[1]);
+  //update P for next time step
+  PPrev[0] = (1 - J[0])*P[0];
+  PPrev[1] = (1 - J[1])*P[1];
+
+  /*
   jointStates.position[0] = atan2(y, z);  //base pitch
   jointStates.position[1] = atan2(x, z);  //base roll
+  */
   frameJointStatePublisher.publish(jointStates);
 
   if (!baseOrientationInitialized)
