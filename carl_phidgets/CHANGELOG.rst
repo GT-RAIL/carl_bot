@@ -2,6 +2,27 @@
 Changelog for package carl_phidgets
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.12 (2015-01-19)
+-------------------
+* cleanup of cmake
+* Orientation filter ignores accelerometer measurements when anything more than the gravity vector is detected
+* IMU filter for top sensor strut orientation
+* Filter tuning
+* Filtering for base IMU initial commit
+* sign error
+* Update README.md
+* Fixed sign error
+* sign error
+* swapped pitch/roll
+* Added joints to CARL urdf to allow for orientation adjustments from IMU data, implemented a static orientation correction from accelerometer data
+* Update README.md
+* Updated readme and removed unused nodelet stuff
+* Added launch file to startup both of CARL's IMUs
+* Parameterized device selection for using multiple IMUs
+* fixed install issue
+* carl_phidgets initial commit
+* Contributors: David Kent, Russell Toris
+
 0.0.11 (2014-12-18)
 -------------------
 

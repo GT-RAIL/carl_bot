@@ -2,6 +2,11 @@
 Changelog for package carl_dynamixel
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.12 (2015-01-19)
+-------------------
+* cleanup of cmake
+* Contributors: Russell Toris
+
 0.0.11 (2014-12-18)
 -------------------
 

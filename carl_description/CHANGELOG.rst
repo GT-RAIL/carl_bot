@@ -2,6 +2,12 @@
 Changelog for package carl_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.12 (2015-01-19)
+-------------------
+* Orientation filter ignores accelerometer measurements when anything more than the gravity vector is detected
+* Added joints to CARL urdf to allow for orientation adjustments from IMU data, implemented a static orientation correction from accelerometer data
+* Contributors: David Kent
+
 0.0.11 (2014-12-18)
 -------------------
 * travis fix

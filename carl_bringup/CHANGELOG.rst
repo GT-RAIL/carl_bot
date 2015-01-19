@@ -2,6 +2,11 @@
 Changelog for package carl_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.12 (2015-01-19)
+-------------------
+* Orientation filter ignores accelerometer measurements when anything more than the gravity vector is detected
+* Contributors: David Kent
+
 0.0.11 (2014-12-18)
 -------------------
 
