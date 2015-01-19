@@ -25,4 +25,8 @@
   
   <!-- COMPUTER BATTERY MONITORING -->
   <include file="$(find m4atx_battery_monitor)/launch/m4atx_battery_monitor.launch" />
+
+  <!-- IMU -->
+  <include file="$(find carl_phidgets)/launch/imu.launch" />
+  <node name="orientation_filter" pkg="carl_phidgets" type="orientation_filter" output="screen" />
 </launch>

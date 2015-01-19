@@ -54,6 +54,7 @@ void OrientationFilter::topImuCallback(const sensor_msgs::Imu::ConstPtr& data)
 
   //accelerometer measurement
   float x = data->linear_acceleration.x;
+  float y = data->linear_acceleration.y;
   float z = data->linear_acceleration.z;
   float a = atan2(x, z) + jointStates.position[0]; //frame pitch
 
@@ -72,8 +73,14 @@ void OrientationFilter::topImuCallback(const sensor_msgs::Imu::ConstPtr& data)
   /******************** Calculate Filtered Orientation ********************/
   float thetaPredicted = thetaPrev + w*deltaT;
   float P = PPrevTop + Q;
+
   float J = P/(P + R);
-  float pitch = thetaPredicted + J*(a - thetaPredicted);
+  //if significant acceleration other than gravity is detected, don't use the accelerometer measurement
+  float pitch;
+  if (fabs(G - sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2))) < .05)
+    pitch = thetaPredicted + J*(a - thetaPredicted);
+  else
+    pitch = thetaPredicted;
   //update P for next time step
   PPrevTop = (1 - J)*P;
 
@@ -135,8 +142,18 @@ void OrientationFilter::baseImuCallback(const sensor_msgs::Imu::ConstPtr& data)
   P[1] = PPrev[1] + Q[1];
   J[0] = P[0]/(P[0] + R[0]);
   J[1] = P[1]/(P[1] + R[1]);
-  jointStates.position[0] = thetaPredicted[0] + J[0]*(a[0] - thetaPredicted[0]);
-  jointStates.position[1] = thetaPredicted[1] + J[1]*(a[1] - thetaPredicted[1]);
+
+  //if significant acceleration other than gravity is detected, don't use the accelerometer measurement
+  if (fabs(G - sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2))) < .05)
+  {
+    jointStates.position[0] = thetaPredicted[0] + J[0]*(a[0] - thetaPredicted[0]);
+    jointStates.position[1] = thetaPredicted[1] + J[1]*(a[1] - thetaPredicted[1]);
+  }
+  else
+  {
+    jointStates.position[0] = thetaPredicted[0];
+    jointStates.position[1] = thetaPredicted[1];
+  }
   //update P for next time step
   PPrev[0] = (1 - J[0])*P[0];
   PPrev[1] = (1 - J[1])*P[1];
