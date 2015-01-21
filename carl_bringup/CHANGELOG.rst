@@ -2,6 +2,11 @@
 Changelog for package carl_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.13 (2015-01-21)
+-------------------
+* New camera calibrations
+* Contributors: David Kent
+
 0.0.12 (2015-01-19)
 -------------------
 * Orientation filter ignores accelerometer measurements when anything more than the gravity vector is detected
