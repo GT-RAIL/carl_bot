@@ -97,7 +97,7 @@
       <!-- hand measured -->
       <origin xyz="-0.016 -0.008 0.018" rpy="0 -${M_PI/2} 0" />
       <!-- calibrated -->
-      <!--<origin xyz="-0.021523 -0.003366 0.021402" rpy="0.0 -1.508124 0.0" />-->
+      <!--<origin xyz="-0.005275 -0.001578 0.014353" rpy="-1.061086 -1.545 1.0" />-->
     </xacro:sensor_asus_xtion_pro>
   </xacro:macro>
 </robot>
