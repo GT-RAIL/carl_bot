@@ -5,8 +5,10 @@
   <description>Interactive Manipulation for CARL</description>
 
   <author email="davidkent@wpi.edu">David Kent</author>
+  <author email="pdmitrano@wpi.edu">Peter Mitrano</author>
   <maintainer email="davidkent@wpi.edu">David Kent</maintainer>
   <maintainer email="rctoris@wpi.edu">Russell Toris</maintainer>
+  <maintainer email="pdmitrano@wpi.edu">Peter Mitrano</maintainer>
 
   <url type="website">http://ros.org/wiki/carl_bot</url>
   <url type="bugtracker">https://github.com/WPI-RAIL/carl_bot/issues</url>
@@ -23,6 +25,10 @@
   <build_depend>rail_segmentation</build_depend>
   <build_depend>sensor_msgs</build_depend>
   <build_depend>wpi_jaco_msgs</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>visualization_msgs</build_depend>
+  <build_depend>message_generation</build_depend>
+  <build_depend>actionlib_msgs</build_depend>
   
   <run_depend>interactive_markers</run_depend>
   <run_depend>roscpp</run_depend>
@@ -31,4 +37,8 @@
   <run_depend>rail_segmentation</run_depend>
   <run_depend>sensor_msgs</run_depend>
   <run_depend>wpi_jaco_msgs</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>visualization_msgs</run_depend>
+  <run_depend>message_generation</run_depend>
+  
 </package>
