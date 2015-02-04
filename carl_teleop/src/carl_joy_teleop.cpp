@@ -72,9 +72,11 @@ carl_joy_teleop::carl_joy_teleop() :
   cartesianCmd.fingerCommand = false;
   cartesianCmd.repeat = true;
 
+  /*
   ROS_INFO("Waiting for home arm server...");
   acHome.waitForServer();
   ROS_INFO("Home arm server found.");
+*/
 
   ROS_INFO("CARL Joystick Teleop Started");
 
