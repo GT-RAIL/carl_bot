@@ -4,7 +4,7 @@ using namespace std;
 
 CarlInteractiveManipulation::CarlInteractiveManipulation() :
     acGrasp("jaco_arm/manipulation/grasp", true), acPickup("jaco_arm/manipulation/pickup", true), acHome(
-        "jaco_arm/home_arm", true)
+        "carl_moveit_wrapper/common_actions/ready_arm", true)
 {
   joints.resize(6);
 
@@ -21,7 +21,7 @@ CarlInteractiveManipulation::CarlInteractiveManipulation() :
   removeObjectClient = n.serviceClient<rail_segmentation::RemoveObject>("rail_segmentation/remove_object");
 
   //actionlib
-  ROS_INFO("Waiting for grasp, pickup, and home arm action servers...");
+  ROS_INFO("Waiting for grasp, and pickup action servers...");
   acGrasp.waitForServer();
   acPickup.waitForServer();
   acHome.waitForServer();
@@ -396,6 +396,7 @@ void CarlInteractiveManipulation::processHandMarkerFeedback(
           acPickup.cancelAllGoals();
           wpi_jaco_msgs::HomeArmGoal homeGoal;
           homeGoal.retract = false;
+          homeGoal.numAttempts = 3;
           acHome.sendGoal(homeGoal);
           acHome.waitForResult(ros::Duration(10.0));
         }
@@ -416,6 +417,7 @@ void CarlInteractiveManipulation::processHandMarkerFeedback(
           homeGoal.retractPosition.joints[3] = -.084;
           homeGoal.retractPosition.joints[4] = .515;
           homeGoal.retractPosition.joints[5] = -1.745;
+          homeGoal.numAttempts = 3;
           acHome.sendGoal(homeGoal);
           acHome.waitForResult(ros::Duration(15.0));
         }

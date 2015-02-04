@@ -4,7 +4,7 @@ project(carl_teleop)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS joy roscpp sensor_msgs std_msgs wpi_jaco_msgs)
+find_package(catkin REQUIRED COMPONENTS actionlib joy roscpp sensor_msgs std_msgs wpi_jaco_msgs)
 
 ###################################################
 ## Declare things to be passed to other projects ##
@@ -22,7 +22,7 @@ catkin_package()
 ## Specify additional locations of header files
 include_directories(
   include
-  ${catkin_INCLUDE_DIRS}	
+  ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a cpp executable

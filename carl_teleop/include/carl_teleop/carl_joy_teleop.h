@@ -16,10 +16,13 @@
 #define CARL_JOY_TELEOP_H_
 
 #include <ros/ros.h>
+#include <actionlib/client/simple_action_client.h>
 #include <sensor_msgs/Joy.h>
 #include <std_msgs/Float64.h>
+#include <rail_segmentation/Segment.h>
 #include <wpi_jaco_msgs/AngularCommand.h>
 #include <wpi_jaco_msgs/CartesianCommand.h>
+#include <wpi_jaco_msgs/HomeArmAction.h>
 
 //Control modes
 #define ARM_CONTROL 0 
@@ -115,6 +118,10 @@ private:
   ros::Publisher creative_servo_pan_cmd; /*< velocity command to pan the creative servo */
   ros::Subscriber joy_sub; /*!< the joy topic */
 
+  ros::ServiceClient segment_client; /*!< the asus point cloud segmentation client */
+
+  actionlib::SimpleActionClient<wpi_jaco_msgs::HomeArmAction> acHome; /*!< home and retract arm action client */
+
   geometry_msgs::Twist twist; /*!< base movement command */
   wpi_jaco_msgs::AngularCommand fingerCmd; /*!< finger movement command */
   wpi_jaco_msgs::CartesianCommand cartesianCmd; /*!< cartesian movement command */
@@ -122,6 +129,9 @@ private:
 
   int mode; /*!< the control mode */
   int controllerType; /*!< the type of joystick controller */
+  int rightBumperPrev; /*!< previous state of the right bumper, used for detecting state changes */
+  int leftBumperPrev; /*!< previous state of the left bumper, used for detecting state changes */
+  int rightStickPrev; /*!< previous state of right stick button press, used for detecting state changes */
   double linear_throttle_factor_base; /*!< factor for reducing the base maximum linear speed */
   double angular_throttle_factor_base; /*!< factor for reducing the base maximum angular speed */
   double linear_throttle_factor_arm; /*!< factor for reducing the arm linear speed */

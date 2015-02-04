@@ -17,7 +17,8 @@
 
 using namespace std;
 
-carl_joy_teleop::carl_joy_teleop()
+carl_joy_teleop::carl_joy_teleop() :
+    acHome("carl_moveit_wrapper/common_actions/ready_arm", true)
 {
   // a private handle for this ROS node (allows retrieval of relative parameters)
   ros::NodeHandle private_nh("~");
@@ -36,6 +37,8 @@ carl_joy_teleop::carl_joy_teleop()
   creative_servo_pan_cmd = node.advertise<std_msgs::Float64>("creative_controller/pan", 10);
   joy_sub = node.subscribe<sensor_msgs::Joy>("joy", 10, &carl_joy_teleop::joy_cback, this);
 
+  segment_client = node.serviceClient<rail_segmentation::Segment>("rail_segmentation/segment");
+
   // read in throttle values
   private_nh.param<double>("linear_throttle_factor_base", linear_throttle_factor_base, 1.0);
   private_nh.param<double>("angular_throttle_factor_base", angular_throttle_factor_base, 1.0);
@@ -50,6 +53,9 @@ carl_joy_teleop::carl_joy_teleop()
     controllerType = ANALOG;
 
   // initialize everything
+  leftBumperPrev = 0;
+  rightBumperPrev = 0;
+  rightStickPrev = 0;
   deadman = false;
   stopMessageSentArm = true;
   stopMessageSentFinger = true;
@@ -65,6 +71,10 @@ carl_joy_teleop::carl_joy_teleop()
   cartesianCmd.armCommand = true;
   cartesianCmd.fingerCommand = false;
   cartesianCmd.repeat = true;
+
+  ROS_INFO("Waiting for home arm server...");
+  acHome.waitForServer();
+  ROS_INFO("Home arm server found.");
 
   ROS_INFO("CARL Joystick Teleop Started");
 
@@ -449,7 +459,66 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
       {
         creative_servo_pan_cmd.publish(cameraPanCommand);
       }
-      
+
+      //bumpers to issue arm retract and home commands
+      if (joy->buttons.at(4) != leftBumperPrev)
+      {
+        if (joy->buttons.at(4) == 1)
+        {
+          //send home command
+          wpi_jaco_msgs::HomeArmGoal homeGoal;
+          homeGoal.retract = false;
+          acHome.sendGoal(homeGoal);
+        }
+        leftBumperPrev = joy->buttons.at(4);
+      }
+      if (joy->buttons.at(5) != rightBumperPrev)
+      {
+        if (joy->buttons.at(5) == 1)
+        {
+          //send retract command
+          wpi_jaco_msgs::HomeArmGoal homeGoal;
+          homeGoal.retract = true;
+          homeGoal.retractPosition.position = true;
+          homeGoal.retractPosition.armCommand = true;
+          homeGoal.retractPosition.fingerCommand = false;
+          homeGoal.retractPosition.repeat = false;
+          homeGoal.retractPosition.joints.resize(6);
+          homeGoal.retractPosition.joints[0] = -2.57;
+          homeGoal.retractPosition.joints[1] = 1.39;
+          homeGoal.retractPosition.joints[2] = .527;
+          homeGoal.retractPosition.joints[3] = -.084;
+          homeGoal.retractPosition.joints[4] = .515;
+          homeGoal.retractPosition.joints[5] = -1.745;
+          acHome.sendGoal(homeGoal);
+        }
+        rightBumperPrev = joy->buttons.at(5);
+      }
+
+      //stick click for segmentation
+      int rightStickIndex;
+      if (controllerType == DIGITAL)
+        rightStickIndex = 11;
+      else
+        rightStickIndex = 10;
+
+      if (joy->buttons.at(rightStickIndex) != rightStickPrev)
+      {
+        if (joy->buttons.at(rightStickIndex) == 1)
+        {
+          //send segment command
+          rail_segmentation::Segment seg;
+          seg.request.clear = true;
+          seg.request.segmentOnRobot = false;
+          seg.request.useMapFrame = false;
+          if (!segment_client.call(seg))
+          {
+            ROS_INFO("Could not call segmentation client.");
+          }
+        }
+        rightStickPrev = joy->buttons.at(rightStickIndex);
+      }
+
       //mode switch
       if (joy->buttons.at(button2Index) == 1)
       {
@@ -593,7 +662,7 @@ void carl_joy_teleop::displayHelp(int menuNumber)
     break;
     case 4:
       puts("|            Sensor Controls             |*");
-      puts("|                                        |*");
+      puts("|    home arm              retract arm   |*");
       puts("|    ________                ________    |*");
       puts("|   /    _   \\______________/        \\   |*");
       puts("|  |   _| |_    < >    < >     (4)    |  |*");
@@ -614,6 +683,7 @@ void carl_joy_teleop::displayHelp(int menuNumber)
   puts("|   (2) Switch to arm control mode       |*");
   puts("|   (3) Switch to base control mode      |*");
   puts("|   (4) Switch to sensor control mode    |*");
+  puts("|   (Right Stick Click) Asus segment     |*");
   puts(" ----------------------------------------**");
   puts("  *****************************************");
 }
