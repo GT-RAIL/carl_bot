@@ -492,13 +492,10 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
       {
         if (joy->buttons.at(4) == 1)
         {
-          if (acHome.getState() != actionlib::SimpleClientGoalState::ACTIVE)
-          {
-            //send home command
-            wpi_jaco_msgs::HomeArmGoal homeGoal;
-            homeGoal.retract = false;
-            acHome.sendGoal(homeGoal);
-          }
+          //send home command
+          wpi_jaco_msgs::HomeArmGoal homeGoal;
+          homeGoal.retract = false;
+          acHome.sendGoal(homeGoal);
         }
         leftBumperPrev = joy->buttons.at(4);
       }
@@ -506,24 +503,21 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
       {
         if (joy->buttons.at(5) == 1)
         {
-          if (acHome.getState() != actionlib::SimpleClientGoalState::ACTIVE)
-          {
-            //send retract command
-            wpi_jaco_msgs::HomeArmGoal homeGoal;
-            homeGoal.retract = true;
-            homeGoal.retractPosition.position = true;
-            homeGoal.retractPosition.armCommand = true;
-            homeGoal.retractPosition.fingerCommand = false;
-            homeGoal.retractPosition.repeat = false;
-            homeGoal.retractPosition.joints.resize(6);
-            homeGoal.retractPosition.joints[0] = -2.57;
-            homeGoal.retractPosition.joints[1] = 1.39;
-            homeGoal.retractPosition.joints[2] = .527;
-            homeGoal.retractPosition.joints[3] = -.084;
-            homeGoal.retractPosition.joints[4] = .515;
-            homeGoal.retractPosition.joints[5] = -1.745;
-            acHome.sendGoal(homeGoal);
-          }
+          //send retract command
+          wpi_jaco_msgs::HomeArmGoal homeGoal;
+          homeGoal.retract = true;
+          homeGoal.retractPosition.position = true;
+          homeGoal.retractPosition.armCommand = true;
+          homeGoal.retractPosition.fingerCommand = false;
+          homeGoal.retractPosition.repeat = false;
+          homeGoal.retractPosition.joints.resize(6);
+          homeGoal.retractPosition.joints[0] = -2.57;
+          homeGoal.retractPosition.joints[1] = 1.39;
+          homeGoal.retractPosition.joints[2] = .527;
+          homeGoal.retractPosition.joints[3] = -.084;
+          homeGoal.retractPosition.joints[4] = .515;
+          homeGoal.retractPosition.joints[5] = -1.745;
+          acHome.sendGoal(homeGoal);
         }
         rightBumperPrev = joy->buttons.at(5);
       }
