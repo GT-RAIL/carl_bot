@@ -492,7 +492,7 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
       {
         if (joy->buttons.at(4) == 1)
         {
-          if (acHome.getState().isDone())
+          if (acHome.getState() != actionlib::SimpleClientGoalState::ACTIVE)
           {
             //send home command
             wpi_jaco_msgs::HomeArmGoal homeGoal;
@@ -506,7 +506,7 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
       {
         if (joy->buttons.at(5) == 1)
         {
-          if (acHome.getState().isDone())
+          if (acHome.getState() != actionlib::SimpleClientGoalState::ACTIVE)
           {
             //send retract command
             wpi_jaco_msgs::HomeArmGoal homeGoal;
