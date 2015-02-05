@@ -22,6 +22,7 @@
 #include <rail_segmentation/Segment.h>
 #include <wpi_jaco_msgs/AngularCommand.h>
 #include <wpi_jaco_msgs/CartesianCommand.h>
+#include <wpi_jaco_msgs/EStop.h>
 #include <wpi_jaco_msgs/HomeArmAction.h>
 
 //Control modes
@@ -119,6 +120,7 @@ private:
   ros::Subscriber joy_sub; /*!< the joy topic */
 
   ros::ServiceClient segment_client; /*!< the asus point cloud segmentation client */
+  ros::ServiceClient eStopClient; /*!< arm software emergency stop service client */
 
   actionlib::SimpleActionClient<wpi_jaco_msgs::HomeArmAction> acHome; /*!< home and retract arm action client */
 

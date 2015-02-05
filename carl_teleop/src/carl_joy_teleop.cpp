@@ -38,6 +38,7 @@ carl_joy_teleop::carl_joy_teleop() :
   joy_sub = node.subscribe<sensor_msgs::Joy>("joy", 10, &carl_joy_teleop::joy_cback, this);
 
   segment_client = node.serviceClient<rail_segmentation::Segment>("rail_segmentation/segment");
+  eStopClient = node.serviceClient<wpi_jaco_msgs::EStop>("jaco_arm/software_estop");
 
   // read in throttle values
   private_nh.param<double>("linear_throttle_factor_base", linear_throttle_factor_base, 1.0);
@@ -137,16 +138,40 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
   if (controllerType == DIGITAL)
   {
     if (joy->buttons.at(8) == 1)
+    {
       EStopEnabled = true;
+      wpi_jaco_msgs::EStop srv;
+      srv.request.enableEStop = true;
+      if (!eStopClient.call(srv))
+        ROS_INFO("Couldn't call software estop service.");
+    }
     else if (joy->buttons.at(9) == 1)
+    {
       EStopEnabled = false;
+      wpi_jaco_msgs::EStop srv;
+      srv.request.enableEStop = false;
+      if (!eStopClient.call(srv))
+        ROS_INFO("Couldn't call software estop service.");
+    }
   }
   else
   {
     if (joy->buttons.at(6) == 1)
+    {
       EStopEnabled = true;
+      wpi_jaco_msgs::EStop srv;
+      srv.request.enableEStop = true;
+      if (!eStopClient.call(srv))
+        ROS_INFO("Couldn't call software estop service.");
+    }
     else if (joy->buttons.at(7) == 1)
+    {
       EStopEnabled = false;
+      wpi_jaco_msgs::EStop srv;
+      srv.request.enableEStop = false;
+      if (!eStopClient.call(srv))
+        ROS_INFO("Couldn't call software estop service.");
+    }
   }
 
   //help menu
@@ -467,10 +492,13 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
       {
         if (joy->buttons.at(4) == 1)
         {
-          //send home command
-          wpi_jaco_msgs::HomeArmGoal homeGoal;
-          homeGoal.retract = false;
-          acHome.sendGoal(homeGoal);
+          if (acHome.getState().isDone())
+          {
+            //send home command
+            wpi_jaco_msgs::HomeArmGoal homeGoal;
+            homeGoal.retract = false;
+            acHome.sendGoal(homeGoal);
+          }
         }
         leftBumperPrev = joy->buttons.at(4);
       }
@@ -478,21 +506,24 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
       {
         if (joy->buttons.at(5) == 1)
         {
-          //send retract command
-          wpi_jaco_msgs::HomeArmGoal homeGoal;
-          homeGoal.retract = true;
-          homeGoal.retractPosition.position = true;
-          homeGoal.retractPosition.armCommand = true;
-          homeGoal.retractPosition.fingerCommand = false;
-          homeGoal.retractPosition.repeat = false;
-          homeGoal.retractPosition.joints.resize(6);
-          homeGoal.retractPosition.joints[0] = -2.57;
-          homeGoal.retractPosition.joints[1] = 1.39;
-          homeGoal.retractPosition.joints[2] = .527;
-          homeGoal.retractPosition.joints[3] = -.084;
-          homeGoal.retractPosition.joints[4] = .515;
-          homeGoal.retractPosition.joints[5] = -1.745;
-          acHome.sendGoal(homeGoal);
+          if (acHome.getState().isDone())
+          {
+            //send retract command
+            wpi_jaco_msgs::HomeArmGoal homeGoal;
+            homeGoal.retract = true;
+            homeGoal.retractPosition.position = true;
+            homeGoal.retractPosition.armCommand = true;
+            homeGoal.retractPosition.fingerCommand = false;
+            homeGoal.retractPosition.repeat = false;
+            homeGoal.retractPosition.joints.resize(6);
+            homeGoal.retractPosition.joints[0] = -2.57;
+            homeGoal.retractPosition.joints[1] = 1.39;
+            homeGoal.retractPosition.joints[2] = .527;
+            homeGoal.retractPosition.joints[3] = -.084;
+            homeGoal.retractPosition.joints[4] = .515;
+            homeGoal.retractPosition.joints[5] = -1.745;
+            acHome.sendGoal(homeGoal);
+          }
         }
         rightBumperPrev = joy->buttons.at(5);
       }
@@ -548,22 +579,7 @@ void carl_joy_teleop::publish_velocity()
   //using this node, but for any other nodes controlling the arm this will
   //instead significantly slow down any motion)
   if (EStopEnabled)
-  {
-    cartesianCmd.arm.linear.x = 0.0;
-    cartesianCmd.arm.linear.y = 0.0;
-    cartesianCmd.arm.linear.z = 0.0;
-    cartesianCmd.arm.angular.x = 0.0;
-    cartesianCmd.arm.angular.y = 0.0;
-    cartesianCmd.arm.angular.z = 0.0;
-    fingerCmd.fingers[0] = 0.0;
-    fingerCmd.fingers[1] = 0.0;
-    fingerCmd.fingers[2] = 0.0;
-
-    cartesian_cmd.publish(cartesianCmd);
-    angular_cmd.publish(fingerCmd);
-
     return;
-  }
 
   switch (mode)
   {
@@ -685,7 +701,6 @@ void carl_joy_teleop::displayHelp(int menuNumber)
   puts("|   (2) Switch to arm control mode       |*");
   puts("|   (3) Switch to base control mode      |*");
   puts("|   (4) Switch to sensor control mode    |*");
-  puts("|   (Right Stick Click) Asus segment     |*");
   puts(" ----------------------------------------**");
   puts("  *****************************************");
 }
