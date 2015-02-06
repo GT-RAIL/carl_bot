@@ -2,8 +2,8 @@
 Changelog for package carl_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.14 (2015-02-06)
+-------------------
 * home/retract action input adjustment
 * teleop adjustment for estop and home/retract with planning
 * Set arm estop calls on the joystick controller

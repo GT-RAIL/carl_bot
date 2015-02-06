@@ -2,8 +2,8 @@
 Changelog for package carl_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.14 (2015-02-06)
+-------------------
 * Main bringup launch file now launches basic safety (tipping prevention and arm over current warning)
 * Contributors: David Kent
 
