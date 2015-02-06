@@ -2,6 +2,11 @@
 Changelog for package carl_interactive_manipulation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Switched home/retract actions to use motion planning, added home/retract/segment calls from joystick teleop
+* Contributors: David Kent
+
 0.0.13 (2015-01-21)
 -------------------
 

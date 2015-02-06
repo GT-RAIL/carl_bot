@@ -2,6 +2,9 @@
 Changelog for package carl_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.0.13 (2015-01-21)
 -------------------
 * New camera calibrations
