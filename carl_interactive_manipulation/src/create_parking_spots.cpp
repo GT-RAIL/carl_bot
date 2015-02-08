@@ -1,6 +1,22 @@
 #include "create_parking_spots.hpp"
 
+/** creates clickable navigation goals infront of furniture*/
+int main(int argc, char** argv){
+  ros::init(argc,argv,"create_parking_spots");
+
+
+  //define static member
+
+  // ParkingSpots parkingSpots;
+  // ros::NodeHandle node;
+  // ros::Rate rate(10.0);
+  // ros::spin();
+
+  return 0;
+}
+
 ParkingSpots::ParkingSpots() {
+
   interactive_markers::InteractiveMarkerServer server("parking_markers");
 
   ROS_INFO("waiting for server...");
@@ -36,8 +52,10 @@ ParkingSpots::ParkingSpots() {
 
   }
 }
-//define static member
-MoveBaseClient ParkingSpots::client_("move_base",true);
+
+void ParkingSpots::InitClient(){
+  MoveBaseClient client_("move_base",true);
+}
 
 /**when you release the mouse on a marker this gets called
 eventually this will set the location of that marker as a nav goal for Carl */
@@ -108,18 +126,4 @@ visualization_msgs::InteractiveMarker ParkingSpots::CreateParkingSpot(std::strin
   int_marker.controls.push_back(control);
 
   return int_marker;
-} 
-
-/** creates clickable navigation goals infront of furniture*/
-int main(int argc, char** argv){
-
-  ros::init(argc,argv,"create_parking_spots");
-
-  ParkingSpots parkingSpots;
-
-  ros::NodeHandle node;
-  ros::Rate rate(10.0);
-  ros::spin();
-
-  return 0;
 }
