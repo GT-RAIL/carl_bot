@@ -16,7 +16,6 @@ find_package(catkin REQUIRED COMPONENTS
 	move_base_msgs
 	geometry_msgs
 	std_msgs
-	message_generation
 	move_base
 	interactive_markers
 	urdf
