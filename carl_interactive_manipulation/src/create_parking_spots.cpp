@@ -1,4 +1,4 @@
-#include "create_parking_spots.hpp"
+#include <carl_interactive_manipulation/create_parking_spots.hpp>
 
 /** creates clickable navigation goals infront of furniture*/
 int main(int argc, char** argv){
@@ -12,16 +12,13 @@ int main(int argc, char** argv){
   return 0;
 }
 
-MoveBaseClient *ParkingSpots::client_ = NULL;
-
-ParkingSpots::ParkingSpots() {
+ParkingSpots::ParkingSpots() : client_("move_base",true) {
 
   interactive_markers::InteractiveMarkerServer server("parking_markers");
 
   ROS_INFO("waiting for server...");
   
-  client_ = new MoveBaseClient("move_base",true);
-  client_->waitForServer();
+  client_.waitForServer();
 
   ROS_INFO("connected to server");
 
@@ -40,8 +37,10 @@ ParkingSpots::ParkingSpots() {
     //go through all links and filter out the ones that end in "nav_goal_link"
     for(itr = links.begin(); itr != links.end(); itr++) {
       std::string link_name = itr->first;
-      if (IsNavGoal(link_name)){
-        server.insert(CreateParkingSpot(link_name), &OnClick);
+      if (isNavGoal(link_name)){
+        visualization_msgs::InteractiveMarker marker = createParkingSpot(link_name);
+        server.insert(marker);
+        server.setCallback(marker.name,boost::bind(&ParkingSpots::onClick, this, _1));
       }
     }
 
@@ -55,7 +54,7 @@ ParkingSpots::ParkingSpots() {
 
 /**when you release the mouse on a marker this gets called
 eventually this will set the location of that marker as a nav goal for Carl */
-void ParkingSpots::OnClick(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &f){
+void ParkingSpots::onClick(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &f){
   if (f->event_type == visualization_msgs::InteractiveMarkerFeedback::MOUSE_UP){
 
     //copy header and pose from marker to new action goal
@@ -76,9 +75,9 @@ void ParkingSpots::OnClick(const visualization_msgs::InteractiveMarkerFeedbackCo
     goal.target_pose = target_pose;
 
     //send action goal
-    client_->sendGoal(goal);
+    client_.sendGoal(goal);
 
-    bool finished_before_timeout = client_->waitForResult(ros::Duration(30.0));
+    bool finished_before_timeout = client_.waitForResult(ros::Duration(30.0));
 
     if (finished_before_timeout){
       ROS_INFO("finished successfully!");
@@ -90,14 +89,14 @@ void ParkingSpots::OnClick(const visualization_msgs::InteractiveMarkerFeedbackCo
 }
 
 /**returns true only if the string ends in "nav_goal_link"*/
-bool ParkingSpots::IsNavGoal(std::string link_name){
+bool ParkingSpots::isNavGoal(std::string link_name){
   std::string search_param = "nav_goal_link";
   return link_name.find(search_param,link_name.length()-search_param.length()) != std::string::npos;
 }
 
 /**creates a clickable marker at the origin of the given frame id
 this frame id is a string of the name of a link*/
-visualization_msgs::InteractiveMarker ParkingSpots::CreateParkingSpot(std::string frame_id){
+visualization_msgs::InteractiveMarker ParkingSpots::createParkingSpot(std::string frame_id){
   visualization_msgs::InteractiveMarker int_marker;
   int_marker.header.frame_id = frame_id;
   int_marker.scale = 1;
