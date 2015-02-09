@@ -21,11 +21,11 @@ class ParkingSpots{
 public:
 
 	ParkingSpots();
-	static void InitClient();
+	
 
 private:
 
-	static MoveBaseClient client_;
+	static MoveBaseClient *client_;
 	static void OnClick(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &f);
 	visualization_msgs::InteractiveMarker CreateParkingSpot(std::string frame_id);
 	bool IsNavGoal(std::string link_name);	

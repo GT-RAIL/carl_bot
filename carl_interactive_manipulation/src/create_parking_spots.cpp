@@ -3,17 +3,16 @@
 /** creates clickable navigation goals infront of furniture*/
 int main(int argc, char** argv){
   ros::init(argc,argv,"create_parking_spots");
-
-
-  //define static member
-
-  // ParkingSpots parkingSpots;
-  // ros::NodeHandle node;
-  // ros::Rate rate(10.0);
-  // ros::spin();
+  
+  ParkingSpots parkingSpots;
+  ros::NodeHandle node;
+  ros::Rate rate(10.0);
+  ros::spin();
 
   return 0;
 }
+
+MoveBaseClient *ParkingSpots::client_ = NULL;
 
 ParkingSpots::ParkingSpots() {
 
@@ -21,7 +20,8 @@ ParkingSpots::ParkingSpots() {
 
   ROS_INFO("waiting for server...");
   
-  client_.waitForServer();
+  client_ = new MoveBaseClient("move_base",true);
+  client_->waitForServer();
 
   ROS_INFO("connected to server");
 
@@ -53,10 +53,6 @@ ParkingSpots::ParkingSpots() {
   }
 }
 
-void ParkingSpots::InitClient(){
-  MoveBaseClient client_("move_base",true);
-}
-
 /**when you release the mouse on a marker this gets called
 eventually this will set the location of that marker as a nav goal for Carl */
 void ParkingSpots::OnClick(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &f){
@@ -80,9 +76,9 @@ void ParkingSpots::OnClick(const visualization_msgs::InteractiveMarkerFeedbackCo
     goal.target_pose = target_pose;
 
     //send action goal
-    client_.sendGoal(goal);
+    client_->sendGoal(goal);
 
-    bool finished_before_timeout = client_.waitForResult(ros::Duration(30.0));
+    bool finished_before_timeout = client_->waitForResult(ros::Duration(30.0));
 
     if (finished_before_timeout){
       ROS_INFO("finished successfully!");
