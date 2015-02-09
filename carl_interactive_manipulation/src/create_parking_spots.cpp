@@ -3,12 +3,11 @@
 /** creates clickable navigation goals infront of furniture*/
 int main(int argc, char** argv){
   ros::init(argc,argv,"create_parking_spots");
-  
-  ParkingSpots parkingSpots;
   ros::NodeHandle node;
   ros::Rate rate(10.0);
-  ros::spin();
 
+  ParkingSpots parkingSpots;
+  
   return 0;
 }
 
@@ -18,7 +17,11 @@ ParkingSpots::ParkingSpots() : client_("move_base",true) {
 
   ROS_INFO("waiting for server...");
   
-  client_.waitForServer();
+  bool status = client_.waitForServer();
+  if (!status){
+    ROS_INFO("Couldn't connect in time...");
+  }
+  else {
 
   ROS_INFO("connected to server");
 
@@ -28,7 +31,6 @@ ParkingSpots::ParkingSpots() : client_("move_base",true) {
   if (!ilab.initParam("/ilab_description")){
     ROS_INFO("couldn't find /ilab_description on param server.");
   }
-  
   else {
 
     std::map<std::string, boost::shared_ptr<urdf::Link> > links = ilab.links_;
@@ -39,16 +41,18 @@ ParkingSpots::ParkingSpots() : client_("move_base",true) {
       std::string link_name = itr->first;
       if (isNavGoal(link_name)){
         visualization_msgs::InteractiveMarker marker = createParkingSpot(link_name);
-        server.insert(marker);
-        server.setCallback(marker.name,boost::bind(&ParkingSpots::onClick, this, _1));
+        ROS_INFO("creating marker %s",link_name.c_str());
+        server.insert(marker,boost::bind(&ParkingSpots::onClick, this, _1));
+        //server.setCallback(marker.name,);
       }
     }
 
     ROS_INFO("creating clickable nav goals...");
 
     //when these are called the markers will actually appear
-    server.applyChanges();
-
+    server.applyChanges();  
+    ros::spin();
+    }
   }
 }
 
