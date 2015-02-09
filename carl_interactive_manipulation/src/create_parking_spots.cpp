@@ -7,14 +7,15 @@ int main(int argc, char** argv){
   ros::Rate rate(10.0);
 
   ParkingSpots parkingSpots;
+  parkingSpots.createParkingSpots();
   
   return 0;
 }
 
-ParkingSpots::ParkingSpots() : client_("move_base",true) {
+ParkingSpots::ParkingSpots() : client_("move_base",true),server_("parking_markers") {
+}
 
-  interactive_markers::InteractiveMarkerServer server("parking_markers");
-
+void ParkingSpots::createParkingSpots(){
   ROS_INFO("waiting for server...");
   
   bool status = client_.waitForServer();
@@ -42,15 +43,14 @@ ParkingSpots::ParkingSpots() : client_("move_base",true) {
       if (isNavGoal(link_name)){
         visualization_msgs::InteractiveMarker marker = createParkingSpot(link_name);
         ROS_INFO("creating marker %s",link_name.c_str());
-        server.insert(marker,boost::bind(&ParkingSpots::onClick, this, _1));
-        //server.setCallback(marker.name,);
+        server_.insert(marker,boost::bind(&ParkingSpots::onClick, this, _1));
       }
     }
 
     ROS_INFO("creating clickable nav goals...");
 
     //when these are called the markers will actually appear
-    server.applyChanges();  
+    server_.applyChanges();  
     ros::spin();
     }
   }
