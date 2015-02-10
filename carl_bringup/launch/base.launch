@@ -5,5 +5,9 @@
 -->
 
 <launch>
-  <include file="$(find ros_ethernet_rmp)/launch/ros_ethernet_rmp.launch" />
+  <!-- launch Segway with default parameters, except for the config_bitmap which allows the base to be turned on
+  while it's charging -->
+  <include file="$(find ros_ethernet_rmp)/launch/ros_ethernet_rmp.launch">
+    <arg name="config_bitmap" value="9" />
+  </include>
 </launch>
