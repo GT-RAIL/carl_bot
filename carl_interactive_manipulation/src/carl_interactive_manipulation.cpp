@@ -15,6 +15,9 @@ CarlInteractiveManipulation::CarlInteractiveManipulation() :
                                            &CarlInteractiveManipulation::segmentedObjectsCallback, this);
 
   //services
+  armCartesianPositionClient = n.serviceClient<wpi_jaco_msgs::GetCartesianPosition>("jaco_arm/get_cartesian_position");
+  armEStopClient = n.serviceClient<wpi_jaco_msgs::EStop>("jaco_arm/software_estop");
+  eraseTrajectoriesClient = n.serviceClient<std_srvs::Empty>("jaco_arm/erase_trajectories");
   jacoFkClient = n.serviceClient<wpi_jaco_msgs::JacoFK>("jaco_arm/kinematics/fk");
   qeClient = n.serviceClient<wpi_jaco_msgs::QuaternionToEuler>("jaco_conversions/quaternion_to_euler");
   pickupSegmentedClient = n.serviceClient<rail_pick_and_place_msgs::PickupSegmentedObject>("rail_pick_and_place/pickup_segmented_object");
@@ -27,7 +30,10 @@ CarlInteractiveManipulation::CarlInteractiveManipulation() :
   acHome.waitForServer();
   ROS_INFO("Finished waiting for action servers");
 
+  markerPose.resize(6);
   lockPose = false;
+  movingArm = false;
+  disableArmMarkerCommands = false;
 
   imServer.reset(
       new interactive_markers::InteractiveMarkerServer("carl_interactive_manipulation", "carl_markers", false));
@@ -48,6 +54,18 @@ void CarlInteractiveManipulation::updateJoints(const sensor_msgs::JointState::Co
   for (unsigned int i = 0; i < 6; i++)
   {
     joints.at(i) = msg->position.at(i);
+  }
+
+  //perform safety check if arm is moving due to interactive marker Cartesian control
+  if (movingArm)
+  {
+    if (fabs(msg->effort[0]) >= J1_THRESHOLD || fabs(msg->effort[1] >= J2_THRESHOLD) || fabs(msg->effort[2] >= J3_THRESHOLD)
+        || fabs(msg->effort[3]) >= J4_THRESHOLD || fabs(msg->effort[4] >= J5_THRESHOLD) || fabs(msg->effort[5] >= J6_THRESHOLD)
+        || fabs(msg->effort[6]) >= F1_THRESHOLD || fabs(msg->effort[7] >= F2_THRESHOLD) || fabs(msg->effort[8] >= F3_THRESHOLD))
+    {
+      ROS_INFO("Arm is moving dangerously, attempty recovery...");
+      armCollisionRecovery();
+    }
   }
 }
 
@@ -361,6 +379,9 @@ void CarlInteractiveManipulation::processHandMarkerFeedback(
       if (feedback->marker_name.compare("jaco_hand_marker") == 0)
       {
         lockPose = true;
+        movingArm = false;
+        if (disableArmMarkerCommands)
+          disableArmMarkerCommands = false;
         sendStopCommand();
       }
       break;
@@ -429,8 +450,10 @@ void CarlInteractiveManipulation::processHandMarkerFeedback(
       if (feedback->marker_name.compare("jaco_hand_marker") == 0
           && feedback->control_name.compare("jaco_hand_origin_marker") != 0)
       {
-        if (!lockPose)
+        if (!(lockPose || disableArmMarkerCommands))
         {
+          movingArm = true;
+
           acGrasp.cancelAllGoals();
           acPickup.cancelAllGoals();
 
@@ -452,6 +475,13 @@ void CarlInteractiveManipulation::processHandMarkerFeedback(
             cmd.arm.angular.z = qeSrv.response.yaw;
 
             cartesianCmd.publish(cmd);
+
+            markerPose[0] = feedback->pose.position.x;
+            markerPose[1] = feedback->pose.position.y;
+            markerPose[2] = feedback->pose.position.z;
+            markerPose[3] = qeSrv.response.roll;
+            markerPose[4] = qeSrv.response.pitch;
+            markerPose[5] = qeSrv.response.yaw;
           }
           else
             ROS_INFO("Quaternion to Euler conversion service failed, could not send pose update");
@@ -469,6 +499,9 @@ void CarlInteractiveManipulation::processHandMarkerFeedback(
       if (feedback->marker_name.compare("jaco_hand_marker") == 0)
       {
         lockPose = true;
+        movingArm = false;
+        if (disableArmMarkerCommands)
+          disableArmMarkerCommands = false;
         sendStopCommand();
       }
       break;
@@ -480,6 +513,7 @@ void CarlInteractiveManipulation::processHandMarkerFeedback(
 
 void CarlInteractiveManipulation::sendStopCommand()
 {
+  //TODO: Switch this to a service call that stops the arm and clears trajectories
   wpi_jaco_msgs::CartesianCommand cmd;
   cmd.position = false;
   cmd.armCommand = true;
@@ -492,6 +526,12 @@ void CarlInteractiveManipulation::sendStopCommand()
   cmd.arm.angular.y = 0.0;
   cmd.arm.angular.z = 0.0;
   cartesianCmd.publish(cmd);
+
+  std_srvs::Empty srv;
+  if (!eraseTrajectoriesClient.call(srv))
+  {
+    ROS_INFO("Could not call erase trajectories service...");
+  }
 }
 
 void CarlInteractiveManipulation::updateMarkerPosition()
@@ -510,6 +550,94 @@ void CarlInteractiveManipulation::updateMarkerPosition()
   else
   {
     ROS_INFO("Failed to call forward kinematics service");
+  }
+}
+
+void CarlInteractiveManipulation::armCollisionRecovery()
+{
+  //check if recovery is already in progress
+  if (disableArmMarkerCommands)
+    return;
+
+  wpi_jaco_msgs::EStop eStopSrv;
+  eStopSrv.request.enableEStop = true;
+  if (!armEStopClient.call(eStopSrv))
+  {
+    ROS_INFO("Could not call arm EStop service.");
+    return;
+  }
+
+  disableArmMarkerCommands = true;
+
+  wpi_jaco_msgs::GetCartesianPosition posSrv;
+  if (!armCartesianPositionClient.call(posSrv))
+  {
+    ROS_INFO("Could not call arm Cartesian position service.");
+    return;
+  }
+  wpi_jaco_msgs::CartesianCommand cmd;
+  cmd.armCommand = true;
+  cmd.fingerCommand = false;
+  cmd.position = false;
+  cmd.repeat = true;
+  cmd.arm.linear.x = 0;
+  cmd.arm.linear.y = 0;
+  cmd.arm.linear.z = 0;
+  cmd.arm.angular.x = 0;
+  cmd.arm.angular.y = 0;
+  cmd.arm.angular.z = 0;
+
+  vector<float> error;
+  error.resize(3);
+  error[0] = posSrv.response.pos.linear.x - markerPose[0];
+  error[1] = posSrv.response.pos.linear.y - markerPose[1];
+  error[2] = posSrv.response.pos.linear.z - markerPose[2];
+  /* Currently using translation only, as the rotations don't seem to move the arm into very dangerous positions
+  error[3] = posSrv.response.pos.angular.x - markerPose[3];
+  error[4] = posSrv.response.pos.angular.y - markerPose[4];
+  error[5] = posSrv.response.pos.angular.z - markerPose[5];
+  for (unsigned int i = 3; i <= 5; i ++)
+  {
+    if (error[i] > M_PI)
+      error[i] -= M_PI;
+    else if (error[i] < -M_PI)
+      error[i] += M_PI;
+  }
+  */
+  if (fabs(error[0]) > fabs(error[1]) && fabs(error[0]) > fabs(error[2]))
+  {
+    if (error[0] < 0)
+      cmd.arm.linear.x = -.175;
+    else
+      cmd.arm.linear.x = .175;
+  }
+  else if (fabs(error[1]) > fabs(error[0]) && fabs(error[1]) > fabs(error[2]))
+  {
+    if (error[1] < 0)
+      cmd.arm.linear.y = -.175;
+    else
+      cmd.arm.linear.y = .175;
+  }
+  else
+  {
+    if (error[2] < 0)
+      cmd.arm.linear.z = -.175;
+    else
+      cmd.arm.linear.z = .175;
+  }
+
+  eStopSrv.request.enableEStop = false;
+  if (!armEStopClient.call(eStopSrv))
+  {
+    ROS_INFO("Could not call arm EStop service.");
+    return;
+  }
+
+  ros::Rate loopRate(60);
+  for (unsigned int i = 0; i < 30; i ++)
+  {
+    cartesianCmd.publish(cmd);
+    loopRate.sleep();
   }
 }
 

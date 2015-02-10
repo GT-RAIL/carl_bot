@@ -4,7 +4,7 @@ project(carl_tools)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS ar_track_alvar_msgs geometry_msgs roscpp std_msgs tf)
+find_package(catkin REQUIRED COMPONENTS ar_track_alvar_msgs geometry_msgs roscpp sensor_msgs std_msgs tf)
 
 ###################################################
 ## Declare things to be passed to other projects ##
@@ -27,16 +27,18 @@ include_directories(
 
 ## Declare a cpp executable
 add_executable(camera_external_calibration src/camera_external_calibration.cpp)
+add_executable(current_logger src/current_logger.cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(camera_external_calibration ${catkin_LIBRARIES})
+target_link_libraries(current_logger ${catkin_LIBRARIES})
 
 #############
 ## Install ##
 #############
 
 ## Mark executables and/or libraries for installation
-install(TARGETS camera_external_calibration
+install(TARGETS camera_external_calibration current_logger
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
