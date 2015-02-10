@@ -2,6 +2,9 @@
 Changelog for package carl_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.15 (2015-02-10)
+-------------------
+
 0.0.14 (2015-02-06)
 -------------------
 * home/retract action input adjustment

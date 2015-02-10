@@ -2,6 +2,11 @@
 Changelog for package carl_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.15 (2015-02-10)
+-------------------
+* Updated base.launch so that CARL can be turned on while charging.
+* Contributors: David Kent
+
 0.0.14 (2015-02-06)
 -------------------
 * Main bringup launch file now launches basic safety (tipping prevention and arm over current warning)
