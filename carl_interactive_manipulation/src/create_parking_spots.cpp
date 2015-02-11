@@ -8,7 +8,9 @@ int main(int argc, char** argv)
   ros::init(argc,argv,"create_parking_spots");
 
   CreateParkingSpots parkingSpots;
-  
+ 
+  ros::spin();
+
   return EXIT_SUCCESS;
 }
 
@@ -54,7 +56,7 @@ CreateParkingSpots::CreateParkingSpots() : client_("move_base",true),server_("pa
 
     //when these are called the markers will actually appear
     server_.applyChanges();  
-    ros::spin();
+    
     }
   }
 }
