@@ -633,7 +633,7 @@ void CarlInteractiveManipulation::armCollisionRecovery()
   }
 
   ros::Rate loopRate(60);
-  for (unsigned int i = 0; i < 30; i ++)
+  for (unsigned int i = 0; i < 60; i ++)
   {
     cartesianCmd.publish(cmd);
     loopRate.sleep();
