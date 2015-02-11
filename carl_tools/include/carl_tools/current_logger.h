@@ -30,9 +30,9 @@ private:
   std::string filename;
 
   /**
-  * \brief get samples if calibration is active
+  * \brief Arm joint state callback
   *
-  * @param msg marker pose data
+  * @param msg arm joint states
   */
   void armJointStateCallback(const sensor_msgs::JointState::ConstPtr& msg);
 };

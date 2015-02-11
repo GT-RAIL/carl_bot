@@ -122,6 +122,9 @@ private:
    */
   void sendStopCommand();
 
+  /**
+  * \brief If interactive markers cause the arm to be in a dangerous collision, briefly reverse arm motion
+  */
   void armCollisionRecovery();
 
   ros::NodeHandle n;

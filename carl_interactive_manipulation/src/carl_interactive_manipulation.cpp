@@ -513,7 +513,6 @@ void CarlInteractiveManipulation::processHandMarkerFeedback(
 
 void CarlInteractiveManipulation::sendStopCommand()
 {
-  //TODO: Switch this to a service call that stops the arm and clears trajectories
   wpi_jaco_msgs::CartesianCommand cmd;
   cmd.position = false;
   cmd.armCommand = true;
