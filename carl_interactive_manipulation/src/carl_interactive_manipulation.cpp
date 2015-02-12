@@ -558,16 +558,6 @@ void CarlInteractiveManipulation::armCollisionRecovery()
   if (disableArmMarkerCommands)
     return;
 
-  wpi_jaco_msgs::EStop eStopSrv;
-  eStopSrv.request.enableEStop = true;
-  if (!armEStopClient.call(eStopSrv))
-  {
-    ROS_INFO("Could not call arm EStop service.");
-    return;
-  }
-
-  disableArmMarkerCommands = true;
-
   wpi_jaco_msgs::GetCartesianPosition posSrv;
   if (!armCartesianPositionClient.call(posSrv))
   {
@@ -603,12 +593,15 @@ void CarlInteractiveManipulation::armCollisionRecovery()
       error[i] += M_PI;
   }
   */
+  float maxError;
   if (fabs(error[0]) > fabs(error[1]) && fabs(error[0]) > fabs(error[2]))
   {
     if (error[0] < 0)
       cmd.arm.linear.x = -.175;
     else
       cmd.arm.linear.x = .175;
+
+    maxError = error[0];
   }
   else if (fabs(error[1]) > fabs(error[0]) && fabs(error[1]) > fabs(error[2]))
   {
@@ -616,6 +609,7 @@ void CarlInteractiveManipulation::armCollisionRecovery()
       cmd.arm.linear.y = -.175;
     else
       cmd.arm.linear.y = .175;
+    maxError = error[1];
   }
   else
   {
@@ -623,6 +617,23 @@ void CarlInteractiveManipulation::armCollisionRecovery()
       cmd.arm.linear.z = -.175;
     else
       cmd.arm.linear.z = .175;
+    maxError = error[2];
+  }
+
+  //ignore if error is less than 1 cm to prevent accidental clicks from starting a recovery behavior
+  if (fabs(maxError) < .01)
+  {
+    return;
+  }
+  else
+    disableArmMarkerCommands = true;
+
+  wpi_jaco_msgs::EStop eStopSrv;
+  eStopSrv.request.enableEStop = true;
+  if (!armEStopClient.call(eStopSrv))
+  {
+    ROS_INFO("Could not call arm EStop service.");
+    return;
   }
 
   eStopSrv.request.enableEStop = false;
