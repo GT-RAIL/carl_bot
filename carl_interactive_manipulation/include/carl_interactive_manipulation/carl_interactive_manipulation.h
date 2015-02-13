@@ -41,9 +41,9 @@
 #define J4_THRESHOLD  5.0
 #define J5_THRESHOLD  5.0
 #define J6_THRESHOLD 3.5
-#define F1_THRESHOLD  1.35
-#define F2_THRESHOLD  1.35
-#define F3_THRESHOLD 1.35
+#define F1_THRESHOLD  1.5
+#define F2_THRESHOLD  1.5
+#define F3_THRESHOLD 1.5
 
 /*!
  * \class jacoInteractiveManipulation
