@@ -45,7 +45,7 @@ add_dependencies(${PROJECT_NAME} wpi_jaco_msgs_gencpp rail_pick_and_place_msgs_g
 #############
 
 ## Mark executables and/or libraries for installation
-install(TARGETS ${PROJECT_NAME}
+install(TARGETS ${PROJECT_NAME} create_parking_spots
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

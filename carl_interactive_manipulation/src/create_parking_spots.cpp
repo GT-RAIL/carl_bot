@@ -85,7 +85,7 @@ void CreateParkingSpots::onClick(const visualization_msgs::InteractiveMarkerFeed
     //send action goal
     client_.sendGoal(goal);
 
-    bool finished_before_timeout = client_.waitForResult(ros::Duration(30.0));
+    bool finished_before_timeout = client_.waitForResult();
 
     if (finished_before_timeout)
     {
