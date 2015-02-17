@@ -66,7 +66,7 @@ bool servoPanTilt::lookAtPoint(carl_dynamixel::LookAtPoint::Request &req, carl_d
 bool servoPanTilt::lookAtFrame(carl_dynamixel::LookAtFrame::Request &req, carl_dynamixel::LookAtFrame::Response &res)
 {
   tf::StampedTransform transform;
-  tfListener.lookupTransform("base_footprint", req.frame, ros::Time::now(), transform);
+  tfListener.lookupTransform("base_footprint", req.frame, ros::Time(0), transform);
   float servoAngle = calculateLookAngle(transform.getOrigin().x(), transform.getOrigin().z());
   std_msgs::Float64 cmd;
   cmd.data = servoAngle;
@@ -78,7 +78,7 @@ bool servoPanTilt::lookAtFrame(carl_dynamixel::LookAtFrame::Request &req, carl_d
 float servoPanTilt::calculateLookAngle(float x, float z)
 {
   tf::StampedTransform transform;
-  tfListener.lookupTransform("base_footprint", "asus_servo_arm_link", ros::Time::now(), transform);
+  tfListener.lookupTransform("base_footprint", "asus_servo_arm_link", ros::Time(0), transform);
   float px = x - transform.getOrigin().x();
   float pz = z - transform.getOrigin().z();
   float angle = atan2(pz, px);
