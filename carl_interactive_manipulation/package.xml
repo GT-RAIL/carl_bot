@@ -8,7 +8,6 @@
   <author email="pdmitrano@wpi.edu">Peter Mitrano</author>
   <maintainer email="davidkent@wpi.edu">David Kent</maintainer>
   <maintainer email="rctoris@wpi.edu">Russell Toris</maintainer>
-  <maintainer email="pdmitrano@wpi.edu">Peter Mitrano</maintainer>
 
   <url type="website">http://ros.org/wiki/carl_bot</url>
   <url type="bugtracker">https://github.com/WPI-RAIL/carl_bot/issues</url>
