@@ -4,7 +4,24 @@ project(carl_dynamixel)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp dynamixel_msgs sensor_msgs)
+find_package(catkin REQUIRED COMPONENTS roscpp dynamixel_msgs sensor_msgs tf)
+
+#######################################
+## Declare ROS messages and services ##
+#######################################
+
+## Generate services in the 'srv' folder
+add_service_files(
+  FILES
+  LookAtFrame.srv
+  LookAtPoint.srv
+)
+
+## Generate added messages and services with any dependencies listed here
+generate_messages(
+  DEPENDENCIES
+  geometry_msgs
+)
 
 ###################################################
 ## Declare things to be passed to other projects ##
@@ -40,6 +57,8 @@ target_link_libraries(servo_pan_tilt
 target_link_libraries(front_joints_node
   ${catkin_LIBRARIES}
 )
+
+add_dependencies(servo_pan_tilt ${PROJECT_NAME}_generate_messages_cpp)
 
 #############
 ## Install ##

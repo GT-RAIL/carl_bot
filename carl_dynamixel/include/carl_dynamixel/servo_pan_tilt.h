@@ -13,8 +13,14 @@
 #define SERVO_PAN_TILT_H_
 
 #include <ros/ros.h>
+#include <carl_dynamixel/LookAtFrame.h>
+#include <carl_dynamixel/LookAtPoint.h>
 #include <sensor_msgs/JointState.h>
 #include <std_msgs/Float64.h>
+#include <tf/transform_listener.h>
+
+#define ASUS_TILT_MIN -1.79
+#define ASUS_TILT_MAX 2.59
 
 /*!
  * \class servoPanTilt
@@ -58,6 +64,30 @@ private:
    */
   void panCallback(const std_msgs::Float64::ConstPtr& msg);
 
+  /**
+  * \brief Callback for pointing the servo at a point
+  * @param req service request
+  * @param res empty service response
+  * @return true on success
+  */
+  bool lookAtPoint(carl_dynamixel::LookAtPoint::Request &req, carl_dynamixel::LookAtPoint::Response &res);
+
+  /**
+  * \brief Callback for pointing the servo at a point
+  * @param req service request
+  * @param res empty service response
+  * @return true on success
+  */
+  bool lookAtFrame(carl_dynamixel::LookAtFrame::Request &req, carl_dynamixel::LookAtFrame::Response &res);
+
+  /**
+  * \brief Determine the servo command angle to look at a given point with the Asus servo
+  * @param x forward distance from camera
+  * @param z height distance from camera
+  * @return an angle (rad) to use as a servo command to look at the specified point
+  */
+  float calculateLookAngle(float x, float z);
+
   ros::NodeHandle node; /*!< a handle for this ROS node */
 
   ros::Publisher asusServoControllerPublisher; /*!< position command for the asus servo */
@@ -66,6 +96,11 @@ private:
   ros::Subscriber panCommandSubscriber; /*!< subscriber for camera pan commands */
   ros::Subscriber backJointStateSubscriber; /*!< back (asus) servo joint state subscrbier */
   ros::Subscriber frontJointStateSubscriber; /*!< front (creative) servo joint state subscrbier */
+
+  ros::ServiceServer lookAtPointServer;
+  ros::ServiceServer lookAtFrameServer;
+
+  tf::TransformListener tfListener;
 
   float backServoPos; /*!< the current position of the back servo */
   float frontServoPos; /*!< the current position of the front servo */
