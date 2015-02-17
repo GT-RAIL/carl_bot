@@ -2,6 +2,31 @@
 Changelog for package carl_interactive_manipulation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.16 (2015-02-17)
+-------------------
+* Update package.xml
+* Merge pull request #25 from PeterMitrano/develop
+  moved carl_parking to carl_interactive markers
+* removed timeout and added intsallation
+* Adjusted finger current thresholds
+* Put a small threshold on executing an arm interactive marker recovery behavior to prevent it from activating on accidental clicks
+* Adjustments for finger safety threshold.
+* Lengthened distance of arm recovery behavior
+* Documentation
+* moved ros spin
+* conformed to conventions
+* Safety override for interactive marker control
+* mend
+* improved oop-ness
+* removed unnessecary dependancy
+* parking spots correctly appear
+* improved oop structure. no statics
+* oop works, but is really bad oop
+* working on initializing static member
+* made ParkingSpots class
+* moved carl_parking to carl_interactive markers
+* Contributors: David Kent, Peter, Russell Toris
+
 0.0.15 (2015-02-10)
 -------------------
 

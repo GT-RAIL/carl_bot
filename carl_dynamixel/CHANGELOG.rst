@@ -2,6 +2,13 @@
 Changelog for package carl_dynamixel
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.16 (2015-02-17)
+-------------------
+* Fixed a timestamp problem for tf lookups
+* Documentation
+* Asus servo commands to look at point or look at frame
+* Contributors: David Kent
+
 0.0.15 (2015-02-10)
 -------------------
 
