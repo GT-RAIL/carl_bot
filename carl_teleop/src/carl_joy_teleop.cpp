@@ -37,7 +37,7 @@ carl_joy_teleop::carl_joy_teleop() :
   creative_servo_pan_cmd = node.advertise<std_msgs::Float64>("creative_controller/pan", 10);
   joy_sub = node.subscribe<sensor_msgs::Joy>("joy", 10, &carl_joy_teleop::joy_cback, this);
 
-  segment_client = node.serviceClient<rail_segmentation::Segment>("rail_segmentation/segment");
+  segment_client = node.serviceClient<std_srvs::Empty>("rail_segmentation/segment_auto");
   eStopClient = node.serviceClient<wpi_jaco_msgs::EStop>("jaco_arm/software_estop");
 
   // read in throttle values
@@ -534,11 +534,8 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
         if (joy->buttons.at(rightStickIndex) == 1)
         {
           //send segment command
-          rail_segmentation::Segment seg;
-          seg.request.clear = true;
-          seg.request.segmentOnRobot = false;
-          seg.request.useMapFrame = false;
-          if (!segment_client.call(seg))
+          std_srvs::Empty srv;
+          if (!segment_client.call(srv))
           {
             ROS_INFO("Could not call segmentation client.");
           }
@@ -682,7 +679,7 @@ void carl_joy_teleop::displayHelp(int menuNumber)
       puts("|  |    |_|    ___      ___    (2)    |  |*");
       puts("|  |          /   \\    /   \\          |  |*");
       puts("|  |          \\___/    \\___/          |  |*");
-      puts("|  |                  asus tilt       |  |*");
+      puts("|  |               asus tilt/segment|    |*");
       puts("|  |        _______/--\\_______        |  |*");
     break;
   }

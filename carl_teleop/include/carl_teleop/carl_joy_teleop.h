@@ -19,7 +19,7 @@
 #include <actionlib/client/simple_action_client.h>
 #include <sensor_msgs/Joy.h>
 #include <std_msgs/Float64.h>
-#include <rail_segmentation/Segment.h>
+#include <std_srvs/Empty.h>
 #include <wpi_jaco_msgs/AngularCommand.h>
 #include <wpi_jaco_msgs/CartesianCommand.h>
 #include <wpi_jaco_msgs/EStop.h>
