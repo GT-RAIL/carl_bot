@@ -2,6 +2,12 @@
 Changelog for package carl_tools
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.16 (2015-02-17)
+-------------------
+* Documentation
+* Safety override for interactive marker control
+* Contributors: David Kent
+
 0.0.15 (2015-02-10)
 -------------------
 

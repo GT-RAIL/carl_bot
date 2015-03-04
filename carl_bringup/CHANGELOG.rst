@@ -2,6 +2,9 @@
 Changelog for package carl_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.16 (2015-02-17)
+-------------------
+
 0.0.15 (2015-02-10)
 -------------------
 * Updated base.launch so that CARL can be turned on while charging.
