@@ -3,7 +3,7 @@
 using namespace std;
 
 CarlInteractiveManipulation::CarlInteractiveManipulation() :
-    acGrasp("jaco_arm/manipulation/grasp", true), acPickup("jaco_arm/manipulation/pickup", true), acHome(
+    acGripper("jaco_arm/manipulation/gripper", true), acLift("jaco_arm/manipulation/lift", true), acHome(
         "carl_moveit_wrapper/common_actions/ready_arm", true)
 {
   joints.resize(6);
@@ -25,8 +25,8 @@ CarlInteractiveManipulation::CarlInteractiveManipulation() :
 
   //actionlib
   ROS_INFO("Waiting for grasp, and pickup action servers...");
-  acGrasp.waitForServer();
-  acPickup.waitForServer();
+  acGripper.waitForServer();
+  acLift.waitForServer();
   acHome.waitForServer();
   ROS_INFO("Finished waiting for action servers");
 
@@ -302,12 +302,12 @@ void CarlInteractiveManipulation::makeHandMarker()
   iMarker.controls.push_back(control);
 
   //menu
-  interactive_markers::MenuHandler::EntryHandle fingersSubMenuHandle = menuHandler.insert("Fingers");
-  menuHandler.insert(fingersSubMenuHandle, "Grasp",
+  interactive_markers::MenuHandler::EntryHandle fingersSubMenuHandle = menuHandler.insert("Gripper");
+  menuHandler.insert(fingersSubMenuHandle, "Close",
                      boost::bind(&CarlInteractiveManipulation::processHandMarkerFeedback, this, _1));
-  menuHandler.insert(fingersSubMenuHandle, "Release",
+  menuHandler.insert(fingersSubMenuHandle, "Open",
                      boost::bind(&CarlInteractiveManipulation::processHandMarkerFeedback, this, _1));
-  menuHandler.insert("Pickup", boost::bind(&CarlInteractiveManipulation::processHandMarkerFeedback, this, _1));
+  menuHandler.insert("Lift", boost::bind(&CarlInteractiveManipulation::processHandMarkerFeedback, this, _1));
   menuHandler.insert("Home", boost::bind(&CarlInteractiveManipulation::processHandMarkerFeedback, this, _1));
   menuHandler.insert("Retract", boost::bind(&CarlInteractiveManipulation::processHandMarkerFeedback, this, _1));
 
@@ -374,137 +374,133 @@ void CarlInteractiveManipulation::processHandMarkerFeedback(
 {
   switch (feedback->event_type)
   {
-    //Send a stop command so that when the marker is released the arm stops moving
-    case visualization_msgs::InteractiveMarkerFeedback::BUTTON_CLICK:
-      if (feedback->marker_name.compare("jaco_hand_marker") == 0)
+  //Send a stop command so that when the marker is released the arm stops moving
+  case visualization_msgs::InteractiveMarkerFeedback::BUTTON_CLICK:
+    if (feedback->marker_name.compare("jaco_hand_marker") == 0)
+    {
+      lockPose = true;
+      movingArm = false;
+      if (disableArmMarkerCommands)
+        disableArmMarkerCommands = false;
+      sendStopCommand();
+    }
+    break;
+
+    //Menu actions
+  case visualization_msgs::InteractiveMarkerFeedback::MENU_SELECT:
+    if (feedback->marker_name.compare("jaco_hand_marker") == 0)
+    {
+      if (feedback->menu_entry_id == 2)	//grasp requested
       {
-        lockPose = true;
-        movingArm = false;
-        if (disableArmMarkerCommands)
-          disableArmMarkerCommands = false;
-        sendStopCommand();
+        rail_manipulation_msgs::GripperGoal gripperGoal;
+        gripperGoal.close = true;
+        acGripper.sendGoal(gripperGoal);
       }
-      break;
-
-      //Menu actions
-    case visualization_msgs::InteractiveMarkerFeedback::MENU_SELECT:
-      if (feedback->marker_name.compare("jaco_hand_marker") == 0)
+      else if (feedback->menu_entry_id == 3)	//release requested
       {
-        if (feedback->menu_entry_id == 2)	//grasp requested
-        {
-          wpi_jaco_msgs::ExecuteGraspGoal graspGoal;
-          graspGoal.closeGripper = true;
-          graspGoal.limitFingerVelocity = false;
-          acGrasp.sendGoal(graspGoal);
-        }
-        else if (feedback->menu_entry_id == 3)	//release requested
-        {
-          wpi_jaco_msgs::ExecuteGraspGoal graspGoal;
-          graspGoal.closeGripper = false;
-          graspGoal.limitFingerVelocity = false;
-          acGrasp.sendGoal(graspGoal);
-        }
-        else if (feedback->menu_entry_id == 4)	//pickup requested
-        {
-          wpi_jaco_msgs::ExecutePickupGoal pickupGoal;
-          pickupGoal.limitFingerVelocity = false;
-          pickupGoal.setLiftVelocity = false;
-          acPickup.sendGoal(pickupGoal);
-        }
-        else if (feedback->menu_entry_id == 5)  //home requested
-        {
-          acGrasp.cancelAllGoals();
-          acPickup.cancelAllGoals();
-          wpi_jaco_msgs::HomeArmGoal homeGoal;
-          homeGoal.retract = false;
-          homeGoal.numAttempts = 3;
-          acHome.sendGoal(homeGoal);
-          acHome.waitForResult(ros::Duration(10.0));
-        }
-        else if (feedback->menu_entry_id == 6)
-        {
-          acGrasp.cancelAllGoals();
-          acPickup.cancelAllGoals();
-          wpi_jaco_msgs::HomeArmGoal homeGoal;
-          homeGoal.retract = true;
-          homeGoal.retractPosition.position = true;
-          homeGoal.retractPosition.armCommand = true;
-          homeGoal.retractPosition.fingerCommand = false;
-          homeGoal.retractPosition.repeat = false;
-          homeGoal.retractPosition.joints.resize(6);
-          homeGoal.retractPosition.joints[0] = -2.57;
-          homeGoal.retractPosition.joints[1] = 1.39;
-          homeGoal.retractPosition.joints[2] = .527;
-          homeGoal.retractPosition.joints[3] = -.084;
-          homeGoal.retractPosition.joints[4] = .515;
-          homeGoal.retractPosition.joints[5] = -1.745;
-          homeGoal.numAttempts = 3;
-          acHome.sendGoal(homeGoal);
-          acHome.waitForResult(ros::Duration(15.0));
-        }
+        rail_manipulation_msgs::GripperGoal gripperGoal;
+        gripperGoal.close = false;
+        acGripper.sendGoal(gripperGoal);
       }
-      break;
-
-      //Send movement commands to the arm to follow the pose marker
-    case visualization_msgs::InteractiveMarkerFeedback::POSE_UPDATE:
-      if (feedback->marker_name.compare("jaco_hand_marker") == 0
-          && feedback->control_name.compare("jaco_hand_origin_marker") != 0)
+      else if (feedback->menu_entry_id == 4)	//pickup requested
       {
-        if (!(lockPose || disableArmMarkerCommands))
-        {
-          movingArm = true;
-
-          acGrasp.cancelAllGoals();
-          acPickup.cancelAllGoals();
-
-          //convert pose for compatibility with JACO API
-          wpi_jaco_msgs::QuaternionToEuler qeSrv;
-          qeSrv.request.orientation = feedback->pose.orientation;
-          if (qeClient.call(qeSrv))
-          {
-            wpi_jaco_msgs::CartesianCommand cmd;
-            cmd.position = true;
-            cmd.armCommand = true;
-            cmd.fingerCommand = false;
-            cmd.repeat = false;
-            cmd.arm.linear.x = feedback->pose.position.x;
-            cmd.arm.linear.y = feedback->pose.position.y;
-            cmd.arm.linear.z = feedback->pose.position.z;
-            cmd.arm.angular.x = qeSrv.response.roll;
-            cmd.arm.angular.y = qeSrv.response.pitch;
-            cmd.arm.angular.z = qeSrv.response.yaw;
-
-            cartesianCmd.publish(cmd);
-
-            markerPose[0] = feedback->pose.position.x;
-            markerPose[1] = feedback->pose.position.y;
-            markerPose[2] = feedback->pose.position.z;
-            markerPose[3] = qeSrv.response.roll;
-            markerPose[4] = qeSrv.response.pitch;
-            markerPose[5] = qeSrv.response.yaw;
-          }
-          else
-            ROS_INFO("Quaternion to Euler conversion service failed, could not send pose update");
-        }
+        rail_manipulation_msgs::LiftGoal liftGoal;
+        acLift.sendGoal(liftGoal);
       }
-      break;
-
-      //Mouse down events
-    case visualization_msgs::InteractiveMarkerFeedback::MOUSE_DOWN:
-      lockPose = false;
-      break;
-
-      //As with mouse clicked, send a stop command when the mouse is released on the marker
-    case visualization_msgs::InteractiveMarkerFeedback::MOUSE_UP:
-      if (feedback->marker_name.compare("jaco_hand_marker") == 0)
+      else if (feedback->menu_entry_id == 5)  //home requested
       {
-        lockPose = true;
-        movingArm = false;
-        if (disableArmMarkerCommands)
-          disableArmMarkerCommands = false;
-        sendStopCommand();
+        acGripper.cancelAllGoals();
+        acLift.cancelAllGoals();
+        wpi_jaco_msgs::HomeArmGoal homeGoal;
+        homeGoal.retract = false;
+        homeGoal.numAttempts = 3;
+        acHome.sendGoal(homeGoal);
+        acHome.waitForResult(ros::Duration(10.0));
       }
-      break;
+      else if (feedback->menu_entry_id == 6)
+      {
+        acGripper.cancelAllGoals();
+        acLift.cancelAllGoals();
+        wpi_jaco_msgs::HomeArmGoal homeGoal;
+        homeGoal.retract = true;
+        homeGoal.retractPosition.position = true;
+        homeGoal.retractPosition.armCommand = true;
+        homeGoal.retractPosition.fingerCommand = false;
+        homeGoal.retractPosition.repeat = false;
+        homeGoal.retractPosition.joints.resize(6);
+        homeGoal.retractPosition.joints[0] = -2.57;
+        homeGoal.retractPosition.joints[1] = 1.39;
+        homeGoal.retractPosition.joints[2] = .527;
+        homeGoal.retractPosition.joints[3] = -.084;
+        homeGoal.retractPosition.joints[4] = .515;
+        homeGoal.retractPosition.joints[5] = -1.745;
+        homeGoal.numAttempts = 3;
+        acHome.sendGoal(homeGoal);
+        acHome.waitForResult(ros::Duration(15.0));
+      }
+    }
+    break;
+
+    //Send movement commands to the arm to follow the pose marker
+  case visualization_msgs::InteractiveMarkerFeedback::POSE_UPDATE:
+    if (feedback->marker_name.compare("jaco_hand_marker") == 0
+        && feedback->control_name.compare("jaco_hand_origin_marker") != 0)
+    {
+      if (!(lockPose || disableArmMarkerCommands))
+      {
+        movingArm = true;
+
+        acGripper.cancelAllGoals();
+        acLift.cancelAllGoals();
+
+        //convert pose for compatibility with JACO API
+        wpi_jaco_msgs::QuaternionToEuler qeSrv;
+        qeSrv.request.orientation = feedback->pose.orientation;
+        if (qeClient.call(qeSrv))
+        {
+          wpi_jaco_msgs::CartesianCommand cmd;
+          cmd.position = true;
+          cmd.armCommand = true;
+          cmd.fingerCommand = false;
+          cmd.repeat = false;
+          cmd.arm.linear.x = feedback->pose.position.x;
+          cmd.arm.linear.y = feedback->pose.position.y;
+          cmd.arm.linear.z = feedback->pose.position.z;
+          cmd.arm.angular.x = qeSrv.response.roll;
+          cmd.arm.angular.y = qeSrv.response.pitch;
+          cmd.arm.angular.z = qeSrv.response.yaw;
+
+          cartesianCmd.publish(cmd);
+
+          markerPose[0] = feedback->pose.position.x;
+          markerPose[1] = feedback->pose.position.y;
+          markerPose[2] = feedback->pose.position.z;
+          markerPose[3] = qeSrv.response.roll;
+          markerPose[4] = qeSrv.response.pitch;
+          markerPose[5] = qeSrv.response.yaw;
+        }
+        else
+          ROS_INFO("Quaternion to Euler conversion service failed, could not send pose update");
+      }
+    }
+    break;
+
+    //Mouse down events
+  case visualization_msgs::InteractiveMarkerFeedback::MOUSE_DOWN:
+    lockPose = false;
+    break;
+
+    //As with mouse clicked, send a stop command when the mouse is released on the marker
+  case visualization_msgs::InteractiveMarkerFeedback::MOUSE_UP:
+    if (feedback->marker_name.compare("jaco_hand_marker") == 0)
+    {
+      lockPose = true;
+      movingArm = false;
+      if (disableArmMarkerCommands)
+        disableArmMarkerCommands = false;
+      sendStopCommand();
+    }
+    break;
   }
 
   //Update interactive marker server

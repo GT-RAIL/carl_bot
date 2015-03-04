@@ -18,13 +18,13 @@
 #include <actionlib/client/simple_action_client.h>
 #include <interactive_markers/interactive_marker_server.h>
 #include <interactive_markers/menu_handler.h>
+#include <rail_manipulation_msgs/GripperAction.h>
+#include <rail_manipulation_msgs/LiftAction.h>
 #include <rail_pick_and_place_msgs/PickupSegmentedObject.h>
 #include <rail_segmentation/RemoveObject.h>
 #include <rail_segmentation/SegmentedObjectList.h>
 #include <wpi_jaco_msgs/CartesianCommand.h>
 #include <wpi_jaco_msgs/EStop.h>
-#include <wpi_jaco_msgs/ExecuteGraspAction.h>
-#include <wpi_jaco_msgs/ExecutePickupAction.h>
 #include <wpi_jaco_msgs/GetCartesianPosition.h>
 #include <wpi_jaco_msgs/HomeArmAction.h>
 #include <wpi_jaco_msgs/JacoFK.h>
@@ -144,8 +144,8 @@ private:
   ros::ServiceClient removeObjectClient;
 
   //actionlib
-  actionlib::SimpleActionClient<wpi_jaco_msgs::ExecuteGraspAction> acGrasp;
-  actionlib::SimpleActionClient<wpi_jaco_msgs::ExecutePickupAction> acPickup;
+  actionlib::SimpleActionClient<rail_manipulation_msgs::GripperAction> acGripper;
+  actionlib::SimpleActionClient<rail_manipulation_msgs::LiftAction> acLift;
   actionlib::SimpleActionClient<wpi_jaco_msgs::HomeArmAction> acHome;
 
   boost::shared_ptr<interactive_markers::InteractiveMarkerServer> imServer; //!< interactive marker server
