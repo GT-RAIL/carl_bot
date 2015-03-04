@@ -70,7 +70,7 @@ void CarlInteractiveManipulation::updateJoints(const sensor_msgs::JointState::Co
 }
 
 void CarlInteractiveManipulation::segmentedObjectsCallback(
-    const rail_segmentation::SegmentedObjectList::ConstPtr& objectList)
+    const rail_manipulation_msgs::SegmentedObjectList::ConstPtr& objectList)
 {
   ROS_INFO("Received new segmented point clouds");
   clearSegmentedObjects();
@@ -79,7 +79,7 @@ void CarlInteractiveManipulation::segmentedObjectsCallback(
   for (unsigned int i = 0; i < objectList->objects.size(); i++)
   {
     visualization_msgs::InteractiveMarker objectMarker;
-    objectMarker.header = objectList->objects[i].objectCloud.header;
+    objectMarker.header = objectList->objects[i].cloud.header;
 
     objectMarker.pose.position.x = 0.0;
     objectMarker.pose.position.y = 0.0;
@@ -95,7 +95,7 @@ void CarlInteractiveManipulation::segmentedObjectsCallback(
     objectMarker.name = ss.str();
 
     visualization_msgs::Marker cloudMarker;
-    cloudMarker.header = objectList->objects[i].objectCloud.header;
+    cloudMarker.header = objectList->objects[i].cloud.header;
     cloudMarker.type = visualization_msgs::Marker::CUBE_LIST;
     if (objectList->objects[i].recognized)
     {
@@ -113,7 +113,7 @@ void CarlInteractiveManipulation::segmentedObjectsCallback(
 
     //add point cloud to cloud marker
     sensor_msgs::PointCloud cloudCopy;
-    sensor_msgs::convertPointCloud2ToPointCloud(objectList->objects[i].objectCloud, cloudCopy);
+    sensor_msgs::convertPointCloud2ToPointCloud(objectList->objects[i].cloud, cloudCopy);
     cloudMarker.scale.x = .01;
     cloudMarker.scale.y = .01;
     cloudMarker.scale.z = .01;
@@ -153,7 +153,7 @@ void CarlInteractiveManipulation::segmentedObjectsCallback(
     objectLabelControl.interaction_mode = visualization_msgs::InteractiveMarkerControl::NONE;
     objectLabelControl.always_visible = true;
     visualization_msgs::Marker objectLabel;
-    objectLabel.header = objectList->objects[i].objectCloud.header;
+    objectLabel.header = objectList->objects[i].cloud.header;
     objectLabel.type = visualization_msgs::Marker::TEXT_VIEW_FACING;
     objectLabel.pose.position.x = xAvg;
     objectLabel.pose.position.y = yAvg;

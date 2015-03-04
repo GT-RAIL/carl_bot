@@ -20,9 +20,9 @@
 #include <interactive_markers/menu_handler.h>
 #include <rail_manipulation_msgs/GripperAction.h>
 #include <rail_manipulation_msgs/LiftAction.h>
+#include <rail_manipulation_msgs/SegmentedObjectList.h>
 #include <rail_pick_and_place_msgs/PickupSegmentedObject.h>
 #include <rail_segmentation/RemoveObject.h>
-#include <rail_segmentation/SegmentedObjectList.h>
 #include <wpi_jaco_msgs/CartesianCommand.h>
 #include <wpi_jaco_msgs/EStop.h>
 #include <wpi_jaco_msgs/GetCartesianPosition.h>
@@ -91,7 +91,7 @@ public:
    * \brief callback for segmented objects to be displayed
    * @param objectList list of segmented objects for displaying
    */
-  void segmentedObjectsCallback(const rail_segmentation::SegmentedObjectList::ConstPtr& objectList);
+  void segmentedObjectsCallback(const rail_manipulation_msgs::SegmentedObjectList::ConstPtr& objectList);
 
   /**
    * \brief clear all segmented objects from the interactive marker server
