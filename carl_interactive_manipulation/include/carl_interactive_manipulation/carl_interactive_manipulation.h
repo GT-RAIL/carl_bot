@@ -20,6 +20,7 @@
 #include <interactive_markers/menu_handler.h>
 #include <rail_manipulation_msgs/GripperAction.h>
 #include <rail_manipulation_msgs/LiftAction.h>
+#include <rail_manipulation_msgs/RecognizeObjectAction.h>
 #include <rail_manipulation_msgs/SegmentedObjectList.h>
 #include <rail_pick_and_place_msgs/PickupSegmentedObject.h>
 #include <rail_segmentation/RemoveObject.h>
@@ -68,6 +69,12 @@ public:
    * @param feedback interactive marker feedback
    */
   void processHandMarkerFeedback(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback);
+
+  /**
+   * /brief Process feedback for objects that can be recognized.
+   * @param feedback interactive marker feedback
+   */
+  void processRecognizeMarkerFeedback(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback);
 
   /**
    * /brief Process feedback for objects that can be picked up.
@@ -131,6 +138,7 @@ private:
 
   //messages
   ros::Publisher cartesianCmd;
+  ros::Publisher segmentedObjectsPublisher;
   ros::Subscriber jointStateSubscriber;
   ros::Subscriber segmentedObjectsSubscriber;
 
@@ -147,12 +155,14 @@ private:
   actionlib::SimpleActionClient<rail_manipulation_msgs::GripperAction> acGripper;
   actionlib::SimpleActionClient<rail_manipulation_msgs::LiftAction> acLift;
   actionlib::SimpleActionClient<wpi_jaco_msgs::HomeArmAction> acHome;
+  actionlib::SimpleActionClient<rail_manipulation_msgs::RecognizeObjectAction> acRecognizeObject;
 
   boost::shared_ptr<interactive_markers::InteractiveMarkerServer> imServer; //!< interactive marker server
   interactive_markers::MenuHandler menuHandler; //!< interactive marker menu handler
   interactive_markers::MenuHandler objectMenuHandler; //!< object interactive markers menu handler
   std::vector<interactive_markers::MenuHandler> recognizedMenuHandlers; //!< list of customized menu handlers for recognized objects
-  std::vector<visualization_msgs::InteractiveMarker> segmentedObjects;
+  std::vector<visualization_msgs::InteractiveMarker> segmentedObjects;  //!< list of segmented objects as interactive markers
+  rail_manipulation_msgs::SegmentedObjectList segmentedObjectList;  //!< list of segmented objects in the rail_manipulation_msgs form
   std::vector<float> joints;  //!< current joint state
   std::vector<float> markerPose; //!< current pose of the gripper marker
   bool lockPose;  //!< flag to stop the arm from updating on pose changes, this is used to prevent the slight movement when left clicking on the center of the marker
