@@ -37,4 +37,5 @@
   <run_depend>carl_teleop</run_depend>
   <run_depend>carl_interactive_manipulation</run_depend>
   <run_depend>carl_safety</run_depend>
+  <run_depend>carl_moveit</run_depend>
 </package>

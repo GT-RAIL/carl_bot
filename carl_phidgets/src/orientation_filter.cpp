@@ -23,6 +23,7 @@ OrientationFilter::OrientationFilter()
   jointStates.effort.resize(4);
 
   baseOrientationInitialized = false;
+  output = false;
 
   // create the ROS topics
   frameJointStatePublisher = n.advertise<sensor_msgs::JointState>("frame_joint_states", 1);
@@ -41,7 +42,11 @@ void OrientationFilter::topImuCallback(const sensor_msgs::Imu::ConstPtr& data)
 {
   if (!baseOrientationInitialized)
   {
-    ROS_INFO("Waiting for base orientation to be initialized before calculating frame pitch...");
+    if (!output)
+    {
+      ROS_INFO("Waiting for base orientation to be initialized before calculating frame pitch...");
+      output = true;
+    }
     return;
   }
 
