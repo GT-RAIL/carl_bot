@@ -2,6 +2,9 @@
 Changelog for package carl_dynamixel
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.17 (2015-03-24)
+-------------------
+
 0.0.16 (2015-02-17)
 -------------------
 * Fixed a timestamp problem for tf lookups
