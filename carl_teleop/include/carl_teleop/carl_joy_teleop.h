@@ -17,13 +17,13 @@
 
 #include <ros/ros.h>
 #include <actionlib/client/simple_action_client.h>
+#include <carl_moveit/ArmAction.h>
 #include <sensor_msgs/Joy.h>
 #include <std_msgs/Float64.h>
 #include <std_srvs/Empty.h>
 #include <wpi_jaco_msgs/AngularCommand.h>
 #include <wpi_jaco_msgs/CartesianCommand.h>
 #include <wpi_jaco_msgs/EStop.h>
-#include <wpi_jaco_msgs/HomeArmAction.h>
 
 //Control modes
 #define ARM_CONTROL 0 
@@ -122,7 +122,7 @@ private:
   ros::ServiceClient segment_client; /*!< the asus point cloud segmentation client */
   ros::ServiceClient eStopClient; /*!< arm software emergency stop service client */
 
-  actionlib::SimpleActionClient<wpi_jaco_msgs::HomeArmAction> acHome; /*!< home and retract arm action client */
+  actionlib::SimpleActionClient<carl_moveit::ArmAction> acArm; /*!< home and retract arm action client */
 
   geometry_msgs::Twist twist; /*!< base movement command */
   wpi_jaco_msgs::AngularCommand fingerCmd; /*!< finger movement command */

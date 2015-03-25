@@ -3,8 +3,8 @@
 using namespace std;
 
 CarlInteractiveManipulation::CarlInteractiveManipulation() :
-    acGripper("jaco_arm/manipulation/gripper", true), acLift("jaco_arm/manipulation/lift", true), acHome(
-        "carl_moveit_wrapper/common_actions/ready_arm", true), acRecognizeObject("pc_recognition/recognize_object", true)
+    acGripper("jaco_arm/manipulation/gripper", true), acLift("jaco_arm/manipulation/lift", true), acArm(
+        "carl_moveit_wrapper/common_actions/arm_action", true), acRecognizeObject("pc_recognition/recognize_object", true)
 {
   joints.resize(6);
 
@@ -28,7 +28,7 @@ CarlInteractiveManipulation::CarlInteractiveManipulation() :
   ROS_INFO("Waiting for grasp, and pickup action servers...");
   acGripper.waitForServer();
   acLift.waitForServer();
-  acHome.waitForServer();
+  acArm.waitForServer();
   ROS_INFO("Finished waiting for action servers");
 
   markerPose.resize(6);
@@ -436,32 +436,19 @@ void CarlInteractiveManipulation::processHandMarkerFeedback(
       {
         acGripper.cancelAllGoals();
         acLift.cancelAllGoals();
-        wpi_jaco_msgs::HomeArmGoal homeGoal;
-        homeGoal.retract = false;
-        homeGoal.numAttempts = 3;
-        acHome.sendGoal(homeGoal);
-        acHome.waitForResult(ros::Duration(10.0));
+        carl_moveit::ArmGoal homeGoal;
+        homeGoal.action = carl_moveit::ArmGoal::READY;
+        acArm.sendGoal(homeGoal);
+        acArm.waitForResult(ros::Duration(10.0));
       }
       else if (feedback->menu_entry_id == 6)
       {
         acGripper.cancelAllGoals();
         acLift.cancelAllGoals();
-        wpi_jaco_msgs::HomeArmGoal homeGoal;
-        homeGoal.retract = true;
-        homeGoal.retractPosition.position = true;
-        homeGoal.retractPosition.armCommand = true;
-        homeGoal.retractPosition.fingerCommand = false;
-        homeGoal.retractPosition.repeat = false;
-        homeGoal.retractPosition.joints.resize(6);
-        homeGoal.retractPosition.joints[0] = -2.57;
-        homeGoal.retractPosition.joints[1] = 1.39;
-        homeGoal.retractPosition.joints[2] = .527;
-        homeGoal.retractPosition.joints[3] = -.084;
-        homeGoal.retractPosition.joints[4] = .515;
-        homeGoal.retractPosition.joints[5] = -1.745;
-        homeGoal.numAttempts = 3;
-        acHome.sendGoal(homeGoal);
-        acHome.waitForResult(ros::Duration(15.0));
+        carl_moveit::ArmGoal homeGoal;
+        homeGoal.action = carl_moveit::ArmGoal::RETRACT;
+        acArm.sendGoal(homeGoal);
+        acArm.waitForResult(ros::Duration(15.0));
       }
     }
     break;

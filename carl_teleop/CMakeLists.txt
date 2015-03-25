@@ -4,7 +4,7 @@ project(carl_teleop)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS actionlib joy roscpp sensor_msgs std_msgs std_srvs wpi_jaco_msgs)
+find_package(catkin REQUIRED COMPONENTS actionlib carl_moveit joy roscpp sensor_msgs std_msgs std_srvs wpi_jaco_msgs)
 
 ###################################################
 ## Declare things to be passed to other projects ##

@@ -18,7 +18,7 @@
 using namespace std;
 
 carl_joy_teleop::carl_joy_teleop() :
-    acHome("carl_moveit_wrapper/common_actions/ready_arm", true)
+    acArm("carl_moveit_wrapper/common_actions/arm_action", true)
 {
   // a private handle for this ROS node (allows retrieval of relative parameters)
   ros::NodeHandle private_nh("~");
@@ -75,7 +75,7 @@ carl_joy_teleop::carl_joy_teleop() :
 
   /*
   ROS_INFO("Waiting for home arm server...");
-  acHome.waitForServer();
+  acArm.waitForServer();
   ROS_INFO("Home arm server found.");
 */
 
@@ -493,9 +493,9 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
         if (joy->buttons.at(4) == 1)
         {
           //send home command
-          wpi_jaco_msgs::HomeArmGoal homeGoal;
-          homeGoal.retract = false;
-          acHome.sendGoal(homeGoal);
+          carl_moveit::ArmGoal homeGoal;
+          homeGoal.action = carl_moveit::ArmGoal::READY;
+          acArm.sendGoal(homeGoal);
         }
         leftBumperPrev = joy->buttons.at(4);
       }
@@ -504,20 +504,9 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
         if (joy->buttons.at(5) == 1)
         {
           //send retract command
-          wpi_jaco_msgs::HomeArmGoal homeGoal;
-          homeGoal.retract = true;
-          homeGoal.retractPosition.position = true;
-          homeGoal.retractPosition.armCommand = true;
-          homeGoal.retractPosition.fingerCommand = false;
-          homeGoal.retractPosition.repeat = false;
-          homeGoal.retractPosition.joints.resize(6);
-          homeGoal.retractPosition.joints[0] = -2.57;
-          homeGoal.retractPosition.joints[1] = 1.39;
-          homeGoal.retractPosition.joints[2] = .527;
-          homeGoal.retractPosition.joints[3] = -.084;
-          homeGoal.retractPosition.joints[4] = .515;
-          homeGoal.retractPosition.joints[5] = -1.745;
-          acHome.sendGoal(homeGoal);
+          carl_moveit::ArmGoal retractGoal;
+          retractGoal.action = carl_moveit::ArmGoal::RETRACT;
+          acArm.sendGoal(retractGoal);
         }
         rightBumperPrev = joy->buttons.at(5);
       }
