@@ -4,7 +4,7 @@ using namespace std;
 
 CarlInteractiveManipulation::CarlInteractiveManipulation() :
     acGripper("jaco_arm/manipulation/gripper", true), acLift("jaco_arm/manipulation/lift", true), acArm(
-        "carl_moveit_wrapper/common_actions/arm_action", true), acRecognizeObject("pc_recognition/recognize_object", true)
+        "carl_moveit_wrapper/common_actions/arm_action", true), acRecognize("rail_recognition/recognize", true)
 {
   joints.resize(6);
 
@@ -14,6 +14,7 @@ CarlInteractiveManipulation::CarlInteractiveManipulation() :
   jointStateSubscriber = n.subscribe("jaco_arm/joint_states", 1, &CarlInteractiveManipulation::updateJoints, this);
   segmentedObjectsSubscriber = n.subscribe("rail_segmentation/segmented_objects", 1,
                                            &CarlInteractiveManipulation::segmentedObjectsCallback, this);
+  recognizedObjectsSubscriber = n.subscribe("rail_recognition/recognized_objects", 1, &CarlInteractiveManipulation::segmentedObjectsCallback, this);
 
   //services
   armCartesianPositionClient = n.serviceClient<wpi_jaco_msgs::GetCartesianPosition>("jaco_arm/get_cartesian_position");
@@ -333,17 +334,10 @@ void CarlInteractiveManipulation::processRecognizeMarkerFeedback(
   if (feedback->event_type == visualization_msgs::InteractiveMarkerFeedback::MENU_SELECT)
   {
     int objectIndex = atoi(feedback->marker_name.substr(6).c_str());
-    rail_manipulation_msgs::RecognizeObjectGoal goal;
-    goal.object = segmentedObjectList.objects[objectIndex];
-    acRecognizeObject.sendGoal(goal);
-    acRecognizeObject.waitForResult(ros::Duration(10.0));
-    rail_manipulation_msgs::RecognizeObjectResultConstPtr result = acRecognizeObject.getResult();
-
-    if (result->object.recognized)
-    {
-      segmentedObjectList.objects[objectIndex] = result->object;
-      segmentedObjectsPublisher.publish(segmentedObjectList);
-    }
+    rail_manipulation_msgs::RecognizeGoal goal;
+    goal.index = objectIndex;
+    acRecognize.sendGoal(goal);
+    acRecognize.waitForResult(ros::Duration(10.0));
   }
 }
 

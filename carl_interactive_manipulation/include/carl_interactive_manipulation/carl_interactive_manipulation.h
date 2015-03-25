@@ -21,7 +21,7 @@
 #include <interactive_markers/menu_handler.h>
 #include <rail_manipulation_msgs/GripperAction.h>
 #include <rail_manipulation_msgs/LiftAction.h>
-#include <rail_manipulation_msgs/RecognizeObjectAction.h>
+#include <rail_manipulation_msgs/RecognizeAction.h>
 #include <rail_manipulation_msgs/SegmentedObjectList.h>
 #include <rail_pick_and_place_msgs/PickupSegmentedObject.h>
 #include <rail_segmentation/RemoveObject.h>
@@ -141,6 +141,7 @@ private:
   ros::Publisher segmentedObjectsPublisher;
   ros::Subscriber jointStateSubscriber;
   ros::Subscriber segmentedObjectsSubscriber;
+  ros::Subscriber recognizedObjectsSubscriber;
 
   //services
   ros::ServiceClient armCartesianPositionClient;
@@ -155,7 +156,7 @@ private:
   actionlib::SimpleActionClient<rail_manipulation_msgs::GripperAction> acGripper;
   actionlib::SimpleActionClient<rail_manipulation_msgs::LiftAction> acLift;
   actionlib::SimpleActionClient<carl_moveit::ArmAction> acArm;
-  actionlib::SimpleActionClient<rail_manipulation_msgs::RecognizeObjectAction> acRecognizeObject;
+  actionlib::SimpleActionClient<rail_manipulation_msgs::RecognizeAction> acRecognize;
 
   boost::shared_ptr<interactive_markers::InteractiveMarkerServer> imServer; //!< interactive marker server
   interactive_markers::MenuHandler menuHandler; //!< interactive marker menu handler
