@@ -2,6 +2,9 @@
 Changelog for package carl_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.17 (2015-03-24)
+-------------------
+
 0.0.16 (2015-02-17)
 -------------------
 * Changed teleop segment call to segment_auto

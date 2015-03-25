@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>carl_tools</name>
-  <version>0.0.16</version>
+  <version>0.0.17</version>
   <description>Miscellaneous Tools for CARL</description>
 
   <maintainer email="rctoris@wpi.edu">Russell Toris</maintainer>

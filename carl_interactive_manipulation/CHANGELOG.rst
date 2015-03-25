@@ -2,6 +2,14 @@
 Changelog for package carl_interactive_manipulation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.17 (2015-03-24)
+-------------------
+* Added new recognition calls to carl_interactive_manipulation (note that pickup is still in progress and will not currently work)
+* updted message
+* Updated to reflect moving some messages from rail_segmentation to rail_manipulation_messages
+* Switched im to use new rail_manipulation_msgs
+* Contributors: David Kent, Russell Toris
+
 0.0.16 (2015-02-17)
 -------------------
 * Update package.xml

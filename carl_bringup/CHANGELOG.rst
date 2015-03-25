@@ -2,6 +2,11 @@
 Changelog for package carl_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.17 (2015-03-24)
+-------------------
+* limited output on phidgets initialization, added moveit stuff to carl_bringup launch
+* Contributors: David Kent
+
 0.0.16 (2015-02-17)
 -------------------
 
