@@ -12,8 +12,6 @@ CarlInteractiveManipulation::CarlInteractiveManipulation() :
   cartesianCmd = n.advertise<wpi_jaco_msgs::CartesianCommand>("jaco_arm/cartesian_cmd", 1);
   segmentedObjectsPublisher = n.advertise<rail_manipulation_msgs::SegmentedObjectList>("rail_segmentation/segmented_objects", 1);
   jointStateSubscriber = n.subscribe("jaco_arm/joint_states", 1, &CarlInteractiveManipulation::updateJoints, this);
-  segmentedObjectsSubscriber = n.subscribe("rail_segmentation/segmented_objects", 1,
-                                           &CarlInteractiveManipulation::segmentedObjectsCallback, this);
   recognizedObjectsSubscriber = n.subscribe("rail_recognition/recognized_objects", 1, &CarlInteractiveManipulation::segmentedObjectsCallback, this);
 
   //services
@@ -162,8 +160,7 @@ void CarlInteractiveManipulation::segmentedObjectsCallback(
     objectLabelControl.interaction_mode = visualization_msgs::InteractiveMarkerControl::NONE;
     objectLabelControl.always_visible = true;
     visualization_msgs::Marker objectLabel;
-    //objectLabel.header = objectList->objects[i].point_cloud.header;
-    objectLabel.header.frame_id = "base_footprint"; //not sure why, but this makes all of the markers work
+    objectLabel.header = objectList->objects[i].point_cloud.header;
     objectLabel.type = visualization_msgs::Marker::TEXT_VIEW_FACING;
     objectLabel.pose.position.x = objectList->objects[i].centroid.x;
     objectLabel.pose.position.y = objectList->objects[i].centroid.y;

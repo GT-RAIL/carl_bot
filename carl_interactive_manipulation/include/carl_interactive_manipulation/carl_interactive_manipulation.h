@@ -140,7 +140,6 @@ private:
   ros::Publisher cartesianCmd;
   ros::Publisher segmentedObjectsPublisher;
   ros::Subscriber jointStateSubscriber;
-  ros::Subscriber segmentedObjectsSubscriber;
   ros::Subscriber recognizedObjectsSubscriber;
 
   //services
