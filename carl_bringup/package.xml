@@ -38,4 +38,8 @@
   <run_depend>carl_interactive_manipulation</run_depend>
   <run_depend>carl_safety</run_depend>
   <run_depend>carl_moveit</run_depend>
+
+  <!-- MISC -->
+  <run_depend>rail_segmentation</run_depend>
+  <run_depend>rail_pick_and_place_tools</run_depend>
 </package>
