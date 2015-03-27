@@ -2,6 +2,14 @@
 Changelog for package carl_interactive_manipulation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.18 (2015-03-27)
+-------------------
+* Fixed a text placement bug on recognized markers
+* Switched recognition functionality in interactive manipulation to use the new shared recognition actions
+* Merge branch 'develop' of github.com:WPI-RAIL/carl_bot into develop
+* Switched to the new ready/retract action provided by carl_moveit_common_actions
+* Contributors: David Kent
+
 0.0.17 (2015-03-24)
 -------------------
 * Added new recognition calls to carl_interactive_manipulation (note that pickup is still in progress and will not currently work)

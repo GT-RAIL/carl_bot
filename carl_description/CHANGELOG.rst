@@ -2,6 +2,9 @@
 Changelog for package carl_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.18 (2015-03-27)
+-------------------
+
 0.0.17 (2015-03-24)
 -------------------
 * Added an end effector frame for the JACO
