@@ -2,6 +2,11 @@
 Changelog for package carl_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.19 (2015-03-27)
+-------------------
+* added launch for carl grasp collection
+* Contributors: Russell Toris
+
 0.0.18 (2015-03-27)
 -------------------
 

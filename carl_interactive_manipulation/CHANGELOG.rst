@@ -2,6 +2,9 @@
 Changelog for package carl_interactive_manipulation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.19 (2015-03-27)
+-------------------
+
 0.0.18 (2015-03-27)
 -------------------
 * Fixed a text placement bug on recognized markers
