@@ -12,7 +12,7 @@ CarlInteractiveManipulation::CarlInteractiveManipulation() :
   cartesianCmd = n.advertise<wpi_jaco_msgs::CartesianCommand>("jaco_arm/cartesian_cmd", 1);
   segmentedObjectsPublisher = n.advertise<rail_manipulation_msgs::SegmentedObjectList>("rail_segmentation/segmented_objects", 1);
   jointStateSubscriber = n.subscribe("jaco_arm/joint_states", 1, &CarlInteractiveManipulation::updateJoints, this);
-  recognizedObjectsSubscriber = n.subscribe("rail_recognition/recognized_objects", 1, &CarlInteractiveManipulation::segmentedObjectsCallback, this);
+  recognizedObjectsSubscriber = n.subscribe("/object_recognition_listener/recognized_objects", 1, &CarlInteractiveManipulation::segmentedObjectsCallback, this);
 
   //services
   armCartesianPositionClient = n.serviceClient<wpi_jaco_msgs::GetCartesianPosition>("jaco_arm/get_cartesian_position");
