@@ -2,6 +2,11 @@
 Changelog for package carl_interactive_manipulation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.20 (2015-03-31)
+-------------------
+* renamed topic
+* Contributors: Russell Toris
+
 0.0.19 (2015-03-27)
 -------------------
 

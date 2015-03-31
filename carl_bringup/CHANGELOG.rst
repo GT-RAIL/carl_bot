@@ -2,6 +2,13 @@
 Changelog for package carl_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.20 (2015-03-31)
+-------------------
+* added segmentation topic
+* typo in config file name
+* added launch for recognition
+* Contributors: Russell Toris
+
 0.0.19 (2015-03-27)
 -------------------
 * added launch for carl grasp collection
