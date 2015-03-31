@@ -2,6 +2,11 @@
 Changelog for package carl_interactive_manipulation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.21 (2015-03-31)
+-------------------
+* removed recognition
+* Contributors: Russell Toris
+
 0.0.20 (2015-03-31)
 -------------------
 * renamed topic
