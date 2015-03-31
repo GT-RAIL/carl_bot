@@ -21,13 +21,13 @@
 
   <group if="$(arg nav)">
     <node name="rail_segmentation" pkg="rail_segmentation" type="rail_segmentation" output="screen">
-      <param name="zones_config" value="$(find carl_bringup)/config/segmentation/zones-no-map.yaml" />
+      <param name="zones_config" value="$(find carl_bringup)/config/segmentation/zones.yaml" />
       <param name="debug" value="$(arg debug)" />
     </node>
   </group>
   <group unless="$(arg nav)">
     <node name="rail_segmentation" pkg="rail_segmentation" type="rail_segmentation" output="screen">
-      <param name="zones_config" value="$(find carl_bringup)/config/segmentation/zones.yaml" />
+      <param name="zones_config" value="$(find carl_bringup)/config/segmentation/zones-no-map.yaml" />
       <param name="debug" value="$(arg debug)" />
     </node>
   </group>
