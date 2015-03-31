@@ -41,5 +41,6 @@
 
   <!-- MISC -->
   <run_depend>rail_segmentation</run_depend>
+  <run_depend>rail_recognition</run_depend>
   <run_depend>rail_pick_and_place_tools</run_depend>
 </package>

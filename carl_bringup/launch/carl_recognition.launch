@@ -1,0 +1,45 @@
+<!--
+   Author: Russell Toris, Worcester Polytechnic Institute
+  Version: March 31, 2015
+-->
+
+<launch>
+  <!-- Grasp Database Connection Params -->
+  <arg name="port" default="5432" />
+  <arg name="user" default="ros" />
+  <arg name="password" default="$(env GRASPDB_PW)" />
+  <arg name="db" default="graspdb" />
+  <!-- RobotsFor.Me IP Address -->
+  <arg name="host" default="130.215.28.159" />
+
+  <!-- Segmentation Params -->
+  <arg name="nav" default="false" />
+  <arg name="debug" default="false" />
+
+  <!-- Recognition Params -->
+  <arg name="segmented_objects_topic" default="/segmentation/segmented_objects" />
+
+  <group if="$(arg nav)">
+    <node name="rail_segmentation" pkg="rail_segmentation" type="rail_segmentation" output="screen">
+      <param name="zones_config" value="$(find carl_bringup)/config/segmentation/zones-no-map.yaml" />
+      <param name="debug" value="$(arg debug)" />
+    </node>
+  </group>
+  <group unless="$(arg nav)">
+    <node name="rail_segmentation" pkg="rail_segmentation" type="rail_segmentation" output="screen">
+      <param name="zones_config" value="$(find carl_bringup)/config/segmentation/zones.yaml" />
+      <param name="debug" value="$(arg debug)" />
+    </node>
+  </group>
+
+  <include file="$(find rail_recognition)/launch/object_recognition_listener.launch">
+    <!-- RobotsFor.Me IP Address -->
+    <arg name="host" value="$(arg host)" />
+    <arg name="port" value="$(arg port)" />
+    <arg name="user" value="$(arg user)" />
+    <arg name="db" value="$(arg db)" />
+    <arg name="password" value="$(arg password)" />
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="segmented_objects_topic" value="$(arg segmented_objects_topic)" />
+  </include>
+</launch>
