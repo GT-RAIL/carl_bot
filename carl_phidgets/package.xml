@@ -1,6 +1,6 @@
 <package>
   <name>carl_phidgets</name>
-  <version>0.0.19</version>
+  <version>0.0.20</version>
   <description>ROS Support for the Phidgets Spatial 3/3/3 Devices for use with the CARL Robot</description>
   
   <maintainer email="davidkent@wpi.edu">David Kent </maintainer>
