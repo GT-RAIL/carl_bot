@@ -4,7 +4,7 @@ using namespace std;
 
 CarlInteractiveManipulation::CarlInteractiveManipulation() :
     acGripper("jaco_arm/manipulation/gripper", true), acLift("jaco_arm/manipulation/lift", true), acArm(
-        "carl_moveit_wrapper/common_actions/arm_action", true), acRecognize("rail_recognition/recognize", true)
+        "carl_moveit_wrapper/common_actions/arm_action", true)//, acRecognize("rail_recognition/recognize", true)
 {
   joints.resize(6);
 
@@ -43,7 +43,7 @@ CarlInteractiveManipulation::CarlInteractiveManipulation() :
   makeHandMarker();
 
   //setup object menu
-  objectMenuHandler.insert("Recognize",  boost::bind(&CarlInteractiveManipulation::processRecognizeMarkerFeedback, this, _1));
+  //objectMenuHandler.insert("Recognize",  boost::bind(&CarlInteractiveManipulation::processRecognizeMarkerFeedback, this, _1));
   objectMenuHandler.insert("Pickup", boost::bind(&CarlInteractiveManipulation::processPickupMarkerFeedback, this, _1));
   objectMenuHandler.insert("Remove", boost::bind(&CarlInteractiveManipulation::processRemoveMarkerFeedback, this, _1));
 
@@ -325,18 +325,18 @@ void CarlInteractiveManipulation::makeHandMarker()
   menuHandler.apply(*imServer, iMarker.name);
 }
 
-void CarlInteractiveManipulation::processRecognizeMarkerFeedback(
-    const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback)
-{
-  if (feedback->event_type == visualization_msgs::InteractiveMarkerFeedback::MENU_SELECT)
-  {
-    int objectIndex = atoi(feedback->marker_name.substr(6).c_str());
-    rail_manipulation_msgs::RecognizeGoal goal;
-    goal.index = objectIndex;
-    acRecognize.sendGoal(goal);
-    acRecognize.waitForResult(ros::Duration(10.0));
-  }
-}
+//void CarlInteractiveManipulation::processRecognizeMarkerFeedback(
+//    const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback)
+//{
+//  if (feedback->event_type == visualization_msgs::InteractiveMarkerFeedback::MENU_SELECT)
+//  {
+//    int objectIndex = atoi(feedback->marker_name.substr(6).c_str());
+//    rail_manipulation_msgs::RecognizeGoal goal;
+//    goal.index = objectIndex;
+//    acRecognize.sendGoal(goal);
+//    acRecognize.waitForResult(ros::Duration(10.0));
+//  }
+//}
 
 void CarlInteractiveManipulation::processPickupMarkerFeedback(
     const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback)

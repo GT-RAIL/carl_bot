@@ -21,7 +21,7 @@
 #include <interactive_markers/menu_handler.h>
 #include <rail_manipulation_msgs/GripperAction.h>
 #include <rail_manipulation_msgs/LiftAction.h>
-#include <rail_manipulation_msgs/RecognizeAction.h>
+//#include <rail_manipulation_msgs/RecognizeAction.h>
 #include <rail_manipulation_msgs/SegmentedObjectList.h>
 #include <rail_pick_and_place_msgs/PickupSegmentedObject.h>
 #include <rail_segmentation/RemoveObject.h>
@@ -74,7 +74,7 @@ public:
    * /brief Process feedback for objects that can be recognized.
    * @param feedback interactive marker feedback
    */
-  void processRecognizeMarkerFeedback(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback);
+  //void processRecognizeMarkerFeedback(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback);
 
   /**
    * /brief Process feedback for objects that can be picked up.
@@ -155,7 +155,7 @@ private:
   actionlib::SimpleActionClient<rail_manipulation_msgs::GripperAction> acGripper;
   actionlib::SimpleActionClient<rail_manipulation_msgs::LiftAction> acLift;
   actionlib::SimpleActionClient<carl_moveit::ArmAction> acArm;
-  actionlib::SimpleActionClient<rail_manipulation_msgs::RecognizeAction> acRecognize;
+  //actionlib::SimpleActionClient<rail_manipulation_msgs::RecognizeAction> acRecognize;
 
   boost::shared_ptr<interactive_markers::InteractiveMarkerServer> imServer; //!< interactive marker server
   interactive_markers::MenuHandler menuHandler; //!< interactive marker menu handler
