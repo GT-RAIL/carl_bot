@@ -15,6 +15,6 @@
   </include>
 
   <node name="rail_segmentation" pkg="rail_segmentation" type="rail_segmentation" respawn="false" output="screen">
-    <param name="zones_config" value="$(find rail_segmentation)/config/zones-no-map.yaml" />
+    <param name="zones_config" value="$(find carl_bringup)/config/segmentation/zones-no-map.yaml" />
   </node>
 </launch>
