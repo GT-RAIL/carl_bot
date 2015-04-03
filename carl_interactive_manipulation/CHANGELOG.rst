@@ -2,6 +2,11 @@
 Changelog for package carl_interactive_manipulation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.23 (2015-04-03)
+-------------------
+* removed pickup from IM client
+* Contributors: Russell Toris
+
 0.0.22 (2015-04-03)
 -------------------
 

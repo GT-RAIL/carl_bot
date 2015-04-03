@@ -2,6 +2,9 @@
 Changelog for package carl_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.23 (2015-04-03)
+-------------------
+
 0.0.22 (2015-04-03)
 -------------------
 * new launch files for grasp collection
