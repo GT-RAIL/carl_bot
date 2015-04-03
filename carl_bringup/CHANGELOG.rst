@@ -2,6 +2,12 @@
 Changelog for package carl_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.22 (2015-04-03)
+-------------------
+* new launch files for grasp collection
+* Fixed config file location in model generation launch file
+* Contributors: David Kent, Russell Toris
+
 0.0.21 (2015-03-31)
 -------------------
 

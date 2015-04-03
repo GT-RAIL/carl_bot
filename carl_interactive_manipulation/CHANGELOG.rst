@@ -2,6 +2,9 @@
 Changelog for package carl_interactive_manipulation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.22 (2015-04-03)
+-------------------
+
 0.0.21 (2015-03-31)
 -------------------
 * removed recognition
