@@ -23,7 +23,7 @@
 #include <rail_manipulation_msgs/LiftAction.h>
 //#include <rail_manipulation_msgs/RecognizeAction.h>
 #include <rail_manipulation_msgs/SegmentedObjectList.h>
-#include <rail_pick_and_place_msgs/PickupSegmentedObject.h>
+//#include <rail_pick_and_place_msgs/PickupSegmentedObject.h>
 #include <rail_segmentation/RemoveObject.h>
 #include <wpi_jaco_msgs/CartesianCommand.h>
 #include <wpi_jaco_msgs/EStop.h>
@@ -76,11 +76,11 @@ public:
    */
   //void processRecognizeMarkerFeedback(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback);
 
-  /**
-   * /brief Process feedback for objects that can be picked up.
-   * @param feedback interactive marker feedback
-   */
-  void processPickupMarkerFeedback(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback);
+//  /**
+//   * /brief Process feedback for objects that can be picked up.
+//   * @param feedback interactive marker feedback
+//   */
+//  void processPickupMarkerFeedback(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback);
 
   /**
   * \brief Process feedback for objects that are selected for removal.
@@ -148,7 +148,7 @@ private:
   ros::ServiceClient eraseTrajectoriesClient;
   ros::ServiceClient jacoFkClient;  //!< forward kinematics
   ros::ServiceClient qeClient;  //!< rotation representation conversion client
-  ros::ServiceClient pickupSegmentedClient;
+//  ros::ServiceClient pickupSegmentedClient;
   ros::ServiceClient removeObjectClient;
 
   //actionlib
