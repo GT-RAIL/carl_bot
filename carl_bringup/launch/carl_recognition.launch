@@ -33,7 +33,6 @@
   </group>
 
   <include file="$(find rail_recognition)/launch/object_recognition_listener.launch">
-    <!-- RobotsFor.Me IP Address -->
     <arg name="host" value="$(arg host)" />
     <arg name="port" value="$(arg port)" />
     <arg name="user" value="$(arg user)" />

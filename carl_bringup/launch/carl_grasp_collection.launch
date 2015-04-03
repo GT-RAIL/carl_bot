@@ -1,0 +1,49 @@
+<!--
+   Author: Russell Toris, Worcester Polytechnic Institute
+  Version: March 27, 2015
+-->
+
+<launch>
+  <!-- Grasp Database Connection Params -->
+  <arg name="port" default="5432" />
+  <arg name="user" default="ros" />
+  <arg name="password" default="$(env GRASPDB_PW)" />
+  <arg name="db" default="graspdb" />
+  <!-- RobotsFor.Me IP Address -->
+  <arg name="host" default="130.215.28.159" />
+
+  <!-- Grasp Collection Params -->
+  <arg name="eef_frame_id" default="jaco_link_eef" />
+  <arg name="gripper_action_server" default="/jaco_arm/manipulation/gripper" />
+  <arg name="lift_action_server" default="/jaco_arm/manipulation/lift" />
+  <arg name="segmented_objects_topic" default="/rail_segmentation/segmented_objects" />
+
+  <!-- Segmentation Params -->
+  <arg name="nav" default="false" />
+  <arg name="debug" default="false" />
+
+  <!-- Pick and Place -->
+  <include file="$(find rail_pick_and_place_tools)/launch/rail_pick_and_place_backend.launch">
+    <arg name="host" value="$(arg host)" />
+    <arg name="port" value="$(arg port)" />
+    <arg name="user" value="$(arg user)" />
+    <arg name="db" value="$(arg db)" />
+    <arg name="password" value="$(arg password)" />
+    <arg name="eef_frame_id" value="$(arg eef_frame_id)" />
+    <arg name="gripper_action_server" value="$(arg gripper_action_server)" />
+    <arg name="lift_action_server" value="$(arg lift_action_server)" />
+    <arg name="segmented_objects_topic" value="$(arg segmented_objects_topic)" />
+  </include>
+
+  <!-- Segmentation -->
+  <include file="$(find carl_bringup)/launch/carl_recognition.launch">
+    <arg name="host" value="$(arg host)" />
+    <arg name="port" value="$(arg port)" />
+    <arg name="user" value="$(arg user)" />
+    <arg name="db" value="$(arg db)" />
+    <arg name="password" value="$(arg password)" />
+    <arg name="segmented_objects_topic" value="$(arg segmented_objects_topic)" />
+    <arg name="nav" value="$(arg nav)" />
+    <arg name="debug" value="$(arg debug)" />
+  </include>
+</launch>
