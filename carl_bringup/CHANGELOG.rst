@@ -2,6 +2,11 @@
 Changelog for package carl_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.24 (2015-04-06)
+-------------------
+* refactor of RViz GUIs
+* Contributors: Russell Toris
+
 0.0.23 (2015-04-03)
 -------------------
 

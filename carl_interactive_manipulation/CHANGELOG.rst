@@ -2,6 +2,9 @@
 Changelog for package carl_interactive_manipulation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.24 (2015-04-06)
+-------------------
+
 0.0.23 (2015-04-03)
 -------------------
 * removed pickup from IM client
