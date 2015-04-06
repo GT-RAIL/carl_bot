@@ -1,0 +1,14 @@
+<!--
+   Author: Russell Toris, Worcester Polytechnic Institute
+   Author: David Kent, Worcester Polytechnic Institute
+  Version: April 3, 2015
+-->
+
+<launch>
+  <!-- Panel Params -->
+  <arg name="segment_service" default="/rail_segmentation/segment" />
+  <param name="/rviz/segment_panel/segment_service" type="str" value="$(arg segment_service)" />
+
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find carl_bringup)/rviz/carl_grasp_collection_frontend.rviz"
+        output="screen" />
+</launch>
