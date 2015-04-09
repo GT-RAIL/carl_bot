@@ -13,4 +13,23 @@
   <include file="$(find carl_teleop)/launch/carl_joy_teleop.launch" />
   <include file="$(find carl_safety)/launch/carl_safety_basic.launch" />
   <include file="$(find carl_moveit)/launch/carl_moveit_full.launch" />
+
+  <!-- Segmentation Params -->
+  <arg name="nav" default="false" />
+  <arg name="debug" default="false" />
+
+  <!-- Recognition Params -->
+  <arg name="segmented_objects_topic" default="/rail_segmentation/segmented_objects" />
+
+  <!-- Check for navigation -->
+  <arg name="nav" default="false" />
+  <group if="$(arg nav)">
+    <include file="$(find carl_navigation)/launch/navigation_layered.launch" />
+  </group>
+
+  <include file="$(find carl_bringup)/launch/carl_recognition.launch">
+    <arg name="nav" value="$(arg nav)" />
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="segmented_objects_topic" value="$(arg segmented_objects_topic)" />
+  </include>
 </launch>

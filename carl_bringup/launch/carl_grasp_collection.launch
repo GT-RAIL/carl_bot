@@ -18,10 +18,6 @@
   <arg name="lift_action_server" default="/jaco_arm/manipulation/lift" />
   <arg name="segmented_objects_topic" default="/rail_segmentation/segmented_objects" />
 
-  <!-- Segmentation Params -->
-  <arg name="nav" default="false" />
-  <arg name="debug" default="false" />
-
   <!-- Pick and Place -->
   <include file="$(find rail_pick_and_place_tools)/launch/rail_pick_and_place_backend.launch">
     <arg name="host" value="$(arg host)" />
@@ -33,17 +29,5 @@
     <arg name="gripper_action_server" value="$(arg gripper_action_server)" />
     <arg name="lift_action_server" value="$(arg lift_action_server)" />
     <arg name="segmented_objects_topic" value="$(arg segmented_objects_topic)" />
-  </include>
-
-  <!-- Segmentation -->
-  <include file="$(find carl_bringup)/launch/carl_recognition.launch">
-    <arg name="host" value="$(arg host)" />
-    <arg name="port" value="$(arg port)" />
-    <arg name="user" value="$(arg user)" />
-    <arg name="db" value="$(arg db)" />
-    <arg name="password" value="$(arg password)" />
-    <arg name="segmented_objects_topic" value="$(arg segmented_objects_topic)" />
-    <arg name="nav" value="$(arg nav)" />
-    <arg name="debug" value="$(arg debug)" />
   </include>
 </launch>
