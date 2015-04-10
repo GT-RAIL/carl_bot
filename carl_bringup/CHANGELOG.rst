@@ -2,6 +2,17 @@
 Changelog for package carl_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.25 (2015-04-10)
+-------------------
+* flag for safety
+* removed bug in nav launch
+* navigation option added to CARL bringup
+* revert
+* navigation option added to CARL bringup
+* splash screen added
+* new default rviz config
+* Contributors: Russell Toris
+
 0.0.24 (2015-04-06)
 -------------------
 * refactor of RViz GUIs
