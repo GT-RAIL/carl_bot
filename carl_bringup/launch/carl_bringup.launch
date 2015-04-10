@@ -5,14 +5,9 @@
   Version: August 4, 2014
 -->
 
-<launch> 
-  <include file="$(find carl_bringup)/launch/arm.launch" />
-  <include file="$(find carl_bringup)/launch/base.launch" /> 
-  <include file="$(find carl_bringup)/launch/sensors.launch" />
-  <include file="$(find carl_bringup)/launch/robot_model.launch" />
-  <include file="$(find carl_teleop)/launch/carl_joy_teleop.launch" />
-  <include file="$(find carl_safety)/launch/carl_safety_basic.launch" />
-  <include file="$(find carl_moveit)/launch/carl_moveit_full.launch" />
+<launch>
+  <!-- Safety Params -->
+  <arg name="safety" default="true" />
 
   <!-- Segmentation Params -->
   <arg name="nav" default="false" />
@@ -20,6 +15,18 @@
 
   <!-- Recognition Params -->
   <arg name="segmented_objects_topic" default="/rail_segmentation/segmented_objects" />
+
+  <include file="$(find carl_bringup)/launch/arm.launch" />
+  <include file="$(find carl_bringup)/launch/base.launch" /> 
+  <include file="$(find carl_bringup)/launch/sensors.launch" />
+  <include file="$(find carl_bringup)/launch/robot_model.launch" />
+  <include file="$(find carl_teleop)/launch/carl_joy_teleop.launch" />
+  <include file="$(find carl_moveit)/launch/carl_moveit_full.launch" />
+
+  <!-- Check for safety -->
+  <group if="$(arg safety)">
+    <include file="$(find carl_safety)/launch/carl_safety_basic.launch" />
+  </group>
 
   <!-- Check for navigation -->
   <group if="$(arg nav)">
