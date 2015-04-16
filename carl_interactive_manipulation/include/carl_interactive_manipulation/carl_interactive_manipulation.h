@@ -17,13 +17,12 @@
 #include <ros/ros.h>
 #include <actionlib/client/simple_action_client.h>
 #include <carl_moveit/ArmAction.h>
+#include <carl_safety/Error.h>
 #include <interactive_markers/interactive_marker_server.h>
 #include <interactive_markers/menu_handler.h>
 #include <rail_manipulation_msgs/GripperAction.h>
 #include <rail_manipulation_msgs/LiftAction.h>
-//#include <rail_manipulation_msgs/RecognizeAction.h>
 #include <rail_manipulation_msgs/SegmentedObjectList.h>
-//#include <rail_pick_and_place_msgs/PickupSegmentedObject.h>
 #include <rail_segmentation/RemoveObject.h>
 #include <wpi_jaco_msgs/CartesianCommand.h>
 #include <wpi_jaco_msgs/EStop.h>
@@ -139,6 +138,7 @@ private:
   //messages
   ros::Publisher cartesianCmd;
   ros::Publisher segmentedObjectsPublisher;
+  ros::Publisher safetyErrorPublisher;
   ros::Subscriber jointStateSubscriber;
   ros::Subscriber recognizedObjectsSubscriber;
 
