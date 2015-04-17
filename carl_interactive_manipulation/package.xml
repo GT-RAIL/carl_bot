@@ -19,6 +19,7 @@
   
   <build_depend>actionlib</build_depend>
   <build_depend>carl_moveit</build_depend>
+  <build_depend>carl_safety</build_depend>
   <build_depend>geometry_msgs</build_depend>
   <build_depend>interactive_markers</build_depend>
   <build_depend>move_base_msgs</build_depend>
@@ -32,6 +33,7 @@
   
   <run_depend>actionlib</run_depend>
   <run_depend>carl_moveit</run_depend>
+  <run_depend>carl_safety</run_depend>
   <run_depend>geometry_msgs</run_depend>
   <run_depend>interactive_markers</run_depend>
   <run_depend>move_base_msgs</run_depend>

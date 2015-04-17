@@ -11,6 +11,7 @@ CarlInteractiveManipulation::CarlInteractiveManipulation() :
   //messages
   cartesianCmd = n.advertise<wpi_jaco_msgs::CartesianCommand>("jaco_arm/cartesian_cmd", 1);
   segmentedObjectsPublisher = n.advertise<rail_manipulation_msgs::SegmentedObjectList>("rail_segmentation/segmented_objects", 1);
+  safetyErrorPublisher = n.advertise<carl_safety::Error>("carl_safety/error", 1);
   jointStateSubscriber = n.subscribe("jaco_arm/joint_states", 1, &CarlInteractiveManipulation::updateJoints, this);
   recognizedObjectsSubscriber = n.subscribe("/object_recognition_listener/recognized_objects", 1, &CarlInteractiveManipulation::segmentedObjectsCallback, this);
 
@@ -97,48 +98,6 @@ void CarlInteractiveManipulation::segmentedObjectsCallback(
     ss.str("");
     ss << "object" << i;
     objectMarker.name = ss.str();
-
-    /*
-    visualization_msgs::Marker cloudMarker;
-    cloudMarker.header = objectList->objects[i].point_cloud.header;
-    cloudMarker.type = visualization_msgs::Marker::CUBE_LIST;
-    if (objectList->objects[i].recognized)
-    {
-      cloudMarker.color.r = ((float)(rand()) / (float)(RAND_MAX)) / 3.0 + .1;
-      cloudMarker.color.g = ((float)(rand()) / (float)(RAND_MAX)) / 3.0 + .4;
-      cloudMarker.color.b = ((float)(rand()) / (float)(RAND_MAX)) / 4.0 + .75;
-    }
-    else
-    {
-      cloudMarker.color.r = ((float)(rand()) / (float)(RAND_MAX)) / 3.0 + .66;
-      cloudMarker.color.g = ((float)(rand()) / (float)(RAND_MAX)) / 4.0;
-      cloudMarker.color.b = ((float)(rand()) / (float)(RAND_MAX)) / 5.0;
-    }
-    cloudMarker.color.a = 1.0;
-
-    //add point cloud to cloud marker
-    sensor_msgs::PointCloud cloudCopy;
-    sensor_msgs::convertPointCloud2ToPointCloud(objectList->objects[i].point_cloud, cloudCopy);
-    cloudMarker.scale.x = .01;
-    cloudMarker.scale.y = .01;
-    cloudMarker.scale.z = .01;
-    cloudMarker.points.resize(cloudCopy.points.size());
-    float xAvg = 0;
-    float yAvg = 0;
-    float zAvg = 0;
-    for (unsigned int j = 0; j < cloudCopy.points.size(); j++)
-    {
-      cloudMarker.points[j].x = cloudCopy.points[j].x;
-      cloudMarker.points[j].y = cloudCopy.points[j].y;
-      cloudMarker.points[j].z = cloudCopy.points[j].z;
-      xAvg += cloudCopy.points[j].x;
-      yAvg += cloudCopy.points[j].y;
-      zAvg += cloudCopy.points[j].z;
-    }
-    xAvg /= cloudCopy.points.size();
-    yAvg /= cloudCopy.points.size();
-    zAvg /= cloudCopy.points.size();
-    */
 
     visualization_msgs::InteractiveMarkerControl objectControl;
     ss << "control";
@@ -624,8 +583,15 @@ void CarlInteractiveManipulation::armCollisionRecovery()
   {
     return;
   }
-  else
-    disableArmMarkerCommands = true;
+
+  disableArmMarkerCommands = true;
+
+  //feedback
+  carl_safety::Error armCollisionError;
+  armCollisionError.message = "Arm in dangerous collision, moving to a safer position...";
+  armCollisionError.severity = 1;
+  armCollisionError.resolved = false;
+  safetyErrorPublisher.publish(armCollisionError);
 
   wpi_jaco_msgs::EStop eStopSrv;
   eStopSrv.request.enableEStop = true;
@@ -648,6 +614,13 @@ void CarlInteractiveManipulation::armCollisionRecovery()
     cartesianCmd.publish(cmd);
     loopRate.sleep();
   }
+
+  //feedback
+  carl_safety::Error armCollisionErrorResolved;
+  armCollisionError.message = "Arm recovered.";
+  armCollisionError.severity = 1;
+  armCollisionError.resolved = true;
+  safetyErrorPublisher.publish(armCollisionErrorResolved);
 }
 
 int main(int argc, char **argv)
