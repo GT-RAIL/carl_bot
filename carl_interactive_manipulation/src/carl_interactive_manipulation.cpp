@@ -3,10 +3,16 @@
 using namespace std;
 
 CarlInteractiveManipulation::CarlInteractiveManipulation() :
-    acGripper("jaco_arm/manipulation/gripper", true), acLift("jaco_arm/manipulation/lift", true), acArm(
-        "carl_moveit_wrapper/common_actions/arm_action", true)//, acRecognize("rail_recognition/recognize", true)
+    acGripper("jaco_arm/manipulation/gripper", true),
+    acArm("carl_moveit_wrapper/common_actions/arm_action", true),
+    acPickup("carl_moveit_wrapper/common_actions/pickup", true)
 {
   joints.resize(6);
+
+  //read parameters
+  ros::NodeHandle pnh("~");
+  usingPickup = false;
+  pnh.getParam("using_pickup", usingPickup);
 
   //messages
   cartesianCmd = n.advertise<wpi_jaco_msgs::CartesianCommand>("jaco_arm/cartesian_cmd", 1);
@@ -23,11 +29,11 @@ CarlInteractiveManipulation::CarlInteractiveManipulation() :
   qeClient = n.serviceClient<wpi_jaco_msgs::QuaternionToEuler>("jaco_conversions/quaternion_to_euler");
   //pickupSegmentedClient = n.serviceClient<rail_pick_and_place_msgs::PickupSegmentedObject>("rail_pick_and_place/pickup_segmented_object");
   removeObjectClient = n.serviceClient<rail_segmentation::RemoveObject>("rail_segmentation/remove_object");
+  detachObjectsClient = n.serviceClient<std_srvs::Empty>("carl_moveit_wrapper/detach_objects");
 
   //actionlib
   ROS_INFO("Waiting for grasp action servers...");
   acGripper.waitForServer();
-  acLift.waitForServer();
   acArm.waitForServer();
   ROS_INFO("Finished waiting for action servers");
 
@@ -44,8 +50,8 @@ CarlInteractiveManipulation::CarlInteractiveManipulation() :
   makeHandMarker();
 
   //setup object menu
-  //objectMenuHandler.insert("Recognize",  boost::bind(&CarlInteractiveManipulation::processRecognizeMarkerFeedback, this, _1));
-  //objectMenuHandler.insert("Pickup", boost::bind(&CarlInteractiveManipulation::processPickupMarkerFeedback, this, _1));
+  if (usingPickup)
+    objectMenuHandler.insert("Pickup", boost::bind(&CarlInteractiveManipulation::processPickupMarkerFeedback, this, _1));
   objectMenuHandler.insert("Remove", boost::bind(&CarlInteractiveManipulation::processRemoveMarkerFeedback, this, _1));
 
   imServer->applyChanges();
@@ -147,10 +153,13 @@ void CarlInteractiveManipulation::segmentedObjectsCallback(
 
     if (objectList->objects[i].recognized)
     {
-//      stringstream ss2;
-//      ss2.str("");
-//      ss2 << "Pickup " << objectList->objects[i].name;
-//      recognizedMenuHandlers[i].insert(ss2.str(), boost::bind(&CarlInteractiveManipulation::processPickupMarkerFeedback, this, _1));
+      if (usingPickup)
+      {
+        stringstream ss2;
+        ss2.str("");
+        ss2 << "Pickup " << objectList->objects[i].name;
+        recognizedMenuHandlers[i].insert(ss2.str(), boost::bind(&CarlInteractiveManipulation::processPickupMarkerFeedback, this, _1));
+      }
       recognizedMenuHandlers[i].insert("Remove", boost::bind(&CarlInteractiveManipulation::processRemoveMarkerFeedback, this, _1));
       recognizedMenuHandlers[i].apply(*imServer, objectMarker.name);
     }
@@ -269,9 +278,8 @@ void CarlInteractiveManipulation::makeHandMarker()
                      boost::bind(&CarlInteractiveManipulation::processHandMarkerFeedback, this, _1));
   menuHandler.insert(fingersSubMenuHandle, "Open",
                      boost::bind(&CarlInteractiveManipulation::processHandMarkerFeedback, this, _1));
-  menuHandler.insert("Lift", boost::bind(&CarlInteractiveManipulation::processHandMarkerFeedback, this, _1));
-  menuHandler.insert("Home", boost::bind(&CarlInteractiveManipulation::processHandMarkerFeedback, this, _1));
-  menuHandler.insert("Retract", boost::bind(&CarlInteractiveManipulation::processHandMarkerFeedback, this, _1));
+  menuHandler.insert("Ready Arm", boost::bind(&CarlInteractiveManipulation::processHandMarkerFeedback, this, _1));
+  menuHandler.insert("Retract Arm", boost::bind(&CarlInteractiveManipulation::processHandMarkerFeedback, this, _1));
 
   visualization_msgs::InteractiveMarkerControl menuControl;
   menuControl.interaction_mode = visualization_msgs::InteractiveMarkerControl::MENU;
@@ -297,28 +305,35 @@ void CarlInteractiveManipulation::makeHandMarker()
 //  }
 //}
 
-//void CarlInteractiveManipulation::processPickupMarkerFeedback(
-//    const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback)
-//{
-//  if (feedback->event_type == visualization_msgs::InteractiveMarkerFeedback::MENU_SELECT)
-//  {
-//    rail_pick_and_place_msgs::PickupSegmentedObject::Request req;
-//    rail_pick_and_place_msgs::PickupSegmentedObject::Response res;
-//    req.objectIndex = atoi(feedback->marker_name.substr(6).c_str());
-//    if (!pickupSegmentedClient.call(req, res))
-//    {
-//      ROS_INFO("Could not call pickup service.");
-//      return;
-//    }
-//    if (res.success)
-//    {
-//      if (!removeObjectMarker(req.objectIndex))
-//        return;
-//    }
-//
-//    imServer->applyChanges();
-//  }
-//}
+void CarlInteractiveManipulation::processPickupMarkerFeedback(
+    const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback)
+{
+  if (feedback->event_type == visualization_msgs::InteractiveMarkerFeedback::MENU_SELECT)
+  {
+    carl_moveit::PickupGoal pickupGoal;
+    pickupGoal.lift = true;
+    pickupGoal.verify = false;
+    int objectIndex = atoi(feedback->marker_name.substr(6).c_str());
+    for (unsigned int i = 0; i < segmentedObjectList.objects[objectIndex].grasps.size(); i ++)
+    {
+      pickupGoal.pose = segmentedObjectList.objects[objectIndex].grasps[i];
+      acPickup.sendGoal(pickupGoal);
+      acPickup.waitForResult(ros::Duration(30.0));
+
+      carl_moveit::PickupResultConstPtr pickupResult = acPickup.getResult();
+      if (!pickupResult->success)
+      {
+        ROS_INFO("Could not call pickup service.");
+        continue;
+      }
+
+      removeObjectMarker(objectIndex);
+      break;
+    }
+
+    imServer->applyChanges();
+  }
+}
 
 void CarlInteractiveManipulation::processRemoveMarkerFeedback(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback)
 {
@@ -376,25 +391,24 @@ void CarlInteractiveManipulation::processHandMarkerFeedback(
         rail_manipulation_msgs::GripperGoal gripperGoal;
         gripperGoal.close = false;
         acGripper.sendGoal(gripperGoal);
+
+        std_srvs::Empty emptySrv;
+        if (!detachObjectsClient.call(emptySrv))
+        {
+          ROS_INFO("Couldn't call detach objects service.");
+        }
       }
-//      else if (feedback->menu_entry_id == 4)	//pickup requested
-//      {
-//        rail_manipulation_msgs::LiftGoal liftGoal;
-//        acLift.sendGoal(liftGoal);
-//      }
-      else if (feedback->menu_entry_id == 5)  //home requested
+      else if (feedback->menu_entry_id == 4)  //home requested
       {
         acGripper.cancelAllGoals();
-        acLift.cancelAllGoals();
         carl_moveit::ArmGoal homeGoal;
         homeGoal.action = carl_moveit::ArmGoal::READY;
         acArm.sendGoal(homeGoal);
         acArm.waitForResult(ros::Duration(10.0));
       }
-      else if (feedback->menu_entry_id == 6)
+      else if (feedback->menu_entry_id == 5)
       {
         acGripper.cancelAllGoals();
-        acLift.cancelAllGoals();
         carl_moveit::ArmGoal homeGoal;
         homeGoal.action = carl_moveit::ArmGoal::RETRACT;
         acArm.sendGoal(homeGoal);
@@ -413,7 +427,6 @@ void CarlInteractiveManipulation::processHandMarkerFeedback(
         movingArm = true;
 
         acGripper.cancelAllGoals();
-        acLift.cancelAllGoals();
 
         //convert pose for compatibility with JACO API
         wpi_jaco_msgs::QuaternionToEuler qeSrv;

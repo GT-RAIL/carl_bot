@@ -17,6 +17,7 @@
 #include <ros/ros.h>
 #include <actionlib/client/simple_action_client.h>
 #include <carl_moveit/ArmAction.h>
+#include <carl_moveit/PickupAction.h>
 #include <carl_safety/Error.h>
 #include <interactive_markers/interactive_marker_server.h>
 #include <interactive_markers/menu_handler.h>
@@ -75,11 +76,11 @@ public:
    */
   //void processRecognizeMarkerFeedback(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback);
 
-//  /**
-//   * /brief Process feedback for objects that can be picked up.
-//   * @param feedback interactive marker feedback
-//   */
-//  void processPickupMarkerFeedback(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback);
+  /**
+   * /brief Process feedback for objects that can be picked up.
+   * @param feedback interactive marker feedback
+   */
+  void processPickupMarkerFeedback(const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback);
 
   /**
   * \brief Process feedback for objects that are selected for removal.
@@ -150,11 +151,12 @@ private:
   ros::ServiceClient qeClient;  //!< rotation representation conversion client
 //  ros::ServiceClient pickupSegmentedClient;
   ros::ServiceClient removeObjectClient;
+  ros::ServiceClient detachObjectsClient;
 
   //actionlib
   actionlib::SimpleActionClient<rail_manipulation_msgs::GripperAction> acGripper;
-  actionlib::SimpleActionClient<rail_manipulation_msgs::LiftAction> acLift;
   actionlib::SimpleActionClient<carl_moveit::ArmAction> acArm;
+  actionlib::SimpleActionClient<carl_moveit::PickupAction> acPickup;
   //actionlib::SimpleActionClient<rail_manipulation_msgs::RecognizeAction> acRecognize;
 
   boost::shared_ptr<interactive_markers::InteractiveMarkerServer> imServer; //!< interactive marker server
@@ -168,6 +170,7 @@ private:
   bool lockPose;  //!< flag to stop the arm from updating on pose changes, this is used to prevent the slight movement when left clicking on the center of the marker
   bool movingArm;
   bool disableArmMarkerCommands;
+  bool usingPickup;
 };
 
 #endif
