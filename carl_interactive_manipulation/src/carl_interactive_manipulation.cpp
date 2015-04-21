@@ -316,6 +316,7 @@ void CarlInteractiveManipulation::processPickupMarkerFeedback(
     int objectIndex = atoi(feedback->marker_name.substr(6).c_str());
     for (unsigned int i = 0; i < segmentedObjectList.objects[objectIndex].grasps.size(); i ++)
     {
+      ROS_INFO("ATTEMPTING PICKUP WITH GRASP %d", i);
       pickupGoal.pose = segmentedObjectList.objects[objectIndex].grasps[i];
       acPickup.sendGoal(pickupGoal);
       acPickup.waitForResult(ros::Duration(30.0));
@@ -323,13 +324,16 @@ void CarlInteractiveManipulation::processPickupMarkerFeedback(
       carl_moveit::PickupResultConstPtr pickupResult = acPickup.getResult();
       if (!pickupResult->success)
       {
-        ROS_INFO("Could not call pickup service.");
+	ROS_INFO("PICKUP FAILED, moving on to a new grasp...");
         continue;
       }
+
+      ROS_INFO("PICKUP SUCCEEDED!");
 
       removeObjectMarker(objectIndex);
       break;
     }
+    ROS_INFO("FINISHED ATTEMPTING PICKUPS");
 
     imServer->applyChanges();
   }
