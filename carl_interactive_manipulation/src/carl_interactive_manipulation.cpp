@@ -317,7 +317,7 @@ void CarlInteractiveManipulation::processPickupMarkerFeedback(
     for (unsigned int i = 0; i < segmentedObjectList.objects[objectIndex].grasps.size(); i ++)
     {
       ROS_INFO("ATTEMPTING PICKUP WITH GRASP %d", i);
-      pickupGoal.pose = segmentedObjectList.objects[objectIndex].grasps[i];
+      pickupGoal.pose = segmentedObjectList.objects[objectIndex].grasps[i].grasp_pose;
       acPickup.sendGoal(pickupGoal);
       acPickup.waitForResult(ros::Duration(30.0));
 
@@ -634,9 +634,9 @@ void CarlInteractiveManipulation::armCollisionRecovery()
 
   //feedback
   carl_safety::Error armCollisionErrorResolved;
-  armCollisionError.message = "Arm recovered.";
-  armCollisionError.severity = 1;
-  armCollisionError.resolved = true;
+  armCollisionErrorResolved.message = "Arm recovered.";
+  armCollisionErrorResolved.severity = 1;
+  armCollisionErrorResolved.resolved = true;
   safetyErrorPublisher.publish(armCollisionErrorResolved);
 }
 
