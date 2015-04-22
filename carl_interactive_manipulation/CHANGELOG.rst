@@ -2,6 +2,12 @@
 Changelog for package carl_interactive_manipulation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.27 (2015-04-22)
+-------------------
+* Debug statement cleanup
+* Connected IM with grasping and scene object attach/detach
+* Contributors: David Kent
+
 0.0.26 (2015-04-17)
 -------------------
 
