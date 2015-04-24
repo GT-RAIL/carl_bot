@@ -24,7 +24,7 @@
 #include <rail_manipulation_msgs/GripperAction.h>
 #include <rail_manipulation_msgs/LiftAction.h>
 #include <rail_manipulation_msgs/SegmentedObjectList.h>
-#include <rail_segmentation/RemoveObject.h>
+#include <rail_pick_and_place_msgs/RemoveObject.h>
 #include <wpi_jaco_msgs/CartesianCommand.h>
 #include <wpi_jaco_msgs/EStop.h>
 #include <wpi_jaco_msgs/GetCartesianPosition.h>

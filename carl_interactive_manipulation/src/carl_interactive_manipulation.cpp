@@ -28,7 +28,7 @@ CarlInteractiveManipulation::CarlInteractiveManipulation() :
   jacoFkClient = n.serviceClient<wpi_jaco_msgs::JacoFK>("jaco_arm/kinematics/fk");
   qeClient = n.serviceClient<wpi_jaco_msgs::QuaternionToEuler>("jaco_conversions/quaternion_to_euler");
   //pickupSegmentedClient = n.serviceClient<rail_pick_and_place_msgs::PickupSegmentedObject>("rail_pick_and_place/pickup_segmented_object");
-  removeObjectClient = n.serviceClient<rail_segmentation::RemoveObject>("rail_segmentation/remove_object");
+  removeObjectClient = n.serviceClient<rail_pick_and_place_msgs::RemoveObject>("rail_segmentation/remove_object");
   detachObjectsClient = n.serviceClient<std_srvs::Empty>("carl_moveit_wrapper/detach_objects");
 
   //actionlib
@@ -352,8 +352,8 @@ void CarlInteractiveManipulation::processRemoveMarkerFeedback(const visualizatio
 
 bool CarlInteractiveManipulation::removeObjectMarker(int index)
 {
-  rail_segmentation::RemoveObject::Request req;
-  rail_segmentation::RemoveObject::Response res;
+  rail_pick_and_place_msgs::RemoveObject::Request req;
+  rail_pick_and_place_msgs::RemoveObject::Response res;
   req.index = index;
   if (!removeObjectClient.call(req, res))
   {
