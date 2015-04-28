@@ -27,6 +27,7 @@
 #include <rail_pick_and_place_msgs/RemoveObject.h>
 #include <wpi_jaco_msgs/CartesianCommand.h>
 #include <wpi_jaco_msgs/EStop.h>
+#include <wpi_jaco_msgs/GetAngularPosition.h>
 #include <wpi_jaco_msgs/GetCartesianPosition.h>
 #include <wpi_jaco_msgs/JacoFK.h>
 #include <wpi_jaco_msgs/QuaternionToEuler.h>
@@ -134,6 +135,12 @@ private:
   */
   void armCollisionRecovery();
 
+  /**
+   * \brief Determine if the arm is in the retracted position
+   * \return true if the arm is retracted, false otherwise
+   */
+  bool isArmRetracted();
+
   ros::NodeHandle n;
 
   //messages
@@ -144,6 +151,7 @@ private:
   ros::Subscriber recognizedObjectsSubscriber;
 
   //services
+  ros::ServiceClient armAngularPositionClient;
   ros::ServiceClient armCartesianPositionClient;
   ros::ServiceClient armEStopClient;
   ros::ServiceClient eraseTrajectoriesClient;
@@ -167,6 +175,7 @@ private:
   rail_manipulation_msgs::SegmentedObjectList segmentedObjectList;  //!< list of segmented objects in the rail_manipulation_msgs form
   std::vector<float> joints;  //!< current joint state
   std::vector<float> markerPose; //!< current pose of the gripper marker
+  std::vector<float> retractPos; //jaco arm retracted joint positions
   bool lockPose;  //!< flag to stop the arm from updating on pose changes, this is used to prevent the slight movement when left clicking on the center of the marker
   bool movingArm;
   bool disableArmMarkerCommands;

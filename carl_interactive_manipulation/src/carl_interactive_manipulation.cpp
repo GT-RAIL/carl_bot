@@ -30,6 +30,7 @@ CarlInteractiveManipulation::CarlInteractiveManipulation() :
   //pickupSegmentedClient = n.serviceClient<rail_pick_and_place_msgs::PickupSegmentedObject>("rail_pick_and_place/pickup_segmented_object");
   removeObjectClient = n.serviceClient<rail_pick_and_place_msgs::RemoveObject>("rail_segmentation/remove_object");
   detachObjectsClient = n.serviceClient<std_srvs::Empty>("carl_moveit_wrapper/detach_objects");
+  armAngularPositionClient = n.serviceClient<wpi_jaco_msgs::GetAngularPosition>("jaco_arm/get_angular_position");
 
   //actionlib
   ROS_INFO("Waiting for grasp action servers...");
@@ -41,6 +42,13 @@ CarlInteractiveManipulation::CarlInteractiveManipulation() :
   lockPose = false;
   movingArm = false;
   disableArmMarkerCommands = false;
+  retractPos.resize(6);
+  retractPos[0] = -2.57;
+  retractPos[1] = 1.39;
+  retractPos[2] = .527;
+  retractPos[3] = -.084;
+  retractPos[4] = .515;
+  retractPos[5] = -1.745;
 
   imServer.reset(
       new interactive_markers::InteractiveMarkerServer("carl_interactive_manipulation", "carl_markers", false));
@@ -428,6 +436,15 @@ void CarlInteractiveManipulation::processHandMarkerFeedback(
     {
       if (!(lockPose || disableArmMarkerCommands))
       {
+        if (isArmRetracted())
+        {
+          carl_safety::Error armRetractedError;
+          armRetractedError.message = "Arm is retracted. Ready the arm before moving it.";
+          armRetractedError.severity = 1;
+          armRetractedError.resolved = false;
+          safetyErrorPublisher.publish(armRetractedError);
+        }
+
         movingArm = true;
 
         acGripper.cancelAllGoals();
@@ -638,6 +655,29 @@ void CarlInteractiveManipulation::armCollisionRecovery()
   armCollisionErrorResolved.severity = 1;
   armCollisionErrorResolved.resolved = true;
   safetyErrorPublisher.publish(armCollisionErrorResolved);
+}
+
+bool CarlInteractiveManipulation::isArmRetracted()
+{
+  float dstFromRetract = 0;
+
+  //get joint positions
+  wpi_jaco_msgs::GetAngularPosition::Request req;
+  wpi_jaco_msgs::GetAngularPosition::Response res;
+  if(!armAngularPositionClient.call(req, res))
+  {
+    ROS_INFO("Could not call Jaco joint position service.");
+    return false;
+  }
+
+  for (unsigned int i = 0; i < 6; i ++)
+  {
+    dstFromRetract += fabs(retractPos[i] - res.pos[i]);
+  }
+
+  if (dstFromRetract > 0.175)
+    return false;
+  return true;
 }
 
 int main(int argc, char **argv)
