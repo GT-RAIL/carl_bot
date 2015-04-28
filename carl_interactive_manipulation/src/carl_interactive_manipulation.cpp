@@ -440,7 +440,7 @@ void CarlInteractiveManipulation::processHandMarkerFeedback(
         {
           carl_safety::Error armRetractedError;
           armRetractedError.message = "Arm is retracted. Ready the arm before moving it.";
-          armRetractedError.severity = 1;
+          armRetractedError.severity = 0;
           armRetractedError.resolved = false;
           safetyErrorPublisher.publish(armRetractedError);
         }
