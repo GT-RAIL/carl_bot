@@ -16,6 +16,7 @@
 
 #include <ros/ros.h>
 #include <actionlib/client/simple_action_client.h>
+#include <boost/thread/recursive_mutex.hpp>
 #include <carl_moveit/ArmAction.h>
 #include <carl_moveit/PickupAction.h>
 #include <carl_safety/Error.h>
@@ -167,6 +168,7 @@ private:
   actionlib::SimpleActionClient<carl_moveit::PickupAction> acPickup;
   //actionlib::SimpleActionClient<rail_manipulation_msgs::RecognizeAction> acRecognize;
 
+  boost::recursive_mutex api_mutex;
   boost::shared_ptr<interactive_markers::InteractiveMarkerServer> imServer; //!< interactive marker server
   interactive_markers::MenuHandler menuHandler; //!< interactive marker menu handler
   interactive_markers::MenuHandler objectMenuHandler; //!< object interactive markers menu handler
@@ -180,6 +182,7 @@ private:
   bool movingArm;
   bool disableArmMarkerCommands;
   bool usingPickup;
+  ros::Time lastRetractedFeedback;
 };
 
 #endif

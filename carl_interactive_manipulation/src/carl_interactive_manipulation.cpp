@@ -8,6 +8,7 @@ CarlInteractiveManipulation::CarlInteractiveManipulation() :
     acPickup("carl_moveit_wrapper/common_actions/pickup", true)
 {
   joints.resize(6);
+  lastRetractedFeedback = ros::Time::now();
 
   //read parameters
   ros::NodeHandle pnh("~");
@@ -88,6 +89,8 @@ void CarlInteractiveManipulation::updateJoints(const sensor_msgs::JointState::Co
 void CarlInteractiveManipulation::segmentedObjectsCallback(
     const rail_manipulation_msgs::SegmentedObjectList::ConstPtr& objectList)
 {
+  boost::recursive_mutex::scoped_lock lock(api_mutex); //lock for object list
+
   //store list of objects
   segmentedObjectList = *objectList;
 
@@ -186,6 +189,8 @@ void CarlInteractiveManipulation::segmentedObjectsCallback(
 
 void CarlInteractiveManipulation::clearSegmentedObjects()
 {
+  boost::recursive_mutex::scoped_lock lock(api_mutex); //lock for object list
+
   for (unsigned int i = 0; i < segmentedObjects.size(); i++)
   {
     stringstream ss;
@@ -300,24 +305,13 @@ void CarlInteractiveManipulation::makeHandMarker()
   menuHandler.apply(*imServer, iMarker.name);
 }
 
-//void CarlInteractiveManipulation::processRecognizeMarkerFeedback(
-//    const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback)
-//{
-//  if (feedback->event_type == visualization_msgs::InteractiveMarkerFeedback::MENU_SELECT)
-//  {
-//    int objectIndex = atoi(feedback->marker_name.substr(6).c_str());
-//    rail_manipulation_msgs::RecognizeGoal goal;
-//    goal.index = objectIndex;
-//    acRecognize.sendGoal(goal);
-//    acRecognize.waitForResult(ros::Duration(10.0));
-//  }
-//}
-
 void CarlInteractiveManipulation::processPickupMarkerFeedback(
     const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback)
 {
   if (feedback->event_type == visualization_msgs::InteractiveMarkerFeedback::MENU_SELECT)
   {
+    boost::recursive_mutex::scoped_lock lock(api_mutex); //lock for segmented objects
+
     carl_moveit::PickupGoal pickupGoal;
     pickupGoal.lift = true;
     pickupGoal.verify = false;
@@ -332,7 +326,7 @@ void CarlInteractiveManipulation::processPickupMarkerFeedback(
       carl_moveit::PickupResultConstPtr pickupResult = acPickup.getResult();
       if (!pickupResult->success)
       {
-	ROS_INFO("PICKUP FAILED, moving on to a new grasp...");
+        ROS_INFO("PICKUP FAILED, moving on to a new grasp...");
         continue;
       }
 
@@ -351,6 +345,8 @@ void CarlInteractiveManipulation::processRemoveMarkerFeedback(const visualizatio
 {
   if (feedback->event_type == visualization_msgs::InteractiveMarkerFeedback::MENU_SELECT)
   {
+    boost::recursive_mutex::scoped_lock lock(api_mutex); //lock for object list
+
     if (!removeObjectMarker(atoi(feedback->marker_name.substr(6).c_str())))
       return;
 
@@ -438,11 +434,14 @@ void CarlInteractiveManipulation::processHandMarkerFeedback(
       {
         if (isArmRetracted())
         {
-          carl_safety::Error armRetractedError;
-          armRetractedError.message = "Arm is retracted. Ready the arm before moving it.";
-          armRetractedError.severity = 0;
-          armRetractedError.resolved = false;
-          safetyErrorPublisher.publish(armRetractedError);
+          if (ros::Time::now().toSec() - lastRetractedFeedback.toSec() >= 5.0)
+          {
+            carl_safety::Error armRetractedError;
+            armRetractedError.message = "Arm is retracted. Ready the arm before moving it.";
+            armRetractedError.severity = 0;
+            armRetractedError.resolved = false;
+            safetyErrorPublisher.publish(armRetractedError);
+          }
         }
 
         movingArm = true;
