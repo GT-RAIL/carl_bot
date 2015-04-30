@@ -16,7 +16,12 @@
   <!-- Recognition Params -->
   <arg name="segmented_objects_topic" default="/rail_segmentation/segmented_objects" />
 
-  <include file="$(find carl_bringup)/launch/arm.launch" />
+  <!-- Manipulation Params -->
+  <arg name="using_pickup" default="true" />
+
+  <include file="$(find carl_bringup)/launch/arm.launch">
+    <arg name="using_pickup" value="$(arg using_pickup)" />
+  </include>
   <include file="$(find carl_bringup)/launch/base.launch" /> 
   <include file="$(find carl_bringup)/launch/sensors.launch" />
   <include file="$(find carl_bringup)/launch/robot_model.launch" />
@@ -31,6 +36,7 @@
   <!-- Check for navigation -->
   <group if="$(arg nav)">
     <include file="$(find carl_navigation)/launch/navigation_layered.launch" />
+    <node pkg="carl_interactive_manipulation" type="create_parking_spots" name="create_parking_spots" output="screen" />
   </group>
 
   <include file="$(find carl_bringup)/launch/carl_recognition.launch">
