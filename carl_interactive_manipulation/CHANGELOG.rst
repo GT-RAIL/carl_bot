@@ -2,6 +2,11 @@
 Changelog for package carl_interactive_manipulation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.30 (2015-05-04)
+-------------------
+* Limited move while retracted feedback to publish at most every 5 seconds
+* Contributors: David Kent
+
 0.0.29 (2015-04-29)
 -------------------
 * Lowered error level on retracted arm movement feedback

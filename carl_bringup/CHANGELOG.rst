@@ -2,6 +2,11 @@
 Changelog for package carl_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.30 (2015-05-04)
+-------------------
+* Added parking spots and interactive marker pickup option to the bringup launch file
+* Contributors: David Kent
+
 0.0.29 (2015-04-29)
 -------------------
 
