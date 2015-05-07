@@ -12,15 +12,20 @@ CarlInteractiveManipulation::CarlInteractiveManipulation() :
 
   //read parameters
   ros::NodeHandle pnh("~");
+  string segmentedObjectsTopic("/object_recognition_listener/recognized_objects");
   usingPickup = false;
+  usingRecognition = false;
   pnh.getParam("using_pickup", usingPickup);
+  pnh.getParam("using_recognition", usingRecognition);
 
   //messages
   cartesianCmd = n.advertise<wpi_jaco_msgs::CartesianCommand>("jaco_arm/cartesian_cmd", 1);
-  segmentedObjectsPublisher = n.advertise<rail_manipulation_msgs::SegmentedObjectList>("rail_segmentation/segmented_objects", 1);
   safetyErrorPublisher = n.advertise<carl_safety::Error>("carl_safety/error", 1);
   jointStateSubscriber = n.subscribe("jaco_arm/joint_states", 1, &CarlInteractiveManipulation::updateJoints, this);
-  recognizedObjectsSubscriber = n.subscribe("/object_recognition_listener/recognized_objects", 1, &CarlInteractiveManipulation::segmentedObjectsCallback, this);
+  if (usingRecognition)
+    recognizedObjectsSubscriber = n.subscribe("object_recognition_listener/recognized_objects", 1, &CarlInteractiveManipulation::segmentedObjectsCallback, this);
+  else
+    recognizedObjectsSubscriber = n.subscribe("rail_segmentation/segmented_objects", 1, &CarlInteractiveManipulation::segmentedObjectsCallback, this);
 
   //services
   armCartesianPositionClient = n.serviceClient<wpi_jaco_msgs::GetCartesianPosition>("jaco_arm/get_cartesian_position");
@@ -29,7 +34,10 @@ CarlInteractiveManipulation::CarlInteractiveManipulation() :
   jacoFkClient = n.serviceClient<wpi_jaco_msgs::JacoFK>("jaco_arm/kinematics/fk");
   qeClient = n.serviceClient<wpi_jaco_msgs::QuaternionToEuler>("jaco_conversions/quaternion_to_euler");
   //pickupSegmentedClient = n.serviceClient<rail_pick_and_place_msgs::PickupSegmentedObject>("rail_pick_and_place/pickup_segmented_object");
-  removeObjectClient = n.serviceClient<rail_pick_and_place_msgs::RemoveObject>("rail_segmentation/remove_object");
+  if (usingRecognition)
+    removeObjectClient = n.serviceClient<rail_pick_and_place_msgs::RemoveObject>("/object_recognition_listener/remove_object");
+  else
+    removeObjectClient = n.serviceClient<rail_segmentation::RemoveObject>("rail_segmentation/remove_object");
   detachObjectsClient = n.serviceClient<std_srvs::Empty>("carl_moveit_wrapper/detach_objects");
   armAngularPositionClient = n.serviceClient<wpi_jaco_msgs::GetAngularPosition>("jaco_arm/get_angular_position");
 

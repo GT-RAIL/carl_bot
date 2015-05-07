@@ -18,9 +18,11 @@
 
   <!-- Manipulation Params -->
   <arg name="using_pickup" default="true" />
+  <arg name="visualize_recognition" default="true" />
 
   <include file="$(find carl_bringup)/launch/arm.launch">
     <arg name="using_pickup" value="$(arg using_pickup)" />
+    <arg name="using_recognition" value="$(arg visualize_recognition)" />
   </include>
   <include file="$(find carl_bringup)/launch/base.launch" /> 
   <include file="$(find carl_bringup)/launch/sensors.launch" />

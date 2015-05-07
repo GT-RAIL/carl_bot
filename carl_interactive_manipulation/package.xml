@@ -27,10 +27,10 @@
   <build_depend>rail_segmentation</build_depend>
   <build_depend>roscpp</build_depend>
   <build_depend>sensor_msgs</build_depend>
-  <build_depend>wpi_jaco_msgs</build_depend>
   <build_depend>urdf</build_depend>
   <build_depend>visualization_msgs</build_depend>
-  
+  <build_depend>wpi_jaco_msgs</build_depend>
+
   <run_depend>actionlib</run_depend>
   <run_depend>carl_moveit</run_depend>
   <run_depend>carl_safety</run_depend>
@@ -41,8 +41,8 @@
   <run_depend>rail_segmentation</run_depend>
   <run_depend>roscpp</run_depend>
   <run_depend>sensor_msgs</run_depend>
-  <run_depend>wpi_jaco_msgs</run_depend>
   <run_depend>urdf</run_depend>
   <run_depend>visualization_msgs</run_depend>
-  
+  <run_depend>wpi_jaco_msgs</run_depend>
+
 </package>

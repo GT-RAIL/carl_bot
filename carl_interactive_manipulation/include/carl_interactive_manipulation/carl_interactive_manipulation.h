@@ -26,6 +26,7 @@
 #include <rail_manipulation_msgs/LiftAction.h>
 #include <rail_manipulation_msgs/SegmentedObjectList.h>
 #include <rail_pick_and_place_msgs/RemoveObject.h>
+#include <rail_segmentation/RemoveObject.h>
 #include <wpi_jaco_msgs/CartesianCommand.h>
 #include <wpi_jaco_msgs/EStop.h>
 #include <wpi_jaco_msgs/GetAngularPosition.h>
@@ -146,7 +147,6 @@ private:
 
   //messages
   ros::Publisher cartesianCmd;
-  ros::Publisher segmentedObjectsPublisher;
   ros::Publisher safetyErrorPublisher;
   ros::Subscriber jointStateSubscriber;
   ros::Subscriber recognizedObjectsSubscriber;
@@ -182,6 +182,7 @@ private:
   bool movingArm;
   bool disableArmMarkerCommands;
   bool usingPickup;
+  bool usingRecognition;
   ros::Time lastRetractedFeedback;
 };
 

@@ -5,7 +5,21 @@ project(carl_interactive_manipulation)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 
-find_package(catkin REQUIRED COMPONENTS roscpp carl_moveit carl_safety geometry_msgs rail_segmentation actionlib rail_pick_and_place_msgs sensor_msgs wpi_jaco_msgs visualization_msgs move_base_msgs interactive_markers urdf)
+find_package(catkin REQUIRED COMPONENTS
+  actionlib
+  carl_moveit
+  carl_safety
+  geometry_msgs
+  interactive_markers
+  move_base_msgs
+  rail_segmentation
+  rail_pick_and_place_msgs
+  roscpp
+  sensor_msgs
+  urdf
+  visualization_msgs
+  wpi_jaco_msgs
+)
 
 ###################################################
 ## Declare things to be passed to other projects ##
