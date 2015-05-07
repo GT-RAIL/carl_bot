@@ -39,8 +39,10 @@
   <run_depend>carl_safety</run_depend>
   <run_depend>carl_moveit</run_depend>
 
-  <!-- MISC -->
+  <!-- VISION -->
   <run_depend>rail_segmentation</run_depend>
   <run_depend>rail_recognition</run_depend>
-  <run_depend>rail_pick_and_place_tools</run_depend>
+
+  <!-- MISC -->
+  <run_depend>world_item_observer</run_depend>
 </package>
