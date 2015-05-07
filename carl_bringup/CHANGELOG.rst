@@ -2,6 +2,11 @@
 Changelog for package carl_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.31 (2015-05-07)
+-------------------
+* added observer to navigation
+* Contributors: Russell Toris
+
 0.0.30 (2015-05-04)
 -------------------
 * Added parking spots and interactive marker pickup option to the bringup launch file

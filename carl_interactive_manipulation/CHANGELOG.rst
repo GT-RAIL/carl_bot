@@ -2,6 +2,9 @@
 Changelog for package carl_interactive_manipulation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.31 (2015-05-07)
+-------------------
+
 0.0.30 (2015-05-04)
 -------------------
 * Limited move while retracted feedback to publish at most every 5 seconds
