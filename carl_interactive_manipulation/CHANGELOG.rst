@@ -2,6 +2,12 @@
 Changelog for package carl_interactive_manipulation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.32 (2015-05-08)
+-------------------
+* Merge branch 'develop' of github.com:WPI-RAIL/carl_bot into develop
+* Added a parameter for carl interactive manipulation to create object markers from segmented objects instead of recognized objects
+* Contributors: David Kent
+
 0.0.31 (2015-05-07)
 -------------------
 
