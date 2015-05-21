@@ -8,7 +8,9 @@
   <arg name="using_pickup" default="true" />
   <arg name="using_recognition" default="true" />
 
-  <include file="$(find wpi_jaco_wrapper)/launch/arm.launch" />
+  <include file="$(find wpi_jaco_wrapper)/launch/arm.launch">
+      <arg name="home_arm_on_init" value="false" />
+  </include>
   <node pkg="carl_interactive_manipulation" type="carl_interactive_manipulation" name="carl_interactive_manipulation" output="screen">
     <param name="using_pickup" value="$(arg using_pickup)" />
     <param name="using_recognition" value="$(arg using_recognition)" />
