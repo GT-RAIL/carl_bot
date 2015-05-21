@@ -538,7 +538,7 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
         mode = ARM_CONTROL;
         ROS_INFO("Activated arm control mode");
       }
-      else if (joy->buttons.at(button2Index) == 1)
+      else if (joy->buttons.at(button1Index) == 1)
       {
         mode = FINGER_CONTROL;
         ROS_INFO("Activate finger control mode");
