@@ -1,6 +1,6 @@
 <package>
   <name>carl_bot</name>
-  <version>0.0.32</version>
+  <version>0.0.33</version>
   <description>Metapackage for CARL (Crowdsourcing for Autonomous Robot Learning) Robot</description>
 
   <maintainer email="rctoris@wpi.edu">Russell Toris</maintainer>
