@@ -2,6 +2,11 @@
 Changelog for package carl_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.33 (2015-08-10)
+-------------------
+* Bugfix on mode switching
+* Contributors: David Kent
+
 0.0.32 (2015-05-08)
 -------------------
 

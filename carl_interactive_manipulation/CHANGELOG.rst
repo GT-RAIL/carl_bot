@@ -2,6 +2,9 @@
 Changelog for package carl_interactive_manipulation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.33 (2015-08-10)
+-------------------
+
 0.0.32 (2015-05-08)
 -------------------
 * Merge branch 'develop' of github.com:WPI-RAIL/carl_bot into develop
