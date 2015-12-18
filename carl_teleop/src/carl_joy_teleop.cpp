@@ -17,7 +17,7 @@
 
 using namespace std;
 
-carl_joy_teleop::carl_joy_teleop() :
+carl_action_executor::carl_action_executor() :
     acArm("carl_moveit_wrapper/common_actions/arm_action", true)
 {
   // a private handle for this ROS node (allows retrieval of relative parameters)
@@ -35,7 +35,7 @@ carl_joy_teleop::carl_joy_teleop() :
   cartesian_cmd2 = node.advertise<geometry_msgs::Twist>("carl_moveit_wrapper/cartesian_control", 10);
   asus_servo_tilt_cmd = node.advertise<std_msgs::Float64>("asus_controller/tilt", 10);
   creative_servo_pan_cmd = node.advertise<std_msgs::Float64>("creative_controller/pan", 10);
-  joy_sub = node.subscribe<sensor_msgs::Joy>("joy", 10, &carl_joy_teleop::joy_cback, this);
+  joy_sub = node.subscribe<sensor_msgs::Joy>("joy", 10, &carl_action_executor::joy_cback, this);
 
   segment_client = node.serviceClient<std_srvs::Empty>("rail_segmentation/segment_auto");
   eStopClient = node.serviceClient<wpi_jaco_msgs::EStop>("jaco_arm/software_estop");
@@ -114,7 +114,7 @@ carl_joy_teleop::carl_joy_teleop() :
     calibrated = true;
 }
 
-void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
+void carl_action_executor::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
 {
   // make sure triggers are calibrated before continuing if an analog controller was specified
   if (!calibrated)
@@ -493,8 +493,8 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
         if (joy->buttons.at(4) == 1)
         {
           //send home command
-          carl_moveit::ArmGoal homeGoal;
-          homeGoal.action = carl_moveit::ArmGoal::READY;
+          rail_manipulation_msgs::ArmGoal homeGoal;
+          homeGoal.action = rail_manipulation_msgs::ArmGoal::READY;
           acArm.sendGoal(homeGoal);
         }
         leftBumperPrev = joy->buttons.at(4);
@@ -504,8 +504,8 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
         if (joy->buttons.at(5) == 1)
         {
           //send retract command
-          carl_moveit::ArmGoal retractGoal;
-          retractGoal.action = carl_moveit::ArmGoal::RETRACT;
+          rail_manipulation_msgs::ArmGoal retractGoal;
+          retractGoal.action = rail_manipulation_msgs::ArmGoal::RETRACT;
           acArm.sendGoal(retractGoal);
         }
         rightBumperPrev = joy->buttons.at(5);
@@ -553,7 +553,7 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
   }
 }
 
-void carl_joy_teleop::publish_velocity()
+void carl_action_executor::publish_velocity()
 {
   //publish arm stop commands if EStop is enabled (this will stop any teleoperation
   //using this node, but for any other nodes controlling the arm this will
@@ -605,7 +605,7 @@ void carl_joy_teleop::publish_velocity()
   }
 }
 
-void carl_joy_teleop::displayHelp(int menuNumber)
+void carl_action_executor::displayHelp(int menuNumber)
 {
   puts(" ----------------------------------------");
   puts("| CARL Joystick Teleop Help              |");
@@ -691,7 +691,7 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "carl_joy_teleop");
 
   // initialize the joystick controller
-  carl_joy_teleop controller;
+  carl_action_executor controller;
 
   ros::Rate loop_rate(60);  //rate at which to publish arm velocity commands
   while (ros::ok())

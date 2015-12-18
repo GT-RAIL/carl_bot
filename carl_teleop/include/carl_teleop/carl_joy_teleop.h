@@ -17,7 +17,7 @@
 
 #include <ros/ros.h>
 #include <actionlib/client/simple_action_client.h>
-#include <carl_moveit/ArmAction.h>
+#include <rail_manipulation_msgs/ArmAction.h>
 #include <sensor_msgs/Joy.h>
 #include <std_msgs/Float64.h>
 #include <std_srvs/Empty.h>
@@ -85,14 +85,14 @@
  * carl_joy_teleop creates a ROS node that allows the control of CARL with a joystick. 
  * This node listens to a /joy topic and sends messages to the /cmd_vel topic.
  */
-class carl_joy_teleop
+class carl_action_executor
 {
 public:
   /*!
    * Creates a carl_joy_teleop object that can be used control carl with a joystick. ROS nodes, services, and publishers
    * are created and maintained within this object.
    */
-  carl_joy_teleop();
+  carl_action_executor();
 
   /*!
    * Periodically publish velocity message to the arm controller
@@ -122,7 +122,7 @@ private:
   ros::ServiceClient segment_client; /*!< the asus point cloud segmentation client */
   ros::ServiceClient eStopClient; /*!< arm software emergency stop service client */
 
-  actionlib::SimpleActionClient<carl_moveit::ArmAction> acArm; /*!< home and retract arm action client */
+  actionlib::SimpleActionClient<rail_manipulation_msgs::ArmAction> acArm; /*!< home and retract arm action client */
 
   geometry_msgs::Twist twist; /*!< base movement command */
   wpi_jaco_msgs::AngularCommand fingerCmd; /*!< finger movement command */

@@ -320,7 +320,7 @@ void CarlInteractiveManipulation::processPickupMarkerFeedback(
   {
     boost::recursive_mutex::scoped_lock lock(api_mutex); //lock for segmented objects
 
-    carl_moveit::PickupGoal pickupGoal;
+    rail_manipulation_msgs::PickupGoal pickupGoal;
     pickupGoal.lift = true;
     pickupGoal.verify = false;
     int objectIndex = atoi(feedback->marker_name.substr(6).c_str());
@@ -331,7 +331,7 @@ void CarlInteractiveManipulation::processPickupMarkerFeedback(
       acPickup.sendGoal(pickupGoal);
       acPickup.waitForResult(ros::Duration(30.0));
 
-      carl_moveit::PickupResultConstPtr pickupResult = acPickup.getResult();
+      rail_manipulation_msgs::PickupResultConstPtr pickupResult = acPickup.getResult();
       if (!pickupResult->success)
       {
         ROS_INFO("PICKUP FAILED, moving on to a new grasp...");
@@ -417,16 +417,16 @@ void CarlInteractiveManipulation::processHandMarkerFeedback(
       else if (feedback->menu_entry_id == 4)  //home requested
       {
         acGripper.cancelAllGoals();
-        carl_moveit::ArmGoal homeGoal;
-        homeGoal.action = carl_moveit::ArmGoal::READY;
+        rail_manipulation_msgs::ArmGoal homeGoal;
+        homeGoal.action = rail_manipulation_msgs::ArmGoal::READY;
         acArm.sendGoal(homeGoal);
         acArm.waitForResult(ros::Duration(10.0));
       }
       else if (feedback->menu_entry_id == 5)
       {
         acGripper.cancelAllGoals();
-        carl_moveit::ArmGoal homeGoal;
-        homeGoal.action = carl_moveit::ArmGoal::RETRACT;
+        rail_manipulation_msgs::ArmGoal homeGoal;
+        homeGoal.action = rail_manipulation_msgs::ArmGoal::RETRACT;
         acArm.sendGoal(homeGoal);
         acArm.waitForResult(ros::Duration(15.0));
       }
