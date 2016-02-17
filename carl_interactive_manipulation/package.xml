@@ -4,14 +4,14 @@
   <version>0.0.33</version>
   <description>Interactive Manipulation for CARL</description>
 
-  <author email="davidkent@wpi.edu">David Kent</author>
+  <author email="dekent@gatech.edu">David Kent</author>
   <author email="pdmitrano@wpi.edu">Peter Mitrano</author>
-  <maintainer email="davidkent@wpi.edu">David Kent</maintainer>
+  <maintainer email="dekent@gatech.edu">David Kent</maintainer>
   <maintainer email="rctoris@wpi.edu">Russell Toris</maintainer>
 
   <url type="website">http://ros.org/wiki/carl_bot</url>
-  <url type="bugtracker">https://github.com/WPI-RAIL/carl_bot/issues</url>
-  <url type="repository">https://github.com/WPI-RAIL/carl_bot</url>
+  <url type="bugtracker">https://github.com/GT-RAIL/carl_bot/issues</url>
+  <url type="repository">https://github.com/GT-RAIL/carl_bot</url>
 
   <license>BSD</license>
   
