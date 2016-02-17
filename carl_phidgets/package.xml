@@ -3,16 +3,16 @@
   <version>0.0.33</version>
   <description>ROS Support for the Phidgets Spatial 3/3/3 Devices for use with the CARL Robot</description>
   
-  <maintainer email="davidkent@wpi.edu">David Kent </maintainer>
+  <maintainer email="dekent@gatech.edu">David Kent </maintainer>
   <maintainer email="rctoris@wpi.edu">Russell Toris</maintainer>
-  <author email="davidkent@wpi.edu">David Kent</author>
+  <author email="dekent@gatech.edu">David Kent</author>
   <author email="rctoris@wpi.edu">Russell Toris</author>
 
   <license>BSD</license>
 
   <url type="website">http://ros.org/wiki/carl_phidgets</url>
-  <url type="bugtracker">https://github.com/WPI-RAIL/carl_bot/issues</url>
-  <url type="repository">https://github.com/WPI-RAIL/carl_bot</url>
+  <url type="bugtracker">https://github.com/GT-RAIL/carl_bot/issues</url>
+  <url type="repository">https://github.com/GT-RAIL/carl_bot</url>
 
   <buildtool_depend>catkin</buildtool_depend>
 
