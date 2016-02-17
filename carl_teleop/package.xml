@@ -5,16 +5,16 @@
   <description>Control the Movement Devices on CARL</description>
 
   <maintainer email="rctoris@wpi.edu">Russell Toris</maintainer>
-  <maintainer email="davidkent@wpi.edu">David Kent</maintainer>
+  <maintainer email="dekent@gatech.edu">David Kent</maintainer>
   <author email="spkordell@wpi.edu">Steven Kordell</author>
   <author email="rctoris@wpi.edu">Russell Toris</author>
-  <author email="davidkent@wpi.edu">David Kent</author>
+  <author email="dekent@gatech.edu">David Kent</author>
 
   <license>BSD</license>
 
   <url type="website">http://ros.org/wiki/carl_teleop</url>
-  <url type="bugtracker">https://github.com/WPI-RAIL/carl_bot/issues</url>
-  <url type="repository">https://github.com/WPI-RAIL/carl_bot</url>
+  <url type="bugtracker">https://github.com/GT-RAIL/carl_bot/issues</url>
+  <url type="repository">https://github.com/GT-RAIL/carl_bot</url>
 
   <buildtool_depend>catkin</buildtool_depend>
 
