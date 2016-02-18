@@ -1,4 +1,4 @@
-carl_bot [![Build Status](https://api.travis-ci.org/WPI-RAIL/carl_bot.png)](https://travis-ci.org/WPI-RAIL/carl_bot)
+carl_bot [![Build Status](https://api.travis-ci.org/GT-RAIL/carl_bot.png)](https://travis-ci.org/GT-RAIL/carl_bot)
 ========
 
 #### CARL (Crowdsourcing for Autonomous Robot Learning)
