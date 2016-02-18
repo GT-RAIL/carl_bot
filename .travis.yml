@@ -32,7 +32,7 @@ install:
   - git clone https://github.com/RIVeR-Lab/wpi_jaco.git
   - git clone https://github.com/GT-RAIL/rail_manipulation_msgs.git
   - git clone https://github.com/GT-RAIL/rail_segmentation.git
-  - git clone https://github.com/GT-RAIL/rail_pick_and_place.git -b develop_no_opencv_nonfree
+  - git clone https://github.com/GT-RAIL/rail_pick_and_place.git -b develop-no-opencv-nonfree
   - git clone https://github.com/GT-RAIL/carl_safety.git
   - git clone https://github.com/GT-RAIL/carl_moveit.git
   - git clone https://github.com/sniekum/ar_track_alvar_msgs.git
