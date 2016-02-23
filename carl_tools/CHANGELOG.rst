@@ -2,6 +2,12 @@
 Changelog for package carl_tools
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.34 (2016-02-23)
+-------------------
+* Update CMakeLists.txt
+* Update package.xml
+* Contributors: David Kent
+
 0.0.33 (2015-08-10)
 -------------------
 

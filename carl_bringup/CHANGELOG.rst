@@ -2,6 +2,11 @@
 Changelog for package carl_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.34 (2016-02-23)
+-------------------
+* Update package.xml
+* Contributors: David Kent
+
 0.0.33 (2015-08-10)
 -------------------
 * Disabled arm home on initialization
