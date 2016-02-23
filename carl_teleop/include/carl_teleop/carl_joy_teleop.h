@@ -85,7 +85,7 @@
  * carl_joy_teleop creates a ROS node that allows the control of CARL with a joystick. 
  * This node listens to a /joy topic and sends messages to the /cmd_vel topic.
  */
-class carl_action_executor
+class carl_joy_teleop
 {
 public:
   /*!
