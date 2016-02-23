@@ -33,6 +33,8 @@ add_executable(current_logger src/current_logger.cpp)
 target_link_libraries(camera_external_calibration ${catkin_LIBRARIES})
 target_link_libraries(current_logger ${catkin_LIBRARIES})
 
+add_dependencies(camera_external_calibration ar_track_alvar_msgs_gencpp)
+
 #############
 ## Install ##
 #############

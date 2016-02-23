@@ -1,19 +1,19 @@
 <?xml version="1.0"?>
 <package>
   <name>carl_dynamixel</name>
-  <version>0.0.33</version>
+  <version>0.0.34</version>
   <description>Configuration for CARLS's Head Dynamixel Servo</description>
 
   <maintainer email="rctoris@wpi.edu">Russell Toris</maintainer>
-  <maintainer email="davidkent@wpi.edu">David Kent</maintainer>
+  <maintainer email="dekent@gatech.edu">David Kent</maintainer>
   <author email="cmdunkers@wpi.edu">Chris Dunkers</author>
-  <author email="davidkent@wpi.edu">David Kent</author>
+  <author email="dekent@gatech.edu">David Kent</author>
 
   <license>BSD</license>
 
   <url type="website">http://ros.org/wiki/carl_bot</url>
-  <url type="bugtracker">https://github.com/WPI-RAIL/carl_dynamixel/issues</url>
-  <url type="repository">https://github.com/WPI-RAIL/carl_dynamixel</url>
+  <url type="bugtracker">https://github.com/GT-RAIL/carl_dynamixel/issues</url>
+  <url type="repository">https://github.com/GT-RAIL/carl_dynamixel</url>
 
   <buildtool_depend>catkin</buildtool_depend>
 

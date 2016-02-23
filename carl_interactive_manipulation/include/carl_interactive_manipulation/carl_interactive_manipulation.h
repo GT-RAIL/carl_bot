@@ -17,8 +17,8 @@
 #include <ros/ros.h>
 #include <actionlib/client/simple_action_client.h>
 #include <boost/thread/recursive_mutex.hpp>
-#include <carl_moveit/ArmAction.h>
-#include <carl_moveit/PickupAction.h>
+#include <rail_manipulation_msgs/ArmAction.h>
+#include <rail_manipulation_msgs/PickupAction.h>
 #include <carl_safety/Error.h>
 #include <interactive_markers/interactive_marker_server.h>
 #include <interactive_markers/menu_handler.h>
@@ -164,8 +164,8 @@ private:
 
   //actionlib
   actionlib::SimpleActionClient<rail_manipulation_msgs::GripperAction> acGripper;
-  actionlib::SimpleActionClient<carl_moveit::ArmAction> acArm;
-  actionlib::SimpleActionClient<carl_moveit::PickupAction> acPickup;
+  actionlib::SimpleActionClient<rail_manipulation_msgs::ArmAction> acArm;
+  actionlib::SimpleActionClient<rail_manipulation_msgs::PickupAction> acPickup;
   //actionlib::SimpleActionClient<rail_manipulation_msgs::RecognizeAction> acRecognize;
 
   boost::recursive_mutex api_mutex;

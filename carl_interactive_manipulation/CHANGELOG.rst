@@ -2,6 +2,12 @@
 Changelog for package carl_interactive_manipulation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.34 (2016-02-23)
+-------------------
+* Update package.xml
+* Updates for new rail_manipulation_msgs
+* Contributors: David Kent
+
 0.0.33 (2015-08-10)
 -------------------
 

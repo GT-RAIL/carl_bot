@@ -493,8 +493,8 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
         if (joy->buttons.at(4) == 1)
         {
           //send home command
-          carl_moveit::ArmGoal homeGoal;
-          homeGoal.action = carl_moveit::ArmGoal::READY;
+          rail_manipulation_msgs::ArmGoal homeGoal;
+          homeGoal.action = rail_manipulation_msgs::ArmGoal::READY;
           acArm.sendGoal(homeGoal);
         }
         leftBumperPrev = joy->buttons.at(4);
@@ -504,8 +504,8 @@ void carl_joy_teleop::joy_cback(const sensor_msgs::Joy::ConstPtr& joy)
         if (joy->buttons.at(5) == 1)
         {
           //send retract command
-          carl_moveit::ArmGoal retractGoal;
-          retractGoal.action = carl_moveit::ArmGoal::RETRACT;
+          rail_manipulation_msgs::ArmGoal retractGoal;
+          retractGoal.action = rail_manipulation_msgs::ArmGoal::RETRACT;
           acArm.sendGoal(retractGoal);
         }
         rightBumperPrev = joy->buttons.at(5);
