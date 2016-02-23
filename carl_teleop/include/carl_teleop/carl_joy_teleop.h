@@ -92,7 +92,7 @@ public:
    * Creates a carl_joy_teleop object that can be used control carl with a joystick. ROS nodes, services, and publishers
    * are created and maintained within this object.
    */
-  carl_action_executor();
+  carl_joy_teleop();
 
   /*!
    * Periodically publish velocity message to the arm controller
