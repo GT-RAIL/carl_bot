@@ -4,9 +4,8 @@
   <description>ROS Support for the Phidgets Spatial 3/3/3 Devices for use with the CARL Robot</description>
   
   <maintainer email="dekent@gatech.edu">David Kent </maintainer>
-  <maintainer email="rctoris@wpi.edu">Russell Toris</maintainer>
   <author email="dekent@gatech.edu">David Kent</author>
-  <author email="rctoris@wpi.edu">Russell Toris</author>
+  <author email="russell.toris@gmail.com">Russell Toris</author>
 
   <license>BSD</license>
 

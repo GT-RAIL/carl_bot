@@ -6,7 +6,7 @@
  * listens to a /carl_estop topic and sends messages to the /move_base actionlib to stop the current execution of a
  * goal.
  *
- * \author Russell Toris, WPI - rctoris@wpi.edu
+ * \author Russell Toris, WPI - russell.toris@gmail.com
  * \author Chris Dunkers, WPI - cmdunkers@wpi.edu
  * \date July 24, 2014
  */

@@ -4,7 +4,6 @@
   <version>0.0.34</version>
   <description>Configuration for CARLS's Head Dynamixel Servo</description>
 
-  <maintainer email="rctoris@wpi.edu">Russell Toris</maintainer>
   <maintainer email="dekent@gatech.edu">David Kent</maintainer>
   <author email="cmdunkers@wpi.edu">Chris Dunkers</author>
   <author email="dekent@gatech.edu">David Kent</author>

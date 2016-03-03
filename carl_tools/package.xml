@@ -4,9 +4,8 @@
   <version>0.0.34</version>
   <description>Miscellaneous Tools for CARL</description>
 
-  <maintainer email="rctoris@wpi.edu">Russell Toris</maintainer>
   <maintainer email="dekent@gatech.edu">David Kent</maintainer>
-  <author email="rctoris@wpi.edu">Russell Toris</author>
+  <author email="russell.toris@gmail.com">Russell Toris</author>
   <author email="dekent@gatech.edu">David Kent</author>
 
   <license>BSD</license>
