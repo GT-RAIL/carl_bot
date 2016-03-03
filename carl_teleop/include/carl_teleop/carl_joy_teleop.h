@@ -7,7 +7,7 @@
  * the base and cartesian_cmd for the arm.
  *
  * \author David Kent, WPI - davidkent@wpi.edu
- * \author Russell Toris, WPI - rctoris@wpi.edu
+ * \author Russell Toris, WPI - russell.toris@gmail.com
  * \author Steven Kordell, WPI - spkordell@wpi.edu
  * \date July 24, 2014
  */
