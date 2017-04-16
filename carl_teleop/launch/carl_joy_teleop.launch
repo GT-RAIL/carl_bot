@@ -20,7 +20,7 @@
     <param name="autorepeat_rate" type="double" value="30" />
     <param name="coalesce_interval" type="double" value="0.033" />
   </node>
-  <node pkg="carl_teleop" type="carl_joy_teleop" name="carl_joy_teleop" output="screen">
+  <node pkg="carl_teleop" type="carl_joy_teleop" name="carl_joy_telep" output="screen">
     <param name="linear_throttle_factor_base" type="double" value="$(arg linear_throttle_factor_base)" />
     <param name="angular_throttle_factor_base" type="double" value="$(arg angular_throttle_factor_base)" />
     <param name="linear_throttle_factor_arm" type="double" value="$(arg linear_throttle_factor_arm)" />
